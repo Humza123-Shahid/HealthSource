@@ -5,6 +5,7 @@ const ViewSurgery = () => {
      const location = useLocation();
     const Surgery=location.state?.surgery || {};
     const patientName=location.state?.patient || "";
+
     const doctorName=location.state?.doctor || "";
     const operationName=location.state?.operation || "";
     const index=location.state?.idx;
@@ -34,7 +35,7 @@ const ViewSurgery = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Patient</th>
+            <th>Patient NationalId/Name</th>
             <th>Primary Surgeon</th>
             <th>Type</th>
             <th>Scheduled Date</th>
@@ -47,7 +48,11 @@ const ViewSurgery = () => {
         <tbody>
             <tr key={Surgery._id}>
               <td>{index}</td>
-              <td>{patientName}</td>
+              <td>{patientName?.nationalId}-{patientName?.firstName}</td>
+              
+              {/* <td>{Surgery?.name}</td>
+              <td>{Surgery?.gender}</td>
+              <td>{Surgery?.contact}</td> */}
               <td>{doctorName}</td>
               <td>{Surgery.type}</td>
               <td>{formattedScheduledDate}</td>

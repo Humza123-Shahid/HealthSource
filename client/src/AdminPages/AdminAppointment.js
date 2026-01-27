@@ -34,9 +34,9 @@ const AdminAppointment = () => {
   //     setQcount(Number(storedCount));
   //   }
   // }, []);
-  const filteredData = appointments.filter(item =>
-      item.appointmentTime?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  // const filteredData = appointments.filter(item =>
+  //     item.appointmentTime?.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
   const handleView = (appointmentId,doctorName,patientName,index) => {
     //const dataitem=buses.find(da => da._id ==id)
     const dataappointment=getAppointmentById(appointmentId);
@@ -118,22 +118,21 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
            <th>Patient</th>
            <th>Doctor</th>
             <th>Appointment Date</th>
-            <th>Appointment Time</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((row,index) => {
+          {appointments.map((row,index) => {
             const doctor = getDoctorById(row.doctor);
             const patient = getPatientById(row.patient);
             const staff = getStaffById(doctor?.staff);
              const formattedAppointmentDate = new Date(row?.appointmentDate).toLocaleString('en-US', {
              year: 'numeric',
             month: '2-digit',
-            day: '2-digit'
-            // hour: 'numeric',
-            // minute: 'numeric',
-            // hour12: true // Ensures AM/PM
+            day: '2-digit',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true // Ensures AM/PM
           });
             return(
             <tr key={row._id}>
@@ -145,7 +144,6 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
               <td>{staff?.firstName}</td>
               
               <td>{formattedAppointmentDate}</td>
-              <td>{row?.appointmentTime}</td>
               <td style={{width:"30%"}}>
                 <button style={{ marginRight: "8px", color: "white",backgroundColor:"blue"}} onClick={()=>
                   handleView(row._id,staff?.firstName,patient?.firstName,index)}>

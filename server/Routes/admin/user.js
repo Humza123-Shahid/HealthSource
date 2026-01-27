@@ -45,13 +45,13 @@ router.post('/adduser',fetchuser,[
 // ROUTE 3: Update an existing Question using :PUT "/api/questions/updatequestion".Login required
 router.put('/updateuser/:id',fetchuser,async (req,res)=>{
     const {staff,patient,username,password,role}=req.body;
-   
+   console.log(role)
     const newUser={};
     if(staff){newUser.staff=staff};
     if(patient){newUser.patient=patient};
     if(username){newUser.username=username};
     if(password){newUser.password=password};
-    if(role){newUser.role=role};
+    newUser.role=role;
 
     let user=await User.findById(req.params.id);
     if(!user){return res.status(404).send("Not Found")}

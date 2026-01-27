@@ -1,6 +1,7 @@
 const express=require('express');
 const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
+const uploaddoctor = require("../../middleware/uploaddoctor");
 const Doctor = require('../../models/Doctor');
 const { body, validationResult } = require('express-validator');
 
@@ -18,22 +19,23 @@ router.get('/fetchalldoctors',fetchuser,async (req,res)=>{
     }
 })
 // ROUTE 2: Add a new Question using :POST "/api/questions/addquestion".Login required
-router.post('/adddoctor',fetchuser,[
+router.post('/adddoctor',fetchuser,uploaddoctor.single("file"),[
     body('specializations').isLength({ min: 1 }),
-    body('licenseNumber').isLength({ min: 1 }),
-    body('signatureUrl').isLength({ min: 1 })
+    body('licenseNumber').isLength({ min: 1 })
 ],async (req,res)=>{
     try {
         let success = false;
-        const {staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signatureUrl}=req.body;
+        const {staff,specializations,licenseNumber,experienceYears,consultationFee,onCall}=req.body;
+        console.log(req.file?.path)
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
         const doctor=new Doctor({
-            staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signatureUrl
+            staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signaturePath:req.file?.path
         })
         const savedDoctor=await doctor.save();
+        console.log(savedDoctor);
         success=true;
         res.json({success,data:savedDoctor})
     } catch (error) {
@@ -42,8 +44,8 @@ router.post('/adddoctor',fetchuser,[
     }
 })
 // ROUTE 3: Update an existing Question using :PUT "/api/questions/updatequestion".Login required
-router.put('/updatedoctor/:id',fetchuser,async (req,res)=>{
-    const {staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signatureUrl}=req.body;
+router.put('/updatedoctor/:id',fetchuser,uploaddoctor.single("file"),async (req,res)=>{
+    const {staff,specializations,licenseNumber,experienceYears,consultationFee,onCall}=req.body;
     const newDoctor={};
     if(staff){newDoctor.staff=staff};
     if(specializations){newDoctor.specializations=specializations};
@@ -51,7 +53,10 @@ router.put('/updatedoctor/:id',fetchuser,async (req,res)=>{
     if(experienceYears){newDoctor.experienceYears=experienceYears};
     if(consultationFee){newDoctor.consultationFee=consultationFee};
     newDoctor.onCall=onCall;
-    if(signatureUrl){newDoctor.signatureUrl=signatureUrl};
+    if (req.file) {
+    newDoctor.signaturePath = req.file.path; // overwrite only if new file
+  }
+    // if(signatureUrl){newDoctor.signatureUrl=signatureUrl};
 
     let doctor=await Doctor.findById(req.params.id);
     if(!doctor){return res.status(404).send("Not Found")}

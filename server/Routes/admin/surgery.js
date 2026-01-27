@@ -2,6 +2,8 @@ const express=require('express');
 const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const Surgery = require('../../models/Surgery');
+const SurgeryTeam = require('../../models/SurgeryTeam');
+
 const { body, validationResult } = require('express-validator');
 
 
@@ -27,7 +29,7 @@ router.post('/addsurgery',fetchuser,[
 ],async (req,res)=>{
     try {
         let success = false;
-        const {patient,primarySurgeon,type,scheduledDate,startTime,endTime,operationTheatre,notes}=req.body;
+        const {patient,primarySurgeon,type,scheduledDate,startTime,endTime,operationTheatre,notes,staffs,roles}=req.body;
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
@@ -36,6 +38,12 @@ router.post('/addsurgery',fetchuser,[
             patient,primarySurgeon,type,scheduledDate,startTime,endTime,operationTheatre,notes
         })
         const savedSurgery=await surgery.save();
+        staffs.forEach(async function(staff,index) {
+            await SurgeryTeam.create(
+                { surgery:savedSurgery._id,staff:staff.value,role:roles[index]})
+            
+            
+        });
         success=true;
         res.json({success,data:savedSurgery})
     } catch (error) {
@@ -48,6 +56,8 @@ router.put('/updatesurgery/:id',fetchuser,async (req,res)=>{
     const {patient,primarySurgeon,type,scheduledDate,startTime,endTime,operationTheatre,notes}=req.body;
     const newSurgery={};
     if(patient){newSurgery.patient=patient};
+    // if(gender){newSurgery.gender=gender};
+    // if(contact){newSurgery.contact=contact};
     if(primarySurgeon){newSurgery.primarySurgeon=primarySurgeon};
     if(type){newSurgery.type=type};
     if(scheduledDate){newSurgery.scheduledDate=scheduledDate};

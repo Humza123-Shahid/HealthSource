@@ -42,7 +42,7 @@ const ViewPatient = () => {
             <th>Disabilities</th>
             <th>Chronic Conditions</th>
             <th>Registration Date</th>
-            <th>Photo Url</th>
+            <th>Photo Path</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -63,7 +63,7 @@ const ViewPatient = () => {
               <td>{Patient?.disabilities}</td>
               <td>{Patient.chronicConditions}</td>
               <td>{formattedRegistrationDate}</td>
-              <td>{Patient.photoUrl}</td>
+              <td>{Patient.photoPath}</td>
               <td>{Patient.status}</td>
             </tr>
         </tbody>

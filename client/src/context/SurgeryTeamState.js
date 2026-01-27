@@ -20,7 +20,7 @@ const SurgeryTeamState=(props)=>{
       setSurgeryTeams(json)
       return json;
     }
-    const addSurgeryTeam=async (surgery,staff,role)=>{
+    const addSurgeryTeam=async (surgery,staffs,roles)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
       const response=await fetch(`${host}/api/surgeryteam/addsurgeryteam`,{
         method:'POST',
@@ -28,13 +28,13 @@ const SurgeryTeamState=(props)=>{
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
         },
-        body:JSON.stringify({surgery,staff,role})
+        body:JSON.stringify({surgery,staffs,roles})
       });
       const surgeryteam=await response.json();
-      const normalizedData = Array.isArray(surgeryteam.data) ? surgeryteam.data : [surgeryteam.data];
-      //setBuses(surgeryteams.concat(bus.savedBus));
-      console.log(surgeryteam)
-      setSurgeryTeams(prevSurgeryTeams => [...prevSurgeryTeams, normalizedData])
+      // const normalizedData = Array.isArray(surgeryteam.data) ? surgeryteam.data : [surgeryteam.data];
+      // //setBuses(surgeryteams.concat(bus.savedBus));
+      // console.log(surgeryteam)
+      // setSurgeryTeams(prevSurgeryTeams => [...prevSurgeryTeams, normalizedData])
       return surgeryteam.success;
     }
     const deleteSurgeryTeam= async(id)=>{

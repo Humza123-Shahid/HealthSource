@@ -1,6 +1,7 @@
 import React,{useState,useContext,useEffect} from 'react'
 import staffContext from '../context/staffContext'
 import shiftContext from '../context/shiftContext'
+import Select from "react-select";
 
 import InfoMessage from '../components/InfoMessage';
 
@@ -15,11 +16,11 @@ const AddStaff = () => {
         const [type,setType]=useState('')
         
     const [shiftName, setShiftName] = useState(null);
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState('active');
     const [ firstName, setFirstName] = useState('');
     const [ lastName, setLastName] = useState('');
     const [ designation, setDesignation] = useState('');
-    const [ gender, setGender] = useState('');
+    const [ gender, setGender] = useState('male');
     const [ birthDate, setBirthDate] = useState('');
     const [ birthDate2, setBirthDate2] = useState('');
 
@@ -28,11 +29,13 @@ const AddStaff = () => {
     const [ contact, setContact] = useState('');
     const [ address, setAddress] = useState('');
 
-    const [ employType, setEmployType] = useState('');
+    const [ employType, setEmployType] = useState('full-time');
     const [ qualification, setQualification] = useState('');
     const [ joinDate, setjoinDate] = useState('');
     const [ joinDate2, setjoinDate2] = useState('');
     const [ photoUrl, setPhotoUrl] = useState('');
+    const [file, setFile] = useState(null);
+
 
   const handleStatusChange = (e) => {
     setStatus(e.target.value); // <-- Get input value here
@@ -83,10 +86,30 @@ const AddStaff = () => {
   const handleShiftChange = (e) => {
     setShiftName(e.target.value); // <-- Get input value here
   };
-
+  const handleChange = (selectedOption) => {
+    if(selectedOption=="" )
+    {
+        setShiftName(null)
+    }
+    else
+    {
+      setShiftName(selectedOption.value)
+    }
+  }
+   const options = [
+  { value: "", label: "Select Shift" }, // empty option
+  ... shifts.map(st => ({
+    value: st._id,
+    label: `${st.name}`
+  }))
+];
+const filterOption = (option, inputValue) => {
+  // Only filter based on the 'label' property, for example
+  return option.label.toLowerCase().includes(inputValue.toLowerCase());
+};
   const addStaffs=async (e)=>{
           e.preventDefault();
-          const success= await addStaff(firstName,lastName,designation,nationalId,gender,birthDate2,address,contact,qualification,joinDate2,employType,salary,shiftName,photoUrl,status)
+          const success= await addStaff(firstName,lastName,designation,nationalId,gender,birthDate2,address,contact,qualification,joinDate2,employType,salary,shiftName,file,status)
           console.log(success);
           if(success)
           {
@@ -133,7 +156,12 @@ useEffect(() => {
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="gender" className="form-label">Enter Gender:</label>
-            <input type="text" className="form-control" id="gender" value={gender} name="gender" onChange={handleGenderChange} />
+            {/* <input type="text" className="form-control" id="gender" value={gender} name="gender" onChange={handleGenderChange} /> */}
+            <select id="mySelect" className="form-control "  value={gender} onChange={handleGenderChange}>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+            </select>
       </div>
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="bdate" className="form-label">Select Date of Birth:</label>
@@ -143,7 +171,7 @@ useEffect(() => {
       <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="address" className="form-label">Enter Address:</label>
-                <input type="text" className="form-control" id="address" value={address} name="address" onChange={handleAddressChange} />
+                 <textarea className="form-control" id="address" value={address} name="address" onChange={handleAddressChange} />
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="contact" className="form-label">Enter Contact:</label>
@@ -151,7 +179,7 @@ useEffect(() => {
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="qualification" className="form-label">Enter Qualification:</label>
-                <input type="text" className="form-control" id="qualification" value={qualification} name="qualification" onChange={handleQualificationChange} />
+                 <textarea className="form-control" id="qualification" value={qualification} name="qualification" onChange={handleQualificationChange} />
         </div>
         </div>
         <div className='mx-0' style={{display:'flex'}}>
@@ -161,7 +189,12 @@ useEffect(() => {
       </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="etype" className="form-label">Enter Employment Type:</label>
-                <input type="text" className="form-control" id="etype" value={employType} name="etype" onChange={handleEmploymentTypeChange} />
+                {/* <input type="text" className="form-control" id="etype" value={employType} name="etype" onChange={handleEmploymentTypeChange} /> */}
+                <select id="mySelect" className="form-control "  value={employType} onChange={handleEmploymentTypeChange}>
+                  <option value="full-time">Full-Time</option>
+                  <option value="part-time">Part-Time</option>
+                  <option value="contract">Contract</option>
+              </select>
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="salary" className="form-label">Enter Salary:</label>
@@ -171,23 +204,34 @@ useEffect(() => {
          <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="shift" className="form-label">Select Shift</label>
-            <select id="shfitId" className="form-control " value={shiftName} name="shiftId" onChange={handleShiftChange}>
-                {/* <option value="admin">Admin</option>
-                <option value="organizer">Organizer</option> */}
+            {/* <select id="shfitId" className="form-control " value={shiftName} name="shiftId" onChange={handleShiftChange}>
               <option value="">-Shift-</option>
                   {Array.isArray(shifts) && shifts.map((row) => (
                   <option value={row._id}>{row.name}</option>
                   ))}
-            </select>
+            </select> */}
+            <Select id="shiftId" options={options} filterOption={filterOption} onChange={handleChange} name="shiftId" placeholder="Select Shift" />
+
         </div>
       
        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
-            <label htmlFor="photoUrl" className="form-label">Enter Photo Url:</label>
-            <input type="text" className="form-control" id="photoUrl" value={photoUrl} name="photoUrl" onChange={handlePhotoUrlChange} />
+            <label htmlFor="photoUrl" className="form-label">Select Photo:</label>
+            <br/>
+            {/* <input type="text" className="form-control" id="photoUrl" value={photoUrl} name="photoUrl" onChange={handlePhotoUrlChange} /> */}
+            <input
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
       </div>
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
-            <input type="text" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} />
+            {/* <input type="text" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} /> */}
+             <select id="mySelect" className="form-control " value={status} onChange={handleStatusChange}>
+                <option value="active">Active</option>
+                <option value="on-leave">On-Leave</option>
+                <option value="resigned">Resigned</option>
+                <option value="terminated">Terminated</option>
+            </select>
       </div>
       </div>
       

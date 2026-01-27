@@ -7,7 +7,7 @@ test: { type: mongoose.Schema.Types.ObjectId, ref: 'LabTest' },
 resultValue: String,
 units: String,
 remarks: String,
-uploadedFileUrl: String,
+filePath: String,
 resultDate: Date
 // verifiedBy: { type: Types.ObjectId, ref: 'Staff' },
 }, { timestamps: true });

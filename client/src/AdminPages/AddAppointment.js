@@ -1,5 +1,7 @@
 
 import React,{useState,useEffect,useContext} from 'react'
+import Select from "react-select";
+
 import appointmentContext from '../context/appointmentContext'
 import patientContext from '../context/patientContext'
 import doctorContext from '../context/doctorContext'
@@ -12,9 +14,9 @@ const AddAppointment = () => {
        const [msg,setMsg]=useState('')
        const [type,setType]=useState('')
        const [roles,setRoles]=useState([]);
-     const [credentials,setCredentials] =useState({patientId:null,doctorId:null,appointmentTime:"",bookingType:"",status:"",notes:""})
+     const [credentials,setCredentials] =useState({patientId:null,doctorId:null,bookingType:"online",status:"booked",notes:""})
          const [ appointmentDate, setAppointmentDate] = useState(undefined);
-         const [ appointmentDate2, setAppointmentDate2] = useState(undefined);
+        //  const [ appointmentDate2, setAppointmentDate2] = useState(undefined);
      
      const context=useContext(appointmentContext);
          const {addAppointment}=context;
@@ -27,8 +29,6 @@ const AddAppointment = () => {
 
           const handleAppointmentDateChange = (e) => {
     setAppointmentDate(e.target.value); // <-- Get input value here
-    const newTime = `${e.target.value}T05:00:00`
-    setAppointmentDate2(newTime);
   };
   
      const onChange=(e)=>{
@@ -42,19 +42,57 @@ const AddAppointment = () => {
       
       
     }
-     
+      const handleChange = (selectedOption) => {
+        if(selectedOption=="" )
+        {
+            setCredentials({...credentials,'patientId':null})
+        }
+        else
+        {
+          setCredentials({...credentials,'patientId':selectedOption.value})
+        }
+  };
+  const handleChange2 = (selectedOption) => {
+        if(selectedOption=="" )
+        {
+            setCredentials({...credentials,'doctorId':null})
+        }
+        else
+        {
+          setCredentials({...credentials,'doctorId':selectedOption.value})
+        }
+  };
 const getDoctorById = (id) => doctors.find(d => d._id === id);
 const getPatientById = (id) => patients.find(d => d._id === id);
 const getStaffById = (id) => staffs.find(d => d._id === id);
-
+const options = [
+  { value: "", label: "Select Patient" }, // empty option
+  ... patients.map(pt => ({
+    value: pt._id,
+    label: `${pt.firstName}`
+  }))
+];
+const options2 = [
+  { value: "", label: "Select Doctor" }, // empty option
+  ... doctors.map(dt => {
+    const staff = getStaffById(dt?.staff);
+    return{
+    value: staff._id,
+    label: `${staff.firstName}`
+}})
+];
+const filterOption = (option, inputValue) => {
+  // Only filter based on the 'label' property, for example
+  return option.label.toLowerCase().includes(inputValue.toLowerCase());
+};
 
   const addAppointments=async (e)=>{
          e.preventDefault();
-        const {patientId,doctorId,appointmentTime,bookingType,status,notes}=credentials
+        const {patientId,doctorId,bookingType,status,notes}=credentials
         const patientobj= getPatientById(patientId);
 
-         
-          const user=await addAppointment(patientId,doctorId,appointmentDate2,appointmentTime,bookingType,status,notes)
+         console.log(bookingType);
+          const user=await addAppointment(patientId.value,doctorId.value,appointmentDate,bookingType,status,notes)
           console.log(user)
           if(user.success)
           {
@@ -85,69 +123,66 @@ useEffect(() => {
     <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="patient" className="form-label">Patient</label>
-            <select id="patientId" className="form-control " name="patientId" onChange={onChange}>
-                {/* <option value="admin">Admin</option>
-                <option value="organizer">Organizer</option> */}
+            {/* <select id="patientId" className="form-control " name="patientId" onChange={onChange}>
                 <option value="">-Patient-</option>
                     {Array.isArray(patients) && patients.map((row) => (
                     <option value={row._id}>{row.firstName}</option>
                     ))}
-            </select>
+            </select> */}
+            <Select id="patientId" options={options} filterOption={filterOption} onChange={handleChange} name="patientId" placeholder="Select Patient" />
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="doctorId" className="form-label">Doctor</label>
-            <select id="doctorId" className="form-control " name="doctorId" onChange={onChange}>
-                {/* <option value="admin">Admin</option>
-                <option value="organizer">Organizer</option> */}
+            {/* <select id="doctorId" className="form-control " name="doctorId" onChange={onChange}>
                 <option value="">-Doctor-</option>
                     {Array.isArray(doctors) && doctors.map((row) => {
                         const staff = getStaffById(row?.staff);
                         return(
                     <option value={staff._id}>{staff.firstName}</option>)
                 })}
-            </select>
+            </select> */}
+             <Select id="doctorId" options={options2} filterOption={filterOption} onChange={handleChange2} name="doctorId" placeholder="Select Doctor" />
         </div>
         
      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
           <label htmlFor="appointmentDate" className="form-label">Appointment Date</label>
-          <input type="date" className="form-control" id="appointmentDate" name="appointmentDate" value={appointmentDate} onChange={handleAppointmentDateChange}  aria-describedby="emailHelp"/>
+          <input type="datetime-local" className="form-control" id="appointmentDate" name="appointmentDate" value={appointmentDate} onChange={handleAppointmentDateChange}  aria-describedby="emailHelp"/>
         </div>
        
     </div>
       <div className='mx-0' style={{display:'flex'}}>
 
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="appointmentTime" className="form-label">Enter Appointment Time:</label>
             <input type="text" className="form-control" id="appointmentTime"  name="appointmentTime" onChange={onChange} />
-      </div>
+      </div> */}
        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="bookingType" className="form-label">Enter Booking Type:</label>
-            <input type="text" className="form-control" id="bookingType" name="bookingType" onChange={onChange} />
+            {/* <input type="text" className="form-control" id="bookingType" name="bookingType" onChange={onChange} /> */}
+            <select id="mySelect" className="form-control " name="bookingType" onChange={onChange}>
+                <option value="online">Online</option>
+                <option value="walk-in">Walk-In</option>
+            </select>
       </div>
       
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
-            <input type="text" className="form-control" id="status" name="status" onChange={onChange} />
+            {/* <input type="text" className="form-control" id="status" name="status" onChange={onChange} /> */}
+            <select id="mySelect" className="form-control " name="status" onChange={onChange}>
+                <option value="booked">Booked</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="completed">Completed</option>
+                <option value="no-show'">No-Show'</option>
+            </select>
       </div>
-    </div>
-        
-     <div className='mx-0' style={{display:'flex'}}>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="notes" className="form-label">Enter Notes:</label>
-            <input type="text" className="form-control" id="notes" name="notes" onChange={onChange} />
+            <textarea className="form-control" id="notes" name="notes" onChange={onChange} />
       </div>
-    <div className="mb-3 ms-3" style={{width:'100%'}}>
-          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
-          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
-     <div className="mb-3 ms-3" style={{width:'100%'}}>
-          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
-          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
-    </div>
-      </div>
     
     
-      <button disabled={credentials.appointmentTime==""||credentials.bookingType==""||credentials.status==""} type="submit" className="btn btn-primary">Add Appointment</button>
+      <button disabled={credentials.bookingType==""||credentials.status==""} type="submit" className="btn btn-primary">Add Appointment</button>
       </form>
     </div>
   )

@@ -1,5 +1,7 @@
 
 import React,{useState,useEffect,useContext} from 'react'
+import Select from "react-select";
+
 import userContext from '../context/userContext'
 import staffContext from '../context/staffContext'
 import patientContext from '../context/patientContext'
@@ -30,10 +32,67 @@ const AddUser = () => {
       
       
     }
+     const handleChange = (selectedOption) => {
+      console.log(selectedOption);
+        if(selectedOption=="" )
+        {
+            setCredentials({...credentials,'staffId':null})
+        }
+        else
+        {
+          setCredentials({...credentials,'staffId':selectedOption.value})
+        }
+  };
+    const handleChange2 = (selectedOption) => {
+        if(selectedOption=="" )
+        {
+            setCredentials({...credentials,'patientId':null})
+        }
+        else
+        {
+          setCredentials({...credentials,'patientId':selectedOption.value})
+        }
+  };
+ 
+   const handleChange3 = (selectedOption) => {
+        if(selectedOption=="" )
+        {
+            setCredentials({...credentials,'roleId':null})
+        }
+        else
+        {
+          setCredentials({...credentials,'roleId':selectedOption.value})
+        }
+  };
      const getRoleById = (id) => roles?.find(d => d._id === id);
      const getStaffById = (id) => staffs?.find(d => d._id === id);
      const getPatientById = (id) => patients?.find(d => d._id === id);
+const options = [
+  { value: "", label: "Select Staff" }, // empty option
+  ... staffs.map(st => ({
+    value: st._id,
+    label: `${st.firstName}`
+}))
+];
+const options2 = [
+  { value: "", label: "Select Patient" }, // empty option
+  ... patients.map(pt => ({
+    value: pt._id,
+    label: `${pt.firstName}`
+  }))
+];
 
+const options3 = [
+  { value: "", label: "Select Role" }, // empty option
+  ... roles.map(rl => ({
+    value: rl._id,
+    label: `${rl.name}`
+}))
+];
+const filterOption = (option, inputValue) => {
+  // Only filter based on the 'label' property, for example
+  return option.label.toLowerCase().includes(inputValue.toLowerCase());
+};
   const addUsers=async (e)=>{
          e.preventDefault();
         const {staffId,patientId,name,password,cpassword,roleId}=credentials
@@ -52,8 +111,8 @@ const AddUser = () => {
         //props.showAlert("Passwords do not match","danger")
         return;
         }
-         
-          const user=await addUser(staffId,patientId,name,password,roleId)
+         console.log(staffId.value,patientId.value,name,password,roleId.value);
+          const user=await addUser(staffId.value,patientId.value,name,password,roleId.value)
           console.log(user)
           if(user.success)
           {
@@ -93,25 +152,23 @@ useEffect(() => {
     <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="staff" className="form-label">Staff</label>
-            <select id="staffId" className="form-control " name="staffId" onChange={onChange}>
-                {/* <option value="admin">Admin</option>
-                <option value="organizer">Organizer</option> */}
+            {/* <select id="staffId" className="form-control " name="staffId" onChange={onChange}>
                 <option value="">-Staff-</option>
                     {Array.isArray(staffs) && staffs.map((row) => (
                     <option value={row._id}>{row.firstName}</option>
                     ))}
-            </select>
+            </select> */}
+             <Select id="staffId" options={options} filterOption={filterOption} onChange={handleChange} name="staffId" placeholder="Select Staff" />
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="patient" className="form-label">Patient</label>
-            <select id="patientId" className="form-control " name="patientId" onChange={onChange}>
-                {/* <option value="admin">Admin</option>
-                <option value="organizer">Organizer</option> */}
+            {/* <select id="patientId" className="form-control " name="patientId" onChange={onChange}>
                 <option value="">-Patient-</option>
                     {Array.isArray(patients) && patients.map((row) => (
                     <option value={row._id}>{row.firstName}</option>
                     ))}
-            </select>
+            </select> */}
+            <Select id="patientId" options={options2} filterOption={filterOption} onChange={handleChange2} name="patientId" placeholder="Select Patient" />
         </div>
      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
           <label htmlFor="name" className="form-label">User Name</label>
@@ -131,14 +188,13 @@ useEffect(() => {
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
           <label htmlFor="role" className="form-label">Role</label>
-            <select id="roleId" className="form-control " name="roleId" onChange={onChange}>
-                {/* <option value="admin">Admin</option>
-                <option value="organizer">Organizer</option> */}
+            {/* <select id="roleId" className="form-control " name="roleId" onChange={onChange}>
               <option value="">-Role-</option>
                   {Array.isArray(roles) && roles.map((row) => (
                   <option value={row._id}>{row.name}</option>
                   ))}
-            </select>
+            </select> */}
+             <Select id="roleId" options={options3} filterOption={filterOption} onChange={handleChange3} name="roleId" placeholder="Select Role" />
         </div>
     </div>
         

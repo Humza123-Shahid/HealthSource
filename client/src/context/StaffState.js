@@ -20,15 +20,33 @@ const StaffState=(props)=>{
       console.log(json);
       setStaffs(json)
     }
-    const addStaff=async (firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,photoUrl,status)=>{
+    const addStaff=async (firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,file,status)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("designation", designation);
+      formData.append("nationalId", nationalId);
+
+      formData.append("gender", gender);
+      formData.append("dob", dob);
+      formData.append("address", address);
+      formData.append("contact", contact);
+      formData.append("qualification", qualification);
+      formData.append("joiningDate", joiningDate);
+      formData.append("employmentType", employmentType);
+      formData.append("salary", salary);
+      formData.append("shift", shift);
+      formData.append("file", file);
+      formData.append("status", status);
+
       const response=await fetch(`${host}/api/staff/addstaff`,{
         method:'POST',
         headers:{
-            'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
         },
-        body:JSON.stringify({firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,photoUrl,status})
+        // body:JSON.stringify({firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,photoUrl,status})
+        body:formData
       });
       const staff=await response.json();
       const normalizedData = Array.isArray(staff.data) ? staff.data : [staff.data];
@@ -50,15 +68,33 @@ const StaffState=(props)=>{
       const newStaffs=staffs.filter((staff)=>{return staff._id!==id})
       setStaffs(newStaffs)
     }
-    const editStaff=async(id,firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,photoUrl,status)=>{
+    const editStaff=async(id,firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,file,status)=>{
       console.log(localStorage.getItem('token'));
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("designation", designation);
+      formData.append("nationalId", nationalId);
+
+      formData.append("gender", gender);
+      formData.append("dob", dob);
+      formData.append("address", address);
+      formData.append("contact", contact);
+      formData.append("qualification", qualification);
+      formData.append("joiningDate", joiningDate);
+      formData.append("employmentType", employmentType);
+      formData.append("salary", salary);
+      formData.append("shift", shift);
+      formData.append("file", file);
+      formData.append("status", status);
+
       const response=await fetch(`${host}/api/staff/updatestaff/${id}`,{
         method:'PUT',
         headers:{
-            'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
           },
-        body:JSON.stringify({firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,photoUrl,status})
+        // body:JSON.stringify({firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,file,status})
+        body:formData
       });
       const json=await response.json();
       let newStaffs=JSON.parse(JSON.stringify(staffs));
@@ -81,7 +117,7 @@ const StaffState=(props)=>{
           newStaffs[index].employmentType=employmentType;
           newStaffs[index].salary=salary;
           newStaffs[index].shift=shift;
-          newStaffs[index].photoUrl=photoUrl;
+          newStaffs[index].file=file;
           newStaffs[index].status=status;
           break;
         }

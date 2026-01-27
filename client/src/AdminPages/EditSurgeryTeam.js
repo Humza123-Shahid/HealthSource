@@ -1,5 +1,7 @@
 
 import React,{useState,useEffect,useContext} from 'react'
+import Select from "react-select";
+
 import surgeryteamContext from '../context/surgeryteamContext'
 import surgeryContext from '../context/surgeryContext'
 import staffContext from '../context/staffContext'
@@ -38,7 +40,14 @@ const EditSurgeryTeam = () => {
   const handleRoleChange = (event) => {
     setRole(event.target.value); 
   };
-   
+   const handleChange = (selectedOption) => {
+        setSelectedSurgeryValue(selectedOption.value)
+        
+  };
+  const handleChange2 = (selectedOption) => {
+    setSelectedStaffValue(selectedOption.value)
+
+  };
   const editSurgeryTeams=async (e)=>{
          e.preventDefault();
         //  const utcArrTime = new Date(arrivalTime2.getTime() - arrivalTime2.getTimezoneOffset() * 60000)
@@ -61,6 +70,27 @@ const EditSurgeryTeam = () => {
     }
     const getSurgeryById = (id) => surgeries.find(d => d._id === id);
     const getStaffById = (id) => staffs.find(d => d._id === id);
+     const options = [
+      { value: "", label: "Select Surgery" }, // empty option
+      ... surgeries.map(sg => ({
+        value: sg._id,
+        label: `${sg.type}`
+      }))
+    ];
+    const options2 = [
+      { value: "", label: "Select Staff" }, // empty option
+      ... staffs.map(st => ({
+        value: st._id,
+        label: `${st.firstName}`
+      }))
+    ];
+    const defaultValue = options.find(d=>d.value==surgery_id);
+    const defaultValue2 = options2.find(d=>d.value==staff_id);
+
+    const filterOption = (option, inputValue) => {
+      // Only filter based on the 'label' property, for example
+      return option.label.toLowerCase().includes(inputValue.toLowerCase());
+    };
     useEffect(() => {
             const fetchData = async () => {
             //const result = await getQuizzes(); // Call context function
@@ -80,24 +110,25 @@ const EditSurgeryTeam = () => {
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
       
       <label htmlFor="mySelect" className="form-label">Select Surgery:</label>
-      <select id="mySelect" className="form-control "  value={selectedSurgeryValue} onChange={handleChangeSurgery}>
+      {/* <select id="mySelect" className="form-control "  value={selectedSurgeryValue} onChange={handleChangeSurgery}>
         <option value="">-Surgery-</option>
         {surgeries.map((row) => (
         <option value={row._id}>{row.type}</option>
         ))}
-      </select>
+      </select> */}
+      <Select id="surgeryId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="surgeryId" placeholder="Select Surgery" />
+
     </div>
     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
       
       <label htmlFor="staffId" className="form-label">Select Staff:</label>
-            <select id="staffId" className="form-control " value={selectedStaffValue} onChange={handleChangeStaff}>
-                {/* <option value="admin">Admin</option>
-                <option value="organizer">Organizer</option> */}
+            {/* <select id="staffId" className="form-control " value={selectedStaffValue} onChange={handleChangeStaff}>
                 <option value="">-Staff-</option>
                   {staffs.map((row) => (
                     <option value={row._id}>{row.firstName}</option>
                 ))}
-        </select>
+        </select> */}
+      <Select id="staffId" options={options2} filterOption={filterOption} defaultValue={defaultValue2} onChange={handleChange2} name="staffId" placeholder="Select Staff" />
     </div>
     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="role" className="form-label">Enter Role:</label>
@@ -106,7 +137,7 @@ const EditSurgeryTeam = () => {
     
     </div>
       
-      <button disabled={selectedSurgeryValue==''||selectedStaffValue==''||role==''} type="submit" className="btn btn-primary">Edit Surgery Team</button>
+      <button disabled={selectedSurgeryValue==''||selectedStaffValue==''||role==''} type="submit" className="btn btn-primary">Update Surgery Team</button>
       </form>
     </div> 
   )

@@ -1,5 +1,7 @@
 
 import React,{useState,useContext,useEffect} from 'react'
+import Select from "react-select";
+
 import doctorContext from '../context/doctorContext'
 import staffContext from '../context/staffContext'
 
@@ -21,6 +23,8 @@ const AddDoctor = () => {
     const [selectedStaffValue, setSelectedStaffValue] = useState('');
     const [signatureUrl, setSignatureUrl] = useState('');
     const [selectedonCallValue, setSelectedOnCallValue] = useState(false);
+    const [file, setFile] = useState(null);
+    
     const handleSignatureUrlChange = (e) => {
     setSignatureUrl(e.target.value); // <-- Get input value here
   };
@@ -42,9 +46,32 @@ const AddDoctor = () => {
   const handleOnCallChange = (e) => {
     setSelectedOnCallValue(e.target.value === 'true'); // <-- Get input value here
   };
+  const handleChange = (selectedOption) => {
+    console.log(selectedOption);
+    if(selectedOption=="" )
+    {
+        setSelectedStaffValue(null)
+    }
+    else
+    {
+      setSelectedStaffValue(selectedOption.value)
+    }
+  }
+   const options = [
+  { value: "", label: "Select Staff" }, // empty option
+  ... staffs.map(st => ({
+    value: st._id,
+    label: `${st.firstName}`
+  }))
+];
+const filterOption = (option, inputValue) => {
+  // Only filter based on the 'label' property, for example
+  return option.label.toLowerCase().includes(inputValue.toLowerCase());
+};
   const addDoctors=async (e)=>{
           e.preventDefault();
-          const success= await addDoctor(selectedStaffValue,specializations,licenseNumber,experienceYears,consultationFee,selectedonCallValue,signatureUrl)
+          console.log(selectedStaffValue);
+          const success= await addDoctor(selectedStaffValue,specializations,licenseNumber,experienceYears,consultationFee,selectedonCallValue,file)
           console.log(success);
           if(success)
           {
@@ -73,16 +100,18 @@ useEffect(() => {
     <div className='mx-0' style={{display:'flex'}}>
     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
         <label htmlFor="mySelect" className="form-label">Select Staff Name:</label>
-        <select id="mySelect" className="form-control "  value={selectedStaffValue} onChange={handleChangeStaff}>
+        {/* <select id="mySelect" className="form-control "  value={selectedStaffValue} onChange={handleChangeStaff}>
             <option value="">-Select-</option>
             {staffs.map((row) => (
             <option value={row._id}>{row.firstName}</option>
             ))}
-        </select>        
+        </select>         */}
+        <Select id="staffId" options={options} filterOption={filterOption} onChange={handleChange} name="staffId" placeholder="Select Staff" />
+
             </div>
      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="specializations" className="form-label">Enter Specializations:</label>
-            <input type="text" className="form-control" id="specializations" value={specializations} name="specializations" onChange={handleSpecializationsChange} />
+            <textarea className="form-control" id="specializations" value={specializations} name="specializations" onChange={handleSpecializationsChange} />
       </div>
     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="lNumber" className="form-label">Enter License Number:</label>
@@ -112,8 +141,12 @@ useEffect(() => {
       </div>
        <div className='mx-0' style={{display:'flex'}}>
      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
-            <label htmlFor="signatureUrl" className="form-label">Enter Signature Url:</label>
-            <input type="text" className="form-control" id="signatureUrl" value={signatureUrl} name="signatureUrl" onChange={handleSignatureUrlChange} />
+            <label htmlFor="signatureUrl" className="form-label">Select Signature:</label>
+            {/* <input type="text" className="form-control" id="signatureUrl" value={signatureUrl} name="signatureUrl" onChange={handleSignatureUrlChange} /> */}
+           <input
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
       </div>
     <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
@@ -124,7 +157,7 @@ useEffect(() => {
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
       </div>
-      <button disabled={specializations.length<1||licenseNumber.length<1||experienceYears.length<1||consultationFee.length<1||signatureUrl.length<1||selectedStaffValue==''} type="submit" className="btn btn-primary" >Add Doctor</button>
+      <button disabled={specializations.length<1||licenseNumber.length<1||experienceYears.length<1||consultationFee.length<1||selectedStaffValue==''} type="submit" className="btn btn-primary" >Add Doctor</button>
       </form>
     </div>
   )

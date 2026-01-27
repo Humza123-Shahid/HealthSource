@@ -1,6 +1,7 @@
 
 import React,{useState,useEffect,useContext} from 'react'
 import { useLocation } from 'react-router-dom';
+import Select from "react-select";
 
 import appointmentContext from '../context/appointmentContext'
 import patientContext from '../context/patientContext'
@@ -64,10 +65,77 @@ const EditConsultation = () => {
       
       
     }
-     
+     const handleChange = (selectedOption) => {
+        if(selectedOption=="" )
+        {
+            setCredentials({...credentials,'patientId':null})
+        }
+        else
+        {
+          setCredentials({...credentials,'patientId':selectedOption.value})
+        }
+  };
+  const handleChange2 = (selectedOption) => {
+        if(selectedOption=="" )
+        {
+            setCredentials({...credentials,'doctorId':null})
+        }
+        else
+        {
+          setCredentials({...credentials,'doctorId':selectedOption.value})
+        }
+  };
+   const handleChange3 = (selectedOption) => {
+        if(selectedOption=="" )
+        {
+            setCredentials({...credentials,'appointmentId':null})
+        }
+        else
+        {
+          setCredentials({...credentials,'appointmentId':selectedOption.value})
+        }
+  };
 const getDoctorById = (id) => doctors.find(d => d._id === id);
 const getPatientById = (id) => patients.find(d => d._id === id);
 const getStaffById = (id) => staffs.find(d => d._id === id);
+const options = [
+  { value: "", label: "Select Patient" }, // empty option
+  ... patients.map(pt => ({
+    value: pt._id,
+    label: `${pt.firstName}`
+  }))
+];
+const options2 = [
+  { value: "", label: "Select Doctor" }, // empty option
+  ... doctors.map(dt => {
+    const staff = getStaffById(dt?.staff);
+    return{
+    value: staff._id,
+    label: `${staff.firstName}`
+}})
+];
+const options3 = [
+  { value: "", label: "Select Appointment" }, // empty option
+  ... appointments.map(at => {
+     const formattedAppointmentDate = new Date(at.appointmentDate).toLocaleString('en-US', {
+             year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+           
+          });
+    return{
+    value: at._id,
+    label: `${formattedAppointmentDate}`
+}})
+];
+const defaultValue = options.find(d=>d.value==patient);
+const defaultValue2 = options2.find(d=>d.value==doctor);
+const defaultValue3 = options3.find(d=>d.value==Appointment);
+
+const filterOption = (option, inputValue) => {
+  // Only filter based on the 'label' property, for example
+  return option.label.toLowerCase().includes(inputValue.toLowerCase());
+};
 
 
   const editConsultations=async (e)=>{
@@ -112,33 +180,29 @@ useEffect(() => {
     <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="patient" className="form-label">Patient</label>
-            <select id="patientId" className="form-control " value={credentials.patientId} name="patientId" onChange={onChange}>
-                {/* <option value="admin">Admin</option>
-                <option value="organizer">Organizer</option> */}
+            {/* <select id="patientId" className="form-control " value={credentials.patientId} name="patientId" onChange={onChange}>
                 <option value="">-Patient-</option>
                     {Array.isArray(patients) && patients.map((row) => (
                     <option value={row._id}>{row.firstName}</option>
                     ))}
-            </select>
+            </select> */}
+            <Select id="patientId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="patientId" placeholder="Select Patient" />
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="doctorId" className="form-label">Doctor</label>
-            <select id="doctorId" className="form-control " value={credentials.doctorId} name="doctorId" onChange={onChange}>
-                {/* <option value="admin">Admin</option>
-                <option value="organizer">Organizer</option> */}
+            {/* <select id="doctorId" className="form-control " value={credentials.doctorId} name="doctorId" onChange={onChange}>
                 <option value="">-Doctor-</option>
                     {Array.isArray(doctors) && doctors.map((row) => {
                         const staff = getStaffById(row?.staff);
                         return(
                     <option value={staff._id}>{staff.firstName}</option>)
                 })}
-            </select>
+            </select> */}
+             <Select id="doctorId" options={options2} filterOption={filterOption} defaultValue={defaultValue2} onChange={handleChange2} name="doctorId" placeholder="Select Doctor" />
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="appointmentId" className="form-label">Appointment</label>
-            <select id="appointmentId" className="form-control " value={credentials.appointmentId} name="appointmentId" onChange={onChange}>
-                {/* <option value="admin">Admin</option>
-                <option value="organizer">Organizer</option> */}
+            {/* <select id="appointmentId" className="form-control " value={credentials.appointmentId} name="appointmentId" onChange={onChange}>
                 <option value="">-Appointment-</option>
                     {Array.isArray(appointments) && appointments.map((row) => {
               const formattedAppointmentDate = new Date(row?.appointmentDate).toLocaleString('en-US', {
@@ -150,7 +214,8 @@ useEffect(() => {
             return(
                     <option value={row._id}>{formattedAppointmentDate}</option>)
                     })}
-            </select>
+            </select> */}
+             <Select id="appointmentId" options={options3} filterOption={filterOption} defaultValue={defaultValue3} onChange={handleChange3} name="appointmentId" placeholder="Select Appointment" />
         </div>
      
        
@@ -159,16 +224,16 @@ useEffect(() => {
 
        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="symptoms" className="form-label">Enter Symptoms:</label>
-            <input type="text" className="form-control" id="symptoms" value={credentials.symptoms} name="symptoms" onChange={onChange} />
+            <textarea className="form-control" id="symptoms" value={credentials.symptoms} name="symptoms" onChange={onChange} />
       </div>
       
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="diagnosis" className="form-label">Enter Diagnosis:</label>
-            <input type="text" className="form-control" id="diagnosis" value={credentials.diagnosis} name="diagnosis" onChange={onChange} />
+            <textarea className="form-control" id="diagnosis" value={credentials.diagnosis} name="diagnosis" onChange={onChange} />
       </div>
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="notes" className="form-label">Enter Notes:</label>
-            <input type="text" className="form-control" id="notes" name="notes" value={credentials.notes} onChange={onChange} />
+            <textarea className="form-control" id="notes" name="notes" value={credentials.notes} onChange={onChange} />
       </div>
     </div>
         
@@ -217,7 +282,7 @@ useEffect(() => {
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
       </div>
-      <button disabled={followUpDate==undefined||credentials.symptoms==""||credentials.diagnosis==""||credentials.notes==""||credentials.bloodPressure==""} type="submit" className="btn btn-primary">Edit Consultation</button>
+      <button disabled={followUpDate==undefined||credentials.symptoms==""||credentials.diagnosis==""||credentials.notes==""||credentials.bloodPressure==""} type="submit" className="btn btn-primary">Update Consultation</button>
       </form>
     </div>
   )

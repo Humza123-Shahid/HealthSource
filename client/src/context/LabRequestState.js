@@ -1,14 +1,14 @@
-import ConsultationContext from "./consultationContext";
+import LabRequestContext from "./labrequestContext";
 import { useState, useEffect  } from "react";
 
-const ConsultationState=(props)=>{
+const LabRequestState=(props)=>{
   const host="http://localhost:5000"
-  const consultationsInitial=[]
+  const labrequestsInitial=[]
 
-    const [consultations,setConsultations]=useState(consultationsInitial)
+    const [labrequests,setLabRequests]=useState(labrequestsInitial)
 
-    const getConsultations=async ()=>{
-      const response=await fetch(`${host}/api/consultation/fetchallconsultations`,{
+    const getLabRequests=async ()=>{
+      const response=await fetch(`${host}/api/labrequest/fetchalllabrequests`,{
         method:'GET',
         headers:{
             'Content-Type':'application/json',
@@ -18,28 +18,28 @@ const ConsultationState=(props)=>{
       })
       const json=await response.json();
       console.log(json);
-      setConsultations(json)
+      setLabRequests(json)
     }
-    const addConsultation=async (patient,doctor,appointment,symptoms,diagnosis,notes,followUpDate,temperature,bloodPressure,pulse,oxygenLevel)=>{
+    const addLabRequest=async (patient,doctor,test,requestDate,priority,status,notes)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
-      const response=await fetch(`${host}/api/consultation/addconsultation`,{
+      const response=await fetch(`${host}/api/labrequest/addlabrequest`,{
         method:'POST',
         headers:{
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
         },
-        body:JSON.stringify({patient,doctor,appointment,symptoms,diagnosis,notes,followUpDate,temperature,bloodPressure,pulse,oxygenLevel})
+        body:JSON.stringify({patient,doctor,test,requestDate,priority,status,notes})
       });
-      const consultation=await response.json();
-      const normalizedData = Array.isArray(consultation.data) ? consultation.data : [consultation.data];
+      const labrequest=await response.json();
+      const normalizedData = Array.isArray(labrequest.data) ? labrequest.data : [labrequest.data];
       //setBuses(buses.concat(bus.savedBus));
-      setConsultations(prevConsultations => [...prevConsultations, normalizedData])
-      // return consultation.success;
-      return consultation;
+      setLabRequests(prevLabRequests => [...prevLabRequests, normalizedData])
+      // return labrequest.success;
+      return labrequest;
 
     }
-    const deleteConsultation= async(id)=>{
-      const response=await fetch(`${host}/api/consultation/deleteconsultation/${id}`,{
+    const deleteLabRequest= async(id)=>{
+      const response=await fetch(`${host}/api/labrequest/deletelabrequest/${id}`,{
         method:'DELETE',
         headers:{
             'Content-Type':'application/json',
@@ -47,52 +47,48 @@ const ConsultationState=(props)=>{
         },
       });
       const json=response.json();
-      const newConsultations=consultations.filter((consultation)=>{return consultation._id!==id})
-      setConsultations(newConsultations)
+      const newLabRequests=labrequests.filter((labrequest)=>{return labrequest._id!==id})
+      setLabRequests(newLabRequests)
     }
-    const editConsultation=async(id,patient,doctor,appointment,symptoms,diagnosis,notes,followUpDate,temperature,bloodPressure,pulse,oxygenLevel)=>{
+    const editLabRequest=async(id,patient,doctor,test,requestDate,priority,status,notes)=>{
       console.log(localStorage.getItem('token'));
-      const response=await fetch(`${host}/api/consultation/updateconsultation/${id}`,{
+      const response=await fetch(`${host}/api/labrequest/updatelabrequest/${id}`,{
         method:'PUT',
         headers:{
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
           },
-        body:JSON.stringify({patient,doctor,appointment,symptoms,diagnosis,notes,followUpDate,temperature,bloodPressure,pulse,oxygenLevel})
+        body:JSON.stringify({patient,doctor,test,requestDate,priority,status,notes})
       });
       const json=await response.json();
-      let newConsultations=JSON.parse(JSON.stringify(consultations));
+      let newLabRequests=JSON.parse(JSON.stringify(labrequests));
       //let newOptions= options.filter(item=>item.mcqId!==id);
       //let newOptions=JSON.parse(JSON.stringify(options));
-      for (let index = 0; index < newConsultations.length; index++) {
-        const element = newConsultations[index];
+      for (let index = 0; index < newLabRequests.length; index++) {
+        const element = newLabRequests[index];
         if(element._id===id)
         {
-          newConsultations[index].patient=patient;
-          newConsultations[index].doctor=doctor;
-          newConsultations[index].appointment=appointment;
-          newConsultations[index].symptoms=symptoms;
-          newConsultations[index].diagnosis=diagnosis;
-          newConsultations[index].notes=notes;
-          newConsultations[index].followUpDate=followUpDate;
-          newConsultations[index].vitals.temperature=temperature;
-          newConsultations[index].vitals.bloodPressure=bloodPressure;
-          newConsultations[index].vitals.pulse=pulse;
-          newConsultations[index].vitals.oxygenLevel=oxygenLevel;
+          newLabRequests[index].patient=patient;
+          newLabRequests[index].doctor=doctor;
+          newLabRequests[index].test=test;
+          newLabRequests[index].requestDate=requestDate;
+          newLabRequests[index].priority=priority;
+          newLabRequests[index].status=status;
+          newLabRequests[index].notes=notes;
           break;
         }
       }
 
       let a=0
-      setConsultations(newConsultations);
+      setLabRequests(newLabRequests);
       return json;
     }
     
     return(
         //<QuestionContext.Provider value={{state,update}}>
-        <ConsultationContext.Provider value={{consultations,addConsultation,deleteConsultation,editConsultation,getConsultations}}>
+        <LabRequestContext.Provider value={{labrequests,addLabRequest,deleteLabRequest,editLabRequest,getLabRequests}}>
             {props.children}
-        </ConsultationContext.Provider>
+        </LabRequestContext.Provider>
     )
 }
-export default ConsultationState;
+export default LabRequestState;

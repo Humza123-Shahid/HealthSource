@@ -19,7 +19,7 @@ chronicConditions: String,
 // disabilities: [String],
 // chronicConditions: [String],
 registrationDate: { type: Date, default: Date.now },
-photoUrl: String,
+photoPath: String,
 status: { type: String, enum: ['active','inactive','deceased'], default: 'active' },
 }, { timestamps: true });
 

@@ -19,22 +19,26 @@ router.get('/fetchallsurgeryteams',fetchuser,async (req,res)=>{
 })
 
 // ROUTE 2: Add a new Question using :POST "/api/questions/addquestion".Login required
-router.post('/addsurgeryteam',fetchuser,[
-    body('role').isLength({ min: 1 })
-],async (req,res)=>{
+router.post('/addsurgeryteam',fetchuser,async (req,res)=>{
     try {
         let success = false;
-        const {surgery,staff,role}=req.body;
+        const {surgery,staffs,roles}=req.body;
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
-        const surgeryteam=new SurgeryTeam({
-            surgery,staff,role
-        })
-        const savedSurgeryTeam=await surgeryteam.save();
+         staffs.forEach(async function(staff,index) {
+                await SurgeryTeam.create(
+                    { surgery:surgery,staff:staff.value,role:roles[index]})
+                
+                
+            });
+        // const surgeryteam=new SurgeryTeam({
+        //     surgery,staff,role
+        // })
+        // const savedSurgeryTeam=await surgeryteam.save();
         success=true;
-        res.json({success,data:savedSurgeryTeam})
+        res.json({success})
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");

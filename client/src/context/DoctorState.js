@@ -20,15 +20,24 @@ const DoctorState=(props)=>{
       console.log(json);
       setDoctors(json)
     }
-    const addDoctor=async (staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signatureUrl)=>{
+    const addDoctor=async (staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,file)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
+       const formData = new FormData();
+      formData.append("staff", staff);
+      formData.append("specializations", specializations);
+      formData.append("licenseNumber", licenseNumber);
+      formData.append("experienceYears", experienceYears);
+      formData.append("consultationFee", consultationFee);
+      formData.append("onCall", onCall);
+      formData.append("file", file);
+
       const response=await fetch(`${host}/api/doctor/adddoctor`,{
         method:'POST',
         headers:{
-            'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
         },
-        body:JSON.stringify({staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signatureUrl})
+        // body:JSON.stringify({staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signatureUrl})
+           body:formData
       });
       const doctors=await response.json();
       const normalizedData = Array.isArray(doctors.savedDoctor ) ? doctors.savedDoctor : [doctors.savedDoctor];
@@ -48,15 +57,24 @@ const DoctorState=(props)=>{
       const newDoctors=doctors.filter((doc)=>{return doc._id!==id})
       setDoctors(newDoctors)
     }
-    const editDoctor=async(id,staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signatureUrl)=>{
+    const editDoctor=async(id,staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,file)=>{
       console.log(localStorage.getItem('token'));
+       const formData = new FormData();
+      formData.append("staff", staff);
+      formData.append("specializations", specializations);
+      formData.append("licenseNumber", licenseNumber);
+      formData.append("experienceYears", experienceYears);
+      formData.append("consultationFee", consultationFee);
+      formData.append("onCall", onCall);
+      formData.append("file", file);
       const response=await fetch(`${host}/api/doctor/updatedoctor/${id}`,{
         method:'PUT',
         headers:{
-            'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
           },
-        body:JSON.stringify({staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signatureUrl})
+        // body:JSON.stringify({staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signatureUrl})
+        body:formData
+
       });
       const json=await response.json();
       let newDoctors=JSON.parse(JSON.stringify(doctors));
@@ -72,7 +90,7 @@ const DoctorState=(props)=>{
           newDoctors[index].experienceYears=experienceYears;
           newDoctors[index].consultationFee=consultationFee;
           newDoctors[index].onCall=onCall;
-          newDoctors[index].signatureUrl=signatureUrl;
+          newDoctors[index].file=file;
           break;
         }
       }

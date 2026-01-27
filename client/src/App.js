@@ -70,6 +70,68 @@ import AdminLabTest from './AdminPages/AdminLabTest';
 import AddLabTest from './AdminPages/AddLabTest';
 import ViewLabTest from './AdminPages/ViewLabTest';
 import EditLabTest from './AdminPages/EditLabTest';
+import LabRequestState from './context/LabRequestState';
+import AdminLabRequest from './AdminPages/AdminLabRequest';
+import AddLabRequest from './AdminPages/AddLabRequest';
+import ViewLabRequest from './AdminPages/ViewLabRequest';
+import EditLabRequest from './AdminPages/EditLabRequest';
+import LabResultState from './context/LabResultState';
+import AdminLabResult from './AdminPages/AdminLabResult';
+import AddLabResult from './AdminPages/AddLabResult';
+import EditLabResult from './AdminPages/EditLabResult';
+import ViewLabResult from './AdminPages/ViewLabResult';
+import PatientMedicalHistoryState from './context/PatientMedicalHistoryState';
+import AdminPatientMedicalHistory from './AdminPages/AdminPatientMedicalHistory';
+import AddPatientMedicalHistory from './AdminPages/AddPatientMedicalHistory';
+import ViewPatientMedicalHistory from './AdminPages/ViewPatientMedicalHistory';
+import EditPatientMedicalHistory from './AdminPages/EditPatientMedicalHistory';
+import MedicineState from './context/MedicineState';
+import AdminMedicine from './AdminPages/AdminMedicine';
+import AddMedicine from './AdminPages/AddMedicine';
+import ViewMedicine from './AdminPages/ViewMedicine';
+import EditMedicine from './AdminPages/EditMedicine';
+import PrescriptionState from './context/PrescriptionState';
+import AddPrescription from './AdminPages/AddPrescription';
+import AdminPrescription from './AdminPages/AdminPrescription';
+import ViewPrescription from './AdminPages/ViewPrescription';
+import EditPrescription from './AdminPages/EditPrescription';
+import WardState from './context/WardState';
+import AdminWard from './AdminPages/AdminWard';
+import AddWard from './AdminPages/AddWard';
+import ViewWard from './AdminPages/ViewWard';
+import EditWard from './AdminPages/EditWard';
+import RoomState from './context/RoomState';
+import AdminRoom from './AdminPages/AdminRoom';
+import AddRoom from './AdminPages/AddRoom';
+import ViewRoom from './AdminPages/ViewRoom';
+import EditRoom from './AdminPages/EditRoom';
+import BedState from './context/BedState';
+import AdminBed from './AdminPages/AdminBed';
+import AddBed from './AdminPages/AddBed';
+import ViewBed from './AdminPages/ViewBed';
+import EditBed from './AdminPages/EditBed';
+import NurseState from './context/NurseState';
+import AdminNurse from './AdminPages/AdminNurse';
+import AddNurse from './AdminPages/AddNurse';
+import ViewNurse from './AdminPages/ViewNurse';
+import EditNurse from './AdminPages/EditNurse';
+import StaffAttendanceState from './context/StaffAttendanceState';
+import AdminStaffAttendance from './AdminPages/AdminStaffAttendance';
+import AddStaffAttendance from './AdminPages/AddStaffAttendance';
+import ViewStaffAttendance from './AdminPages/ViewStaffAttendance';
+import EditStaffAttendance from './AdminPages/EditStaffAttendance';
+import AdmissionState from './context/AdmissionState';
+import AdminAdmission from './AdminPages/AdminAdmission';
+import AddAdmission from './AdminPages/AddAdmission';
+import ViewAdmission from './AdminPages/ViewAdmission';
+import EditAdmission from './AdminPages/EditAdmission';
+import StaffDutyState from './context/StaffDutyState';
+import AdminStaffDuty from './AdminPages/AdminStaffDuty';
+import AddStaffDuty from './AdminPages/AddStaffDuty';
+import ViewStaffDuty from './AdminPages/ViewStaffDuty';
+import EditStaffDuty from './AdminPages/EditStaffDuty';
+import Home from './UserPages/Home';
+import AboutUs from './UserPages/AboutUs';
 
 function App() {
   const [alert,setAlert]=useState(null);
@@ -106,10 +168,22 @@ function App() {
       <SurgeryTeamState>
       <OperationTheatreState>
       <LabTestState>
+      <LabRequestState>
+      <LabResultState>
+      <PatientMedicalHistoryState>
+      <MedicineState>
+      <PrescriptionState>
+      <WardState>
+      <RoomState>
+      <BedState>
+      <NurseState>
+      <StaffAttendanceState>
+      <AdmissionState>
+      <StaffDutyState>
       <UserState>
         {/* <div className="container"  style={{ maxWidth: "100vw",paddingLeft:"0px",paddingRight:"0px" }}> */}
           <Routes>
-          <Route exact path="/" element={<Admin/>} >
+          <Route exact path="/admin" element={<Admin/>} >
               
               <Route path="user" element={<AdminUser/>} />  
               <Route path="user/adduser" element={<AddUser/>} />
@@ -123,6 +197,10 @@ function App() {
               <Route path="patient/addpatient" element={<AddPatient/>} />
               <Route path="patient/getpatient" element={<ViewPatient/>} /> 
               <Route path="patient/editpatient" element={<EditPatient/>} />
+              <Route path="patientmedicalhistory" element={<AdminPatientMedicalHistory/>} /> 
+              <Route path="patientmedicalhistory/addpatientmedicalhistory" element={<AddPatientMedicalHistory/>} />
+              <Route path="patientmedicalhistory/getpatientmedicalhistory" element={<ViewPatientMedicalHistory/>} /> 
+              <Route path="patientmedicalhistory/editpatientmedicalhistory" element={<EditPatientMedicalHistory/>} />
               <Route path="staff" element={<AdminStaff/>} /> 
               <Route path="staff/addstaff" element={<AddStaff/>} />
               <Route path="staff/getstaff" element={<ViewStaff/>} /> 
@@ -131,6 +209,10 @@ function App() {
               <Route path="shift/addshift" element={<AddShift/>} />
               <Route path="shift/getshift" element={<ViewShift/>} /> 
               <Route path="shift/editshift" element={<EditShift/>} />
+              <Route path="staffduty" element={<AdminStaffDuty/>} /> 
+              <Route path="staffduty/addstaffduty" element={<AddStaffDuty/>} />
+              <Route path="staffduty/getstaffduty" element={<ViewStaffDuty/>} /> 
+              <Route path="staffduty/editstaffduty" element={<EditStaffDuty/>} />
               <Route path="doctor" element={<AdminDoctor/>} /> 
               <Route path="doctor/adddoctor" element={<AddDoctor/>} />
               <Route path="doctor/getdoctor" element={<ViewDoctor/>} /> 
@@ -159,12 +241,66 @@ function App() {
               <Route path="labtest/addlabtest" element={<AddLabTest/>} />
               <Route path="labtest/getlabtest" element={<ViewLabTest/>} /> 
               <Route path="labtest/editlabtest" element={<EditLabTest/>} />
+              <Route path="labrequest" element={<AdminLabRequest/>} /> 
+              <Route path="labrequest/addlabrequest" element={<AddLabRequest/>} />
+              <Route path="labrequest/getlabrequest" element={<ViewLabRequest/>} /> 
+              <Route path="labrequest/editlabrequest" element={<EditLabRequest/>} />
+              <Route path="labresult" element={<AdminLabResult/>} /> 
+              <Route path="labresult/addlabresult" element={<AddLabResult/>} />
+              <Route path="labresult/getlabresult" element={<ViewLabResult/>} /> 
+              <Route path="labresult/editlabresult" element={<EditLabResult/>} />
+              <Route path="medicine" element={<AdminMedicine/>} /> 
+              <Route path="medicine/addmedicine" element={<AddMedicine/>} />
+              <Route path="medicine/getmedicine" element={<ViewMedicine/>} /> 
+              <Route path="medicine/editmedicine" element={<EditMedicine/>} />
+              <Route path="prescription" element={<AdminPrescription/>} /> 
+              <Route path="prescription/addprescription" element={<AddPrescription/>} />
+              <Route path="prescription/getprescription" element={<ViewPrescription/>} /> 
+              <Route path="prescription/editprescription" element={<EditPrescription/>} />
+              <Route path="ward" element={<AdminWard/>} /> 
+              <Route path="ward/addward" element={<AddWard/>} />
+              <Route path="ward/getward" element={<ViewWard/>} /> 
+              <Route path="ward/editward" element={<EditWard/>} />
+              <Route path="room" element={<AdminRoom/>} /> 
+              <Route path="room/addroom" element={<AddRoom/>} />
+              <Route path="room/getroom" element={<ViewRoom/>} /> 
+              <Route path="room/editroom" element={<EditRoom/>} />
+              <Route path="bed" element={<AdminBed/>} /> 
+              <Route path="bed/addbed" element={<AddBed/>} />
+              <Route path="bed/getbed" element={<ViewBed/>} /> 
+              <Route path="bed/editbed" element={<EditBed/>} />
+              <Route path="nurse" element={<AdminNurse/>} /> 
+              <Route path="nurse/addnurse" element={<AddNurse/>} />
+              <Route path="nurse/getnurse" element={<ViewNurse/>} /> 
+              <Route path="nurse/editnurse" element={<EditNurse/>} />
+              <Route path="staffattendance" element={<AdminStaffAttendance/>} /> 
+              <Route path="staffattendance/addstaffattendance" element={<AddStaffAttendance/>} />
+              <Route path="staffattendance/getstaffattendance" element={<ViewStaffAttendance/>} /> 
+              <Route path="staffattendance/editstaffattendance" element={<EditStaffAttendance/>} />
+              <Route path="admission" element={<AdminAdmission/>} /> 
+              <Route path="admission/addadmission" element={<AddAdmission/>} />
+              <Route path="admission/getadmission" element={<ViewAdmission/>} /> 
+              <Route path="admission/editadmission" element={<EditAdmission/>} />
 
           </Route>
-                     
+              <Route path="/" element={<Home />}/>
+              <Route path="aboutus" element={<AboutUs />}/> 
+             {/* </Route> */}
           </Routes>
         {/* </div> */}
       </UserState>
+      </StaffDutyState>
+      </AdmissionState>
+      </StaffAttendanceState>
+      </NurseState>
+      </BedState>
+      </RoomState>
+      </WardState>
+      </PrescriptionState>
+      </MedicineState>
+      </PatientMedicalHistoryState>
+      </LabResultState>
+      </LabRequestState>
       </LabTestState>
       </OperationTheatreState>
       </SurgeryTeamState>

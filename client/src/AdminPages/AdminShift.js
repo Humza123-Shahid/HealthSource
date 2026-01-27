@@ -59,7 +59,7 @@ const AdminShift = () => {
       <div className="d-flex justify-content-between" style={{
       margin: '20px 0px 0px 15px',
       padding: '0px'}}>
-        <h3 className="ms-2">Role Data</h3>
+        <h3 className="ms-2">Shift Data</h3>
         <div className="me-5" style={{display: 'flex',
       alignItems: 'center',
       border: '1px solid #ccc',

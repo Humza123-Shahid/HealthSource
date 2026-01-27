@@ -20,7 +20,7 @@ const AppointmentState=(props)=>{
       console.log(json);
       setAppointments(json)
     }
-    const addAppointment=async (patient,doctor,appointmentDate,appointmentTime,bookingType,status,notes)=>{
+    const addAppointment=async (patient,doctor,appointmentDate,bookingType,status,notes)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
       const response=await fetch(`${host}/api/appointment/addappointment`,{
         method:'POST',
@@ -28,7 +28,7 @@ const AppointmentState=(props)=>{
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
         },
-        body:JSON.stringify({patient,doctor,appointmentDate,appointmentTime,bookingType,status,notes})
+        body:JSON.stringify({patient,doctor,appointmentDate,bookingType,status,notes})
       });
       const appointment=await response.json();
       const normalizedData = Array.isArray(appointment.data) ? appointment.data : [appointment.data];
@@ -50,7 +50,7 @@ const AppointmentState=(props)=>{
       const newAppointments=appointments.filter((appointment)=>{return appointment._id!==id})
       setAppointments(newAppointments)
     }
-    const editAppointment=async(id,patient,doctor,appointmentDate,appointmentTime,bookingType,status,notes)=>{
+    const editAppointment=async(id,patient,doctor,appointmentDate,bookingType,status,notes)=>{
       console.log(localStorage.getItem('token'));
       const response=await fetch(`${host}/api/appointment/updateappointment/${id}`,{
         method:'PUT',
@@ -58,7 +58,7 @@ const AppointmentState=(props)=>{
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
           },
-        body:JSON.stringify({patient,doctor,appointmentDate,appointmentTime,bookingType,status,notes})
+        body:JSON.stringify({patient,doctor,appointmentDate,bookingType,status,notes})
       });
       const json=await response.json();
       let newAppointments=JSON.parse(JSON.stringify(appointments));
@@ -71,7 +71,6 @@ const AppointmentState=(props)=>{
           newAppointments[index].patient=patient;
           newAppointments[index].doctor=doctor;
           newAppointments[index].appointmentDate=appointmentDate;
-          newAppointments[index].appointmentTime=appointmentTime;
           newAppointments[index].bookingType=bookingType;
           newAppointments[index].status=status;
           newAppointments[index].notes=notes;

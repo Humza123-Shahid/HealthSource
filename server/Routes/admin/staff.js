@@ -1,6 +1,7 @@
 const express=require('express');
 const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
+const uploadstaff = require("../../middleware/uploadstaff");
 const Staff = require('../../models/Staff');
 const { body, validationResult } = require('express-validator');
 
@@ -18,19 +19,19 @@ router.get('/fetchallstaffs',fetchuser,async (req,res)=>{
     }
 })
 // ROUTE 2: Add a new Question using :POST "/api/questions/addquestion".Login required
-router.post('/addstaff',fetchuser,[
+router.post('/addstaff',fetchuser,uploadstaff.single("file"),[
     body('firstName').isLength({ min: 1 })
 ],async (req,res)=>{
     try {
         let success = false;
-        const {firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,photoUrl,status}=req.body;
+        const {firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,status}=req.body;
         const errors = validationResult(req);
         console.log(errors)
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
         const staff=new Staff({
-           firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,photoUrl,status
+           firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,photoPath: req.file?.path,status
         })
         const savedStaff=await staff.save();
         success=true;
@@ -41,8 +42,8 @@ router.post('/addstaff',fetchuser,[
     }
 })
 // ROUTE 3: Update an existing Question using :PUT "/api/questions/updatequestion".Login required
-router.put('/updatestaff/:id',fetchuser,async (req,res)=>{
-    const {firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,photoUrl,status}=req.body;
+router.put('/updatestaff/:id',fetchuser,uploadstaff.single("file"),async (req,res)=>{
+    const {firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,status}=req.body;
     const newStaff={};
     if(firstName){newStaff.firstName=firstName};
     if(lastName){newStaff.lastName=lastName};
@@ -57,7 +58,10 @@ router.put('/updatestaff/:id',fetchuser,async (req,res)=>{
     if(employmentType){newStaff.employmentType=employmentType};
     if(salary){newStaff.salary=salary};
     if(shift){newStaff.shift=shift};
-    if(photoUrl){newStaff.photoUrl=photoUrl};
+    // if(photoUrl){newStaff.photoUrl=photoUrl};
+    if (req.file) {
+    newStaff.photoPath = req.file.path; // overwrite only if new file
+  }
     if(status){newStaff.status=status};
 
     let staff=await Staff.findById(req.params.id);

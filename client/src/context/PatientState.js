@@ -20,15 +20,33 @@ const PatientState=(props)=>{
       console.log(json);
       setPatients(json)
     }
-    const addPatient=async (firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status)=>{
+    const addPatient=async (firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,file,status)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("fatherName", fatherName);
+      formData.append("gender", gender);
+      formData.append("dateOfBirth", dateOfBirth);
+      formData.append("age", age);
+      formData.append("nationalId", nationalId);
+      formData.append("contact", contact);
+      formData.append("address", address);
+      formData.append("maritalStatus", maritalStatus);
+      formData.append("bloodGroup", bloodGroup);
+      formData.append("disabilities", disabilities);
+      formData.append("chronicConditions", chronicConditions);
+      formData.append("registrationDate", registrationDate);
+      formData.append("file", file);
+      formData.append("status", status);
+
       const response=await fetch(`${host}/api/patient/addpatient`,{
         method:'POST',
         headers:{
-            'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
         },
-        body:JSON.stringify({firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status})
+        // body:JSON.stringify({firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status})
+        body:formData     
       });
       const patient=await response.json();
       const normalizedData = Array.isArray(patient.data) ? patient.data : [patient.data];
@@ -50,15 +68,36 @@ const PatientState=(props)=>{
       const newPatients=patients.filter((patient)=>{return patient._id!==id})
       setPatients(newPatients)
     }
-    const editPatient=async(id,firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status)=>{
+    const editPatient=async(id,firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,file,status)=>{
       console.log(localStorage.getItem('token'));
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("fatherName", fatherName);
+      formData.append("gender", gender);
+      formData.append("dateOfBirth", dateOfBirth);
+      formData.append("age", age);
+      formData.append("nationalId", nationalId);
+      formData.append("contact", contact);
+      formData.append("address", address);
+      formData.append("maritalStatus", maritalStatus);
+      formData.append("bloodGroup", bloodGroup);
+      formData.append("disabilities", disabilities);
+      formData.append("chronicConditions", chronicConditions);
+      formData.append("registrationDate", registrationDate);
+      if (file) {
+      formData.append('file', file);
+    }
+    console.log(file);
+      // formData.append("file", file);
+      formData.append("status", status);
+
       const response=await fetch(`${host}/api/patient/updatepatient/${id}`,{
         method:'PUT',
         headers:{
-            'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
           },
-        body:JSON.stringify({firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status})
+        body:formData
       });
       const json=await response.json();
       let newPatients=JSON.parse(JSON.stringify(patients));
@@ -82,7 +121,7 @@ const PatientState=(props)=>{
           newPatients[index].disabilities=disabilities;
           newPatients[index].chronicConditions=chronicConditions;
           newPatients[index].registrationDate=registrationDate;
-          newPatients[index].photoUrl=photoUrl;
+          newPatients[index].file=file;
           newPatients[index].status=status;
           break;
         }

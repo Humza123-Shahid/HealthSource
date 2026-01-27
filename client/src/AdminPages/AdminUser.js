@@ -141,7 +141,7 @@ const getPatientById = (id) => patients.find(d => d._id === id);
                   handleView(staff?.firstName,patient?.firstName,row.username,role?.name,index)}>
                 View
               </button>
-              <button onClick={() => handleEdit(row._id,staff?.firstName,patient?.firstName,row.username,row.password,role?.name)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
+              <button onClick={() => handleEdit(row._id,staff?._id,patient?._id,row.username,row.password,role?._id)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
                 Edit
               </button>
               <button onClick={() => handleDelete(row._id)} style={{ color:"white",backgroundColor:"red" }}>

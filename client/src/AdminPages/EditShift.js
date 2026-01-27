@@ -31,20 +31,24 @@ const EditShift = () => {
   };
  const handleStartTimeChange = (e) => {
     setStartTime(e.target.value); // <-- Get input value here
-    const newTime =`1970-01-01T${e.target.value}:00`
-    setStartTime2(newTime);
+    // const newTime =`1970-01-01T${e.target.value}:00`
+    // setStartTime2(newTime);
   };
    const handleEndTimeChange = (e) => {
     setEndTime(e.target.value); // <-- Get input value here
-    const newTime =`1970-01-01T${e.target.value}:00`
-    setEndTime2(newTime);
+    // const newTime =`1970-01-01T${e.target.value}:00`
+    // setEndTime2(newTime);
   };
     const handleBreakMinutesChange = (event) => {
     setBreakMinutes(event.target.value); 
   };
   const editShifts=(e)=>{
           e.preventDefault();
-          const success=editShift(Shift._id,name,startTime2,endTime2,breakMinutes)
+          const newStartTime =`1970-01-01T${startTime}:00`
+          
+          const newEndTime =`1970-01-01T${endTime}:00`
+          console.log(startTime2,endTime2)
+          const success=editShift(Shift._id,name,newStartTime,newEndTime,breakMinutes)
           if(success)
           {
             setShowToast(true);
@@ -55,7 +59,6 @@ const EditShift = () => {
             },1500)
           }
     }
-
   return (
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
@@ -89,7 +92,7 @@ const EditShift = () => {
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
       </div>
-      <button disabled={startTime.length<1||endTime.length<1||name.length<1} type="submit" className="btn btn-primary" >Edit Shift</button>
+      <button disabled={startTime.length<1||endTime.length<1||name.length<1} type="submit" className="btn btn-primary" >Update Shift</button>
       </form>
     </div>
   )

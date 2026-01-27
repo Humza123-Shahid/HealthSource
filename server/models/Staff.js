@@ -16,7 +16,7 @@ employmentType: { type: String, enum: ['full-time','part-time','contract'] },
 // department: { type: Types.ObjectId, ref: 'Department' },
 salary: Number,
 shift: { type: mongoose.Schema.Types.ObjectId, ref: 'StaffShift' },
-photoUrl: String,
+photoPath: String,
 status: { type: String, enum: ['active','on-leave','resigned','terminated'], default: 'active' },
 }, { timestamps: true });
 

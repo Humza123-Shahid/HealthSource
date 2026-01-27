@@ -53,14 +53,19 @@ const EditOperationTheatre = () => {
     </div>
     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
         <label htmlFor="equipment" className="form-label">Equipment:</label>
-        <input type="text" className="form-control" id="equipment" value={equipment} name="equipment" onChange={handleEquipmentChange} />
+        <textarea className="form-control" id="equipment" value={equipment} name="equipment" onChange={handleEquipmentChange} />
     </div>
     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
         <label htmlFor="status" className="form-label">Status:</label>
-        <input type="text" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} />
+        {/* <input type="text" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} /> */}
+        <select id="mySelect" className="form-control " value={status} onChange={handleStatusChange}>
+            <option value="available">Available</option>
+            <option value="maintenance">Maintenance</option>
+            <option value="unavailable">Unavailable</option>
+        </select>
     </div>
       </div>
-      <button disabled={name.length<1||equipment.length<1||status.length<1} type="submit" className="btn btn-primary" >Edit Operation Theatre</button>
+      <button disabled={name.length<1||equipment.length<1||status.length<1} type="submit" className="btn btn-primary" >Update Operation Theatre</button>
       </form>
     </div>
   )

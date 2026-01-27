@@ -19,19 +19,17 @@ router.get('/fetchallappointments',fetchuser,async (req,res)=>{
     }
 })
 // ROUTE 2: Add a new Question using :POST "/api/questions/addquestion".Login required
-router.post('/addappointment',fetchuser,[
-    body('appointmentTime').isLength({ min: 1 })
-],async (req,res)=>{
+router.post('/addappointment',fetchuser,async (req,res)=>{
     try {
         let success = false;
-        const {patient,doctor,appointmentDate,appointmentTime,bookingType,status,notes}=req.body;
+        const {patient,doctor,appointmentDate,bookingType,status,notes}=req.body;
         const errors = validationResult(req);
         console.log(errors)
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
         const appointment=new Appointment({
-            patient,doctor,appointmentDate,appointmentTime,bookingType,status,notes
+            patient,doctor,appointmentDate,bookingType,status,notes
         })
         const savedAppointment=await appointment.save();
         success=true;
@@ -43,13 +41,12 @@ router.post('/addappointment',fetchuser,[
 })
 // ROUTE 3: Update an existing Question using :PUT "/api/questions/updatequestion".Login required
 router.put('/updateappointment/:id',fetchuser,async (req,res)=>{
-    const {patient,doctor,appointmentDate,appointmentTime,bookingType,status,notes}=req.body;
+    const {patient,doctor,appointmentDate,bookingType,status,notes}=req.body;
    
     const newAppointment={};
     if(patient){newAppointment.patient=patient};
     if(doctor){newAppointment.doctor=doctor};
     if(appointmentDate){newAppointment.appointmentDate=appointmentDate};
-    if(appointmentTime){newAppointment.appointmentTime=appointmentTime};
     if(bookingType){newAppointment.bookingType=bookingType};
     if(status){newAppointment.status=status};
     if(notes){newAppointment.notes=notes};

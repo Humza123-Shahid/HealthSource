@@ -10,7 +10,10 @@ const ViewAppointment = () => {
      const formattedAppointmentDate = new Date(Appointment.appointmentDate).toLocaleString('en-US', {
              year: 'numeric',
             month: '2-digit',
-            day: '2-digit'
+            day: '2-digit',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true // Ensures AM/PM
           });
   return (
     <div>
@@ -22,7 +25,6 @@ const ViewAppointment = () => {
             <th>Patient</th>
             <th>Doctor</th>
             <th>Appointment Date</th>
-            <th>Appointment Time</th>
             <th>Booking Type</th>
             <th>Status</th>
             <th>Notes</th>
@@ -35,7 +37,6 @@ const ViewAppointment = () => {
               <td>{patientName}</td>
               <td>{doctorName}</td>
               <td>{formattedAppointmentDate}</td>
-              <td>{Appointment.appointmentTime}</td>
               <td>{Appointment.bookingType}</td>
               <td>{Appointment.status}</td>
               <td>{Appointment.notes}</td>

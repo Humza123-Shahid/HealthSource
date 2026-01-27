@@ -20,7 +20,7 @@ const SurgeryState=(props)=>{
       setSurgeries(json)
       return json;
     }
-    const addSurgery=async (patient,primarySurgeon,type,scheduledDate,startTime,endTime,operationTheatre,notes)=>{
+    const addSurgery=async (patient,primarySurgeon,type,scheduledDate,startTime,endTime,operationTheatre,notes,staffs,roles)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
       const response=await fetch(`${host}/api/surgery/addsurgery`,{
         method:'POST',
@@ -28,7 +28,7 @@ const SurgeryState=(props)=>{
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
         },
-        body:JSON.stringify({patient,primarySurgeon,type,scheduledDate,startTime,endTime,operationTheatre,notes})
+        body:JSON.stringify({patient,primarySurgeon,type,scheduledDate,startTime,endTime,operationTheatre,notes,staffs,roles})
       });
       const surgery=await response.json();
       const normalizedData = Array.isArray(surgery.data) ? surgery.data : [surgery.data];

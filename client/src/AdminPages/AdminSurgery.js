@@ -17,7 +17,7 @@
       const context3=useContext(doctorContext);
       const {doctors,getDoctors}=context3;
       const context4=useContext(operationtheatreContext);
-      const {operationTheatres,getOperationTheatres}=context4;
+      const {operationtheatres,getOperationTheatres}=context4;
       const context5=useContext(staffContext);
         const {staffs,getStaffs}=context5;
       const navigate = useNavigate();
@@ -45,10 +45,10 @@
       navigate('getsurgery', { state: { surgery:dataitem,patient:patientName,doctor:doctorName,operation:operationName,idx:index} });
        
     };
-    const handleEdit = (id,patient_id,doctor_id,operation_id) => {
+    const handleEdit = (id,doctor_id,operation_id) => {
       const dataitem=surgeries.find(da => da._id ==id)
      
-      navigate('editsurgery', { state: { surgery:dataitem,patientId:patient_id,doctorId:doctor_id,operationId:operation_id} });
+      navigate('editsurgery', { state: { surgery:dataitem,doctorId:doctor_id,operationId:operation_id} });
     };
     const handleDelete = (id) => {
        const confirmed = window.confirm("Are you sure you want to delete this?");
@@ -62,7 +62,7 @@
     const getPatientById = (id) => patients.find(d => d._id === id);
     const getDoctorById = (id) => doctors.find(d => d._id === id);
     const getStaffById = (id) => staffs.find(d => d._id === id);
-    const getOperationTheatresById = (id) => operationTheatres.find(d => d._id === id);
+    const getOperationTheatresById = (id) => operationtheatres.find(d => d._id === id);
 
     useEffect(() => {
           const fetchData = async () => {
@@ -107,7 +107,7 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Patient</th>
+              <th>Patient NationalId/Name</th>
               <th>Primary Surgeon</th>
               <th>Type</th>
               <th>Scheduled Date</th>
@@ -118,10 +118,12 @@
           </thead>
           <tbody>
             {filteredData.map((row,index) => {
-            const patient = getPatientById(row.patient);
+            // const patient = getPatientById(row.patient);
             // const doctor = getDoctorById(row.primarySurgeon);
             const staff = getStaffById(row.primarySurgeon);
-            const operation = getOperationTheatres(row?.operationTheatre);
+            const operation = getOperationTheatresById(row?.operationTheatre);
+            const patient = getPatientById(row?.patient);
+
                const formattedStartTime = new Date(row.startTime).toLocaleString('en-US', {
                   hour: 'numeric',
                   minute: 'numeric',
@@ -140,7 +142,7 @@
               return(
               <tr key={row._id}>
                 <td>{index+1}</td>
-                <td>{patient?.firstName}</td>
+                <td>{patient?.nationalId}-{patient?.firstName}</td>
                 <td>{staff?.firstName}</td>
                 <td>{row?.type}</td>
                 <td>{formattedScheduledDate}</td>
@@ -148,10 +150,10 @@
                 <td>{formattedEndTime}</td>
                 <td style={{width:"30%"}}>
                   <button style={{ marginRight: "8px", color: "white",backgroundColor:"blue"}} onClick={()=>
-                    handleView(row._id,patient?.firstName,staff?.firstName,operation.name,index+1)}>
+                    handleView(row._id,patient,staff?.firstName,operation.name,index+1)}>
                   View
                 </button>
-                <button onClick={() => handleEdit(row._id,row.patient,staff._id,row.operationTheatres)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
+                <button onClick={() => handleEdit(row._id,staff._id,row.operationTheatre)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
                   Edit
                 </button>
                 <button onClick={() => handleDelete(row._id)} style={{ color:"white",backgroundColor:"red" }}>

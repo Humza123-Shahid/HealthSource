@@ -1,6 +1,7 @@
 const express=require('express');
 const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
+const uploadpatient = require("../../middleware/uploadpatient");
 const Patient = require('../../models/Patient');
 const { body, validationResult } = require('express-validator');
 
@@ -18,19 +19,20 @@ router.get('/fetchallpatients',fetchuser,async (req,res)=>{
     }
 })
 // ROUTE 2: Add a new Question using :POST "/api/questions/addquestion".Login required
-router.post('/addpatient',fetchuser,[
+router.post('/addpatient',fetchuser,uploadpatient.single("file"),[
     body('firstName').isLength({ min: 1 })
 ],async (req,res)=>{
     try {
         let success = false;
-        const {firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status}=req.body;
+        // const {firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status}=req.body;
+        const {firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,status}=req.body;        
         const errors = validationResult(req);
-        console.log(errors)
+        console.log(req.file?.path)
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
         const patient=new Patient({
-           firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status
+           firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoPath: req.file?.path,status
         })
         const savedPatient=await patient.save();
         success=true;
@@ -41,9 +43,10 @@ router.post('/addpatient',fetchuser,[
     }
 })
 // ROUTE 3: Update an existing Question using :PUT "/api/questions/updatequestion".Login required
-router.put('/updatepatient/:id',fetchuser,async (req,res)=>{
-    const {firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status}=req.body;
+router.put('/updatepatient/:id',fetchuser,uploadpatient.single('file'),async (req,res)=>{
+    const {firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,status}=req.body;
     const newPatient={};
+    console.log(req.file)
     if(firstName){newPatient.firstName=firstName};
     if(lastName){newPatient.lastName=lastName};
     if(fatherName){newPatient.fatherName=fatherName};
@@ -59,7 +62,10 @@ router.put('/updatepatient/:id',fetchuser,async (req,res)=>{
     if(disabilities){newPatient.disabilities=disabilities};
     if(chronicConditions){newPatient.chronicConditions=chronicConditions};
     if(registrationDate){newPatient.registrationDate=registrationDate};
-    if(photoUrl){newPatient.photoUrl=photoUrl};
+    if (req.file) {
+    newPatient.photoPath = req.file.path; // overwrite only if new file
+  }
+    // if(photoUrl){newPatient.photoUrl=photoUrl};
     if(status){newPatient.status=status};
 
     let patient=await Patient.findById(req.params.id);

@@ -85,7 +85,7 @@ const EditLabTest = () => {
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
       </div>
-      <button disabled={name.length<1||category.length<1||normalRange.length<1||code.length<1} type="submit" className="btn btn-primary" >Edit Lab Test</button>
+      <button disabled={name.length<1||category.length<1||normalRange.length<1||code.length<1} type="submit" className="btn btn-primary" >Update Lab Test</button>
       </form>
     </div>
   )

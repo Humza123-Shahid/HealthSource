@@ -1,0 +1,79 @@
+.swiper-pagination {
+    display: flex;
+     align-items: center;
+  /* justify-content: center; */
+  bottom: 0px !important;
+  left: 375px !important;
+  gap:1px !important;
+  height:40px;
+}
+
+/* Default bullet style */
+.swiper-pagination-bullet {
+  width: 20px;
+  height: 20px;
+  background: #EFF5F9;
+  opacity: 1;
+  margin: 0 4px;
+  border-radius: 50%;
+  transition: background .3s ease;
+  border: 2px solid var(--primary);
+}
+
+/* Active bullet */
+.swiper-pagination-bullet-active {
+    background: #13C5DD;
+
+  /* background: #fff; Like Owl */
+}
+.swiper-pagination-bullet-active {
+  /* transform: scale(2); */
+   width: 40px;
+    height: 40px;
+}
+
+ .custom-prev,
+.custom-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: #13C5DD ;
+  color: white;
+  border: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.custom-prev2,
+.custom-next2 {
+  position: absolute;
+  top: 96%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: white ;
+  color: #13C5DD;
+  border: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.custom-prev {
+  left: 50px;
+}
+
+.custom-next {
+  right: 50px;
+}
+.custom-prev2 {
+  left: 45%;
+}
+
+.custom-next2 {
+  right: 46%;
+}
+ 
+ 

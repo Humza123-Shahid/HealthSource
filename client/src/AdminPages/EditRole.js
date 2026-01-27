@@ -67,7 +67,7 @@ const EditRole = () => {
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
       </div>
-      <button disabled={name.length<1 || permissions.length<1} type="submit" className="btn btn-primary" >Edit Role</button>
+      <button disabled={name.length<1 || permissions.length<1} type="submit" className="btn btn-primary" >Update Role</button>
       </form>
     </div>
   )
