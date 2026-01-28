@@ -24,6 +24,7 @@ app.use('/labresultuploads', express.static(path.join(__dirname, 'labresultuploa
 
 // // Increase the limit for URL-encoded data to 10MB
 // app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use('/api/auth',require('./Routes/common/auth'))
 app.use('/api/role',require('./Routes/admin/role'))
 app.use('/api/staff',require('./Routes/admin/staff'))
 app.use('/api/patient',require('./Routes/admin/patient'))

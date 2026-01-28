@@ -1,28 +1,16 @@
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination} from "swiper/modules";
-import { Navigation } from "swiper/modules";
-import { useRef } from "react";
-import 'swiper/css';
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import '../styles/swiperPagination.css';
-const AboutUs = () => {
-    const prevRef = useRef(null);
-      const nextRef = useRef(null);
-      const prevRef2 = useRef(null);
-      const nextRef2 = useRef(null);
-      const scrollToTop = () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth' // Adds a smooth scrolling animation
-      });
-    };
-      const handleLogout =()=>{
-        localStorage.removeItem('token');
-      }
+const Search = () => {
+    const scrollToTop = () => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Adds a smooth scrolling animation
+          });
+        };
+          const handleLogout =()=>{
+            localStorage.removeItem('token');
+          }
   return (
     <div>
       <div class="container-fluid py-2 border-bottom d-none d-lg-block">
@@ -73,14 +61,12 @@ const AboutUs = () => {
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        {/* <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link active">About</a> */}
-                        <Link to="/" class="nav-item nav-link">Home</Link>
-                        <Link to="/aboutus" class="nav-item nav-link active">About</Link>
-                        <Link to="/service" class="nav-item nav-link">Service</Link>
+                       <Link to="/" class="nav-item nav-link">Home</Link>
+                        <Link to="/aboutus" class="nav-item nav-link">About</Link>
+                        <Link to="/service" class="nav-item nav-link ">Service</Link>
                        {/* <a href="price.html" class="nav-item nav-link">Pricing</a> */}
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">More</a>
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">More</a>
                             <div class="dropdown-menu m-0">
                                 {/* <a href="blog.html" class="dropdown-item">Blog Grid</a>
                                 <a href="detail.html" class="dropdown-item">Blog Detail</a> */}
@@ -96,7 +82,6 @@ const AboutUs = () => {
                         <li><Link to="/login" className="nav-item nav-link"> Login</Link></li>
                         :localStorage.getItem('utype')=="user"?<li><Link to="/login" className="nav-item nav-link" onClick={handleLogout}>Logout</Link></li>
                         :<li><Link to="/admin" className="nav-item nav-link">Dashboard</Link></li>}
-                        {/* <a href="contact.html" class="nav-item nav-link">Contact</a> */}
                     </div>
                 </div>
             </nav>
@@ -104,64 +89,13 @@ const AboutUs = () => {
     </div>
 
 
-    <div class="container-fluid py-5">
+    <div class="container-fluid pt-5">
         <div class="container">
-            <div class="row gx-5">
-                <div class="col-lg-5 mb-5 mb-lg-0" style={{'min-height': '500px'}}>
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100 rounded" src="img/about.jpg"
-                            style={{'object-fit': 'cover'}}/>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="mb-4">
-                        <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">About Us</h5>
-                        <h1 class="display-4">Best Medical Care For Yourself and Your Family</h1>
-                    </div>
-                    <p>Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor
-                        voluptua sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum
-                        et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur
-                        takimata eirmod, dolores takimata consetetur invidunt magna dolores aliquyam dolores dolore.
-                        Amet erat amet et magna</p>
-                    <div class="row g-3 pt-3">
-                        <div class="col-sm-3 col-6">
-                            <div class="bg-light text-center rounded-circle py-4">
-                                <i class="fa fa-3x fa-user-md text-primary mb-3"></i>
-                                <h6 class="mb-0">Qualified<small class="d-block text-primary">Doctors</small></h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-6">
-                            <div class="bg-light text-center rounded-circle py-4">
-                                <i class="fa fa-3x fa-procedures text-primary mb-3"></i>
-                                <h6 class="mb-0">Emergency<small class="d-block text-primary">Services</small></h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-6">
-                            <div class="bg-light text-center rounded-circle py-4">
-                                <i class="fa fa-3x fa-microscope text-primary mb-3"></i>
-                                <h6 class="mb-0">Accurate<small class="d-block text-primary">Testing</small></h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-6">
-                            <div class="bg-light text-center rounded-circle py-4">
-                                <i class="fa fa-3x fa-ambulance text-primary mb-3"></i>
-                                <h6 class="mb-0">Free<small class="d-block text-primary">Ambulance</small></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container-fluid bg-primary my-5 py-5">
-        <div class="container py-5">
             <div class="text-center mx-auto mb-5" style={{'max-width': '500px'}}>
-                <h5 class="d-inline-block text-white text-uppercase border-bottom border-5">Find A Doctor</h5>
+                <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Find A Doctor</h5>
                 <h1 class="display-4 mb-4">Find A Healthcare Professionals</h1>
-                <h5 class="text-white fw-normal">Duo ipsum erat stet dolor sea ut nonumy tempor. Tempor duo lorem eos
-                    sit sed ipsum takimata ipsum sit est. Ipsum ea voluptua ipsum sit justo</h5>
+                <h5 class="fw-normal">Duo ipsum erat stet dolor sea ut nonumy tempor. Tempor duo lorem eos sit sed ipsum
+                    takimata ipsum sit est. Ipsum ea voluptua ipsum sit justo</h5>
             </div>
             <div class="mx-auto" style={{'width': '100%', 'max-width': '600px'}}>
                 <div class="input-group">
@@ -181,118 +115,149 @@ const AboutUs = () => {
 
     <div class="container-fluid py-5">
         <div class="container">
-            <div class="text-center mx-auto mb-5" style={{'max-width': '500px'}}>
-                <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Our Doctors</h5>
-                <h1 class="display-4">Qualified Healthcare Professionals</h1>
+            <div class="row g-5">
+                <div class="col-lg-6 team-item">
+                    <div class="row g-0 bg-light rounded overflow-hidden">
+                        <div class="col-12 col-sm-5 h-100">
+                            <img class="img-fluid h-100" src="img/team-1.jpg" style={{'object-fit': 'cover'}}/>
+                        </div>
+                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
+                            <div class="mt-auto p-4">
+                                <h3>Doctor Name</h3>
+                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
+                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
+                                    dolor</p>
+                            </div>
+                            <div class="d-flex mt-auto border-top p-4">
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-twitter"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 team-item">
+                    <div class="row g-0 bg-light rounded overflow-hidden">
+                        <div class="col-12 col-sm-5 h-100">
+                            <img class="img-fluid h-100" src="img/team-2.jpg" style={{'object-fit': 'cover'}}/>
+                        </div>
+                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
+                            <div class="mt-auto p-4">
+                                <h3>Doctor Name</h3>
+                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
+                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
+                                    dolor</p>
+                            </div>
+                            <div class="d-flex mt-auto border-top p-4">
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-twitter"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 team-item">
+                    <div class="row g-0 bg-light rounded overflow-hidden">
+                        <div class="col-12 col-sm-5 h-100">
+                            <img class="img-fluid h-100" src="img/team-3.jpg" style={{'object-fit': 'cover'}}/>
+                        </div>
+                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
+                            <div class="mt-auto p-4">
+                                <h3>Doctor Name</h3>
+                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
+                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
+                                    dolor</p>
+                            </div>
+                            <div class="d-flex mt-auto border-top p-4">
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-twitter"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 team-item">
+                    <div class="row g-0 bg-light rounded overflow-hidden">
+                        <div class="col-12 col-sm-5 h-100">
+                            <img class="img-fluid h-100" src="img/team-1.jpg" style={{'object-fit': 'cover'}}/>
+                        </div>
+                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
+                            <div class="mt-auto p-4">
+                                <h3>Doctor Name</h3>
+                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
+                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
+                                    dolor</p>
+                            </div>
+                            <div class="d-flex mt-auto border-top p-4">
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-twitter"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 team-item">
+                    <div class="row g-0 bg-light rounded overflow-hidden">
+                        <div class="col-12 col-sm-5 h-100">
+                            <img class="img-fluid h-100" src="img/team-2.jpg" style={{'object-fit': 'cover'}}/>
+                        </div>
+                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
+                            <div class="mt-auto p-4">
+                                <h3>Doctor Name</h3>
+                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
+                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
+                                    dolor</p>
+                            </div>
+                            <div class="d-flex mt-auto border-top p-4">
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-twitter"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 team-item">
+                    <div class="row g-0 bg-light rounded overflow-hidden">
+                        <div class="col-12 col-sm-5 h-100">
+                            <img class="img-fluid h-100" src="img/team-3.jpg" style={{'object-fit': 'cover'}}/>
+                        </div>
+                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
+                            <div class="mt-auto p-4">
+                                <h3>Doctor Name</h3>
+                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
+                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
+                                    dolor</p>
+                            </div>
+                            <div class="d-flex mt-auto border-top p-4">
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-twitter"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary py-3 px-5">Load More</button>
+                </div>
             </div>
-            <Swiper loop={true}  autoplay={{
-
-							delay: 4000,
-							disableOnInteraction: false,
-						}}
-                        
-                        modules={[Navigation,Autoplay, Pagination]}
-                        //navigation
-                        slidesPerView={2}
-                        spaceBetween={45}
-                        speed={1000}
-                        onBeforeInit={(swiper) => {
-                            swiper.params.navigation.prevEl = prevRef.current;
-                            swiper.params.navigation.nextEl = nextRef.current;
-                            }}
-                            navigation={{
-                            prevEl: prevRef.current,
-                            nextEl: nextRef.current,
-                        }}
-                         
-						 //modules={[Autoplay, Pagination]}
-						//pagination={{ clickable: true }}
-                        
-						>
-                <SwiperSlide>
-                <div class="team-item">
-                    <div class="row g-0 bg-light rounded overflow-hidden" style={{'height':'350px'}}>
-                        <div class="col-12 col-sm-5 h-100">
-                            <img class="img-fluid h-100" src="img/team-1.jpg" style={{'objectFit': 'cover'}}/>
-                        </div>
-                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
-                            <div class="mt-auto p-4">
-                                <h3>Doctor Name</h3>
-                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
-                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
-                                    dolor</p>
-                            </div>
-                            <div class="d-flex mt-auto border-top p-4">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
-                                        class="fab fa-twitter"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
-                                        class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
-                                        class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </SwiperSlide>
-                <SwiperSlide>
-
-                <div class="team-item">
-                    <div class="row g-0 bg-light rounded overflow-hidden" style={{'height':'350px'}}>
-                        <div class="col-12 col-sm-5 h-100">
-                            <img class="img-fluid h-100" src="img/team-2.jpg" style={{'objectFit': 'cover'}}/>
-                        </div>
-                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
-                            <div class="mt-auto p-4">
-                                <h3>Doctor Name</h3>
-                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
-                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
-                                    dolor</p>
-                            </div>
-                            <div class="d-flex mt-auto border-top p-4">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
-                                        class="fab fa-twitter"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
-                                        class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
-                                        class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </SwiperSlide>
-                <SwiperSlide>
-
-                <div class="team-item">
-                    <div class="row g-0 bg-light rounded overflow-hidden" style={{'height':'350px'}}>
-                        <div class="col-12 col-sm-5 h-100">
-                            <img class="img-fluid h-100" src="img/team-3.jpg" style={{'objectFit': 'cover'}}/>
-                        </div>
-                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
-                            <div class="mt-auto p-4">
-                                <h3>Doctor Name</h3>
-                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
-                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
-                                    dolor</p>
-                            </div>
-                            <div class="d-flex mt-auto border-top p-4">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
-                                        class="fab fa-twitter"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
-                                        class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
-                                        class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </SwiperSlide>
-                <button ref={prevRef} className="custom-prev">
-                    <i className="bi bi-arrow-left fs-4"/>
-                    </button>
-                    <button ref={nextRef} className="custom-next">
-                    <i className="bi bi-arrow-right fs-4"/>
-                </button>
-            </Swiper>
         </div>
     </div>
 
@@ -372,9 +337,12 @@ const AboutUs = () => {
             </div>
         </div>
     </div>
+
+
     <a class="btn btn-lg btn-primary btn-lg-square back-to-top" onClick={scrollToTop}><i class="bi bi-arrow-up"></i></a>
+
     </div>
   )
 }
 
-export default AboutUs
+export default Search

@@ -29,12 +29,12 @@ const Sidebar = () => {
   // <div className="bg-dark text-white p-3 vh-100" style={{ width: '250px',backgroundColor: '#2c3e50',
     <div className="bg-dark text-white p-3" style={{ width: '255px',backgroundColor: '#2c3e50',
         color: 'white',
-        // height: '100vh',
-        height: '100%',
+        // height: '100%',
+        height: '100vh',
         position: 'sticky',
         top: 0,
         padding: '1rem',
-        // overflow: 'hidden'
+        //overflow: 'hidden'
         overflowY: 'auto'
         }}>
     <h4 className="mb-4" style={{'color':'white'}}>Admin Dashboard</h4>

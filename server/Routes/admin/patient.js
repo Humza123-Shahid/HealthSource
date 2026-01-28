@@ -7,7 +7,7 @@ const { body, validationResult } = require('express-validator');
 
 
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
-router.get('/fetchallpatients',fetchuser,async (req,res)=>{
+router.get('/fetchallpatients',async (req,res)=>{
     try {
     
     const patients=await Patient.find({});
@@ -19,7 +19,7 @@ router.get('/fetchallpatients',fetchuser,async (req,res)=>{
     }
 })
 // ROUTE 2: Add a new Question using :POST "/api/questions/addquestion".Login required
-router.post('/addpatient',fetchuser,uploadpatient.single("file"),[
+router.post('/addpatient',uploadpatient.single("file"),[
     body('firstName').isLength({ min: 1 })
 ],async (req,res)=>{
     try {

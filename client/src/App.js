@@ -132,6 +132,13 @@ import ViewStaffDuty from './AdminPages/ViewStaffDuty';
 import EditStaffDuty from './AdminPages/EditStaffDuty';
 import Home from './UserPages/Home';
 import AboutUs from './UserPages/AboutUs';
+import Service from './UserPages/Service';
+import Team from './UserPages/Team';
+import Contact from './UserPages/Contact';
+import Appointment from './UserPages/Appointment';
+import Search from './UserPages/Search';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 function App() {
   const [alert,setAlert]=useState(null);
@@ -283,8 +290,17 @@ function App() {
               <Route path="admission/editadmission" element={<EditAdmission/>} />
 
           </Route>
+              <Route path="/login" element={<Login/>} />
+              <Route path="/admin/login" element={<Login/>} />
+              <Route path="/signup" element={<SignUp/>} />
               <Route path="/" element={<Home />}/>
               <Route path="aboutus" element={<AboutUs />}/> 
+              <Route path="service" element={<Service />}/> 
+              <Route path="team" element={<Team />}/> 
+              <Route path="contact" element={<Contact />}/> 
+              <Route path="appointment" element={<Appointment />}/> 
+              <Route path="search" element={<Search />}/> 
+
              {/* </Route> */}
           </Routes>
         {/* </div> */}

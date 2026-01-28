@@ -7,7 +7,7 @@ const { body, validationResult } = require('express-validator');
 
 
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
-router.get('/fetchallstaffs',fetchuser,async (req,res)=>{
+router.get('/fetchallstaffs',async (req,res)=>{
     try {
     
     const staffs=await Staff.find({});

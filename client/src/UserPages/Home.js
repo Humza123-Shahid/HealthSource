@@ -106,20 +106,20 @@ const Home = () => {
                     <div class="navbar-nav ms-auto py-0">
                         {/* <a href="index.html" class="nav-item nav-link active">Home</a> */}
                         <Link to="/" class="nav-item nav-link active">Home</Link>
-                        <Link to="aboutus" class="nav-item nav-link">About</Link>
+                        <Link to="/aboutus" class="nav-item nav-link">About</Link>
                         {/* <a href="about.html" class="nav-item nav-link">About</a> */}
-                        <Link to="service" class="nav-item nav-link">Service</Link>
+                        <Link to="/service" class="nav-item nav-link">Service</Link>
                         {/* <a href="price.html" class="nav-item nav-link">Pricing</a> */}
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">More</a>
                             <div class="dropdown-menu m-0">
                                 {/* <a href="blog.html" class="dropdown-item">Blog Grid</a>
                                 <a href="detail.html" class="dropdown-item">Blog Detail</a> */}
-                                <a href="team.html" class="dropdown-item">The Team</a>
+                                <Link to="/team" class="dropdown-item">The Team</Link>
                                 {/* <a href="testimonial.html" class="dropdown-item">Testimonial</a> */}
-                                <a href="contact.html" class="dropdown-item">Contact</a>
-                                <a href="appointment.html" class="dropdown-item">Appointment</a>
-                                <a href="search.html" class="dropdown-item">Search</a>
+                                <Link to="/contact" class="dropdown-item">Contact</Link>
+                                <Link to="/appointment" class="dropdown-item">Appointment</Link>
+                                <Link to="/search" class="dropdown-item">Search</Link>
                             </div>
                         </div>
                         {/* <a href="login.html" class="nav-item nav-link">Log In</a> */}
@@ -872,7 +872,7 @@ const Home = () => {
     </div>
 
 
-    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top" onClick={scrollToTop}><i class="bi bi-arrow-up"></i></a>
+    <a class="btn btn-lg btn-primary btn-lg-square back-to-top" onClick={scrollToTop}><i class="bi bi-arrow-up"></i></a>
 
 
     </div>
