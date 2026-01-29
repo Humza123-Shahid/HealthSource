@@ -7,7 +7,7 @@ firstName: { type: String, required: true },
 lastName: String,
 fatherName: String,
 gender: { type: String, enum: ['male','female','other'] },
-dateOfBirth: Date,
+dateOfBirth: {type:Date,required: false},
 age: Number,
 nationalId: String, // CNIC / passport
 contact: String,
@@ -20,7 +20,7 @@ chronicConditions: String,
 // chronicConditions: [String],
 registrationDate: { type: Date, default: Date.now },
 photoPath: String,
-status: { type: String, enum: ['active','inactive','deceased'], default: 'active' },
+status: { type: String, enum: ['active','inactive','deceased'], default: 'active'},
 }, { timestamps: true });
 
 module.exports=mongoose.model('Patient', PatientSchema);

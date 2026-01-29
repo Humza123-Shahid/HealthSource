@@ -17,19 +17,31 @@ const SignUp = (props) => {
     // const [roles,setRoles]=useState([]);
   // const [credentials,setCredentials] =useState({staffId:"",patientId:"",name:"",email:"",phone_number:'',password:"",cpassword:"",roleId:""})
 
-  const [credentials,setCredentials] =useState({firstName:"",gender:"",age:"",nationalId:"",maritalStatus:'',bloodGroup:""})
-  
+  const [credentials,setCredentials] =useState({firstName:"",age:"",nationalId:""})
+      
+  const [ gender, setGender] = useState('male');
+    const [ maritalStatus, setMaritalStatus] = useState('single');
+    const [ bloodGroup, setBloodGroup] = useState("b+");
 
   let navigate=useNavigate();
-  
+  const handleGenderChange = (e) => {
+    setGender(e.target.value); // <-- Get input value here
+  };
+  const handleMaritalStatusChange = (e) => {
+    setMaritalStatus(e.target.value); // <-- Get input value here
+  };
+  const handleBloodGroupChange = (e) => {
+    setBloodGroup(e.target.value); // <-- Get input value here
+  };
   const handleSubmit=async(e)=>{
-    e.preventDefault();
-    let {firstName,gender,age,nationalId,maritalStatus,bloodGroup}=credentials
-    const success=await addPatient(firstName,gender,age,nationalId,maritalStatus,bloodGroup)
-          console.log(success)
-          if(success)
+     e.preventDefault();
+    let {firstName,age,nationalId}=credentials
+    console.log(firstName,gender,age,nationalId,maritalStatus,bloodGroup)
+    const json=await addPatient(firstName,undefined,undefined,gender,"",age,nationalId,undefined,undefined,maritalStatus,bloodGroup,undefined,undefined,"",undefined,undefined)
+          console.log(json.success)
+          if(json.success)
           {
-            localStorage.setItem('token',json.authtoken);
+            // localStorage.setItem('token',json.authtoken);
 
             // console.log("abc");
             // setShowToast(true);
@@ -42,7 +54,11 @@ const SignUp = (props) => {
               state: { signUpSuccess: true},
               replace: true, // optional: prevents back button returning to login
             });
-          }
+          //   navigate("/",{
+          //   state: { loginSuccess: true},
+          //   replace: true, // optional: prevents back button returning to login
+          // });
+           }
            else{
                   setShowToast(true);
                 setMsg("Invalid Credentials")
@@ -152,18 +168,19 @@ const SignUp = (props) => {
   return (
     <div className='mt-0 d-flex flex-column align-items-center justify-content-center' style={{backgroundColor:"#318CE7",height:'100vh'}}>
       <InfoMessage showToast={showToast} msg={msg} type={type}/>
-      <form className='mt-3 mb-3 pt-4 px-3' onSubmit={handleSubmit} style={{backgroundColor:"white",borderRadius: '10px',width:'50vw'}} >
+      {/* <form className='mt-3 mb-3 pt-4 px-3' onSubmit={handleSubmit} style={{backgroundColor:"white",borderRadius: '10px',width:'50vw'}} > */}
+      <form className='mt-3 mb-3 pt-4 px-3' onSubmit={handleSubmit} style={{backgroundColor:"white",borderRadius: '10px',width:'50vw'}} >  
         <img src={logimg} className="center" style={{display:'block',margin:'0 auto',width:'100px'}}alt="..."/>
         <h2 className='mb-3' style={{textAlign:"center",width:'100%'}}>Sign Up</h2>
        <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3" style={{width:'100%'}}>
-          <label htmlFor="fisrtName" className="form-label">First Name</label>
-          <input type="text" className="form-control" id="fisrtName" name="fisrtName" onChange={onChange}  aria-describedby="emailHelp"/>
+          <label htmlFor="firstName" className="form-label">First Name</label>
+          <input type="text" className="form-control" id="firstName" name="firstName" onChange={onChange}  aria-describedby="emailHelp"/>
         </div>
          <div className="mb-3 ms-3 me-3" style={{width:'100%'}}>
             <label htmlFor="gender" className="form-label">Enter Gender:</label>
             {/* <input type="text" className="form-control" id="gender" value={gender} name="gender" onChange={handleGenderChange} /> */}
-            <select id="mySelect" className="form-control " name="gender" onChange={onChange}>
+            <select id="mySelect" className="form-control " name="gender"  value={gender} onChange={handleGenderChange}>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="other">Other</option>
@@ -214,7 +231,7 @@ const SignUp = (props) => {
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="mstatus" className="form-label">Enter Marital Status:</label>
                 {/* <input type="text" className="form-control" id="mstatus" value={maritalStatus} name="mstatus" onChange={handleMaritalStatusChange} /> */}
-                 <select id="mySelect" className="form-control "  name="maritalStatus" onChange={onChange}>
+                 <select id="mySelect" className="form-control "  value={maritalStatus} onChange={handleMaritalStatusChange}>
                   <option value="single">Single</option>
                   <option value="married">Married</option>
                   <option value="other">Other</option>
@@ -222,7 +239,7 @@ const SignUp = (props) => {
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="bgroup" className="form-label">Enter Blood Group:</label>
-                <select id="mySelect" className="form-control " name="bloodGroup" onChange={onChange}>
+                <select id="mySelect" className="form-control " value={bloodGroup} name="bloodGroup" onChange={handleBloodGroupChange}>
                   <option value="a+">A+</option>
                   <option value="a-">A-</option>
                   <option value="b+">B+</option>
@@ -249,13 +266,14 @@ const SignUp = (props) => {
         </div> */}
         </div>
 
+        {/* <button type="submit" className="btn btn-primary mb-2" style={{width:'50%',display:'block',margin:'auto'}} onClick={()=>handleRegister()} >Register</button> */}
         <button type="submit" className="btn btn-primary mb-2" style={{width:'50%',display:'block',margin:'auto'}} >Register</button>
           <p className="ms-0 mt-0 mb-5" style={{textAlign:'center'}}>
         Already have an account?{' '}
         <Link to="/login" style={{textDecoration:'underline'}}>
          Sign In
         </Link>
-
+{/* frontend data loaded without json token,so not required to get token on addition of patient in signup page  */}
       </p>
       </form>
      

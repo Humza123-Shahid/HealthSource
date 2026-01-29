@@ -16,23 +16,12 @@ const Admin = (props) => {
            const navigate = useNavigate();
       
 useEffect(()=>{
-    
-      if(localStorage.getItem('token')){
-        
-        if(localStorage.getItem('utype')=="user")
-        {
-          navigate("/");
-        }
-        if (location.state?.loginSuccess) { 
-          setShowToast(true);
-          setMsg("Logged in Successfully")
-          setType("success")
-          setTimeout(()=>{
-            setShowToast(false)
-          },1500)
-          window.history.replaceState({}, document.title); 
-        }
-         else if(location.state?.signUpSuccess)
+  
+    if(localStorage.getItem('utype')=="user")
+    {
+      navigate("/");
+    }
+    if(location.state?.signUpSuccess)
          {
           setShowToast(true);
           setMsg("Account Created Successfully")
@@ -41,15 +30,48 @@ useEffect(()=>{
             setShowToast(false)
           },1500)
          }
+      else if(location.state?.loginSuccess){ 
+          setShowToast(true);
+          setMsg("Logged in Successfully")
+          setType("success")
+          setTimeout(()=>{
+            setShowToast(false)
+          },1500)
+          window.history.replaceState({}, document.title); 
+        }
+      // if(localStorage.getItem('token')){
+        
+      //   if(localStorage.getItem('utype')=="user")
+      //   {
+      //     navigate("/");
+      //   }
+      //   if (location.state?.loginSuccess) { 
+      //     setShowToast(true);
+      //     setMsg("Logged in Successfully")
+      //     setType("success")
+      //     setTimeout(()=>{
+      //       setShowToast(false)
+      //     },1500)
+      //     window.history.replaceState({}, document.title); 
+      //   }
+      //    else if(location.state?.signUpSuccess)
+      //    {
+      //     setShowToast(true);
+      //     setMsg("Account Created Successfully")
+      //     setType("success")
+      //     setTimeout(()=>{
+      //       setShowToast(false)
+      //     },1500)
+      //    }
         //  if (sessionStorage.getItem("reloaded")=="false") {
         //  sessionStorage.setItem("reloaded", "true");
         //  window.location.reload();
         //  }
-      }
-      else
-      {
-        navigate("/login");
-      }
+      // }
+      // else
+      // {
+      //   navigate("/login");
+      // }
       
     },[])
     

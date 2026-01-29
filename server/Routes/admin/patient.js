@@ -25,15 +25,26 @@ router.post('/addpatient',uploadpatient.single("file"),[
     try {
         let success = false;
         // const {firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status}=req.body;
+        // const {firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,status}=req.body;        
+        // const errors = validationResult(req);
+        // console.log(req.file?.path)
+        // if (!errors.isEmpty()) {
+        // return res.status(400).json({ success,errors: errors.array() });
+        // }
+        // const patient=new Patient({
+        //    firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoPath: req.file?.path,status
+        // })
         const {firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,status}=req.body;        
         const errors = validationResult(req);
         console.log(req.file?.path)
+        const finalData = { firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoPath: req.file?.path };
+            if (status!="undefined") {
+                finalData.status = status;
+        }
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
-        const patient=new Patient({
-           firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoPath: req.file?.path,status
-        })
+        const patient=new Patient(finalData)
         const savedPatient=await patient.save();
         success=true;
         res.json({success,data:savedPatient})

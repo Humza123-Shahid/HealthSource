@@ -1,6 +1,7 @@
 import React,{ useState, useEffect}from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import '../styles/scrollBar.css';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 const Sidebar = () => {
    let navigate=useNavigate();
@@ -37,7 +38,13 @@ const Sidebar = () => {
         //overflow: 'hidden'
         overflowY: 'auto'
         }}>
-    <h4 className="mb-4" style={{'color':'white'}}>Admin Dashboard</h4>
+    {/* <h4 className="mb-4" style={{'color':'white'}}>Admin Dashboard</h4> */}
+    <div style={{'display':"flex",
+  'justifyContent':"center",
+  'alignItems':"center",
+  'minHeight':"10vh"}} >
+    <LocalHospitalIcon sx={{ fontSize: '3.5rem' }}  />
+  </div>
     <ul className="nav flex-column">
       {/* <li className="nav-item mb-2">
         <Link className="nav-link text-white" style={{color:'white'}} to="dashboard" onClick={()=>SelectedTab("dashboard")}><i className="fas fa-tachometer-alt me-2"></i> Dashboard</Link>
