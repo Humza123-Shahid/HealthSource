@@ -77,7 +77,7 @@ const options2 = [
   ... doctors.map(dt => {
     const staff = getStaffById(dt?.staff);
     return{
-    value: staff._id,
+    value: dt._id,
     label: `${staff.firstName}`
 }})
 ];

@@ -18,3 +18,22 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555; /* Color of the thumb on hover */
 }
+a{
+     color: black !important; /* Icon color on hover */
+ 
+}
+i{
+    color: green; /* Icon color on hover */
+
+}
+li:hover {
+  background-color: darkgreen; /* New background color on hover */
+  border-radius: 5px;
+  color: #ffffff;            /* New text color on hover */
+}
+li:hover i {
+  color: white; /* Icon color on hover */
+}
+li:hover a {
+  color: white !important; /* Icon color on hover */
+}

@@ -6,7 +6,7 @@ import InfoMessage from '../components/InfoMessage';
 
 const EditRole = () => {
     const context=useContext(roleContext);
-    const {editRole}=context;
+    const {editRole,deleteRole}=context;
     const [showToast,setShowToast]=useState(false)
         const [msg,setMsg]=useState('')
         const [type,setType]=useState('')
@@ -14,6 +14,7 @@ const EditRole = () => {
         const Role=location.state?.role || {};
     const [name, setName] = useState(Role.name);
     const [permissions, setPermissions] = useState(Role.permissions);
+    const [permissions2, setPermissions2] = useState(Role.permissions);
 
     const handleNameChange = (e) => {
     setName(e.target.value); // <-- Get input value here
@@ -21,12 +22,27 @@ const EditRole = () => {
   const handlePermissionsChange = (e) => {
     setPermissions(e.target.value);
     };
+  const handleCheckboxChange=(event)=>{
 
+    console.log("test2")
+      const {checked}=event.target;
+        console.log("tets")
+        let myObject={};
+    
+      if(checked)
+      {
+        
+      }
+      else{
+        setPermissions2("");
+        
+      }
+    }
   const editRoles=(e)=>{
           e.preventDefault();
-          const success=editRole(Role._id,name,permissions)
-          if(success)
+          if(permissions2=="")
           {
+            deleteRole(Role._id);
             setShowToast(true);
             setMsg("Role updated successfully")
             setType("success")
@@ -34,6 +50,19 @@ const EditRole = () => {
               setShowToast(false)
             },1500)
           }
+          else{
+            const success=editRole(Role._id,name,permissions)
+            if(success)
+            {
+              setShowToast(true);
+              setMsg("Role updated successfully")
+              setType("success")
+              setTimeout(()=>{
+                setShowToast(false)
+              },1500)
+            }
+          }
+          
     }
 
   return (
@@ -46,10 +75,10 @@ const EditRole = () => {
         <label htmlFor="name" className="form-label">Enter Name:</label>
         <input type="text" className="form-control" id="name" value={name} name="name" onChange={handleNameChange} />
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
       
       <label htmlFor="permissions" className="form-label">Enter Permissions:</label>
-      <input type="text" className="form-control" id="permissions" value={permissions} name="permissions" onChange={handlePermissionsChange} />
+      <input type="text" className="form-control" id="permissions" value={permissions} name="permissions" onChange={handlePermissionsChange} /> */}
       {/* <select id="mySelect" className="form-control " value={selectedStatusValue} onChange={handleStatusChange}>
         <option value="On Schedule">On Schedule</option>
         <option value="Delayed">Delayed</option>
@@ -61,12 +90,21 @@ const EditRole = () => {
         <option value="Boarding Closed">Boarding Closed</option>
 
       </select> */}
+    {/* </div> */}
+     <div className="mb-3 ms-3" style={{width:'100%'}}>
+          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
+          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
      <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
       </div>
+      <label htmlFor="name" className="form-label">Update Permission:</label>
+      <div style={{ display: 'flex', gap: '50px', alignItems: 'center',paddingLeft:'5px' }}>
+         <label style={{ fontSize:'20px' }}><input type="checkbox" defaultChecked={true} onChange={(event)=>handleCheckboxChange(event)} style={{ transform: "scale(1.5)" }}/> {permissions}</label>
+      </div>
+      <br/>
       <button disabled={name.length<1 || permissions.length<1} type="submit" className="btn btn-primary" >Update Role</button>
       </form>
     </div>

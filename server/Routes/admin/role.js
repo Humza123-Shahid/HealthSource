@@ -27,12 +27,21 @@ router.post('/addrole',[
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
-        const role=new Role({
-            name,permissions
-        })
-        const savedRole=await role.save();
+         permissions.forEach(async function(permission,index) {
+                    // console.log(stf,shift[index],duty_type[index])
+                    await Role.create(
+                        { name:name,permissions:permission})
+                                
+                                
+                });
+        // const role=new Role({
+        //     name,permissions
+        // })
+        // const savedRole=await role.save();
         success=true;
-        res.json({success,data:savedRole})
+        // res.json({success,data:savedRole})
+        res.json({success})
+
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");

@@ -139,6 +139,11 @@ import Appointment from './UserPages/Appointment';
 import Search from './UserPages/Search';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import SocialState from './context/SocialState';
+import AdminSocial from './AdminPages/AdminSocial';
+import AddSocial from './AdminPages/AddSocial';
+import ViewSocial from './AdminPages/ViewSocial';
+import EditSocial from './AdminPages/EditSocial';
 
 function App() {
   const [alert,setAlert]=useState(null);
@@ -155,10 +160,10 @@ function App() {
   const navigate= useNavigate();
   //code to redirect to home page on reload at any other page
   useEffect(() => {
-    if (location.pathname !== "/") {
-      navigate("/");
-      window.location.reload();
-    }
+    // if (location.pathname !== "/") {
+    //   navigate("/");
+    //   window.location.reload();
+    // }
   }, []);
   
   return (
@@ -187,6 +192,7 @@ function App() {
       <StaffAttendanceState>
       <AdmissionState>
       <StaffDutyState>
+      <SocialState>
       <UserState>
         {/* <div className="container"  style={{ maxWidth: "100vw",paddingLeft:"0px",paddingRight:"0px" }}> */}
           <Routes>
@@ -288,7 +294,10 @@ function App() {
               <Route path="admission/addadmission" element={<AddAdmission/>} />
               <Route path="admission/getadmission" element={<ViewAdmission/>} /> 
               <Route path="admission/editadmission" element={<EditAdmission/>} />
-
+              <Route path="social" element={<AdminSocial/>} /> 
+              <Route path="social/addsocial" element={<AddSocial/>} />
+              <Route path="social/getsocial" element={<ViewSocial/>} /> 
+              <Route path="social/editsocial" element={<EditSocial/>} />
           </Route>
               <Route path="/login" element={<Login/>} />
               <Route path="/admin/login" element={<Login/>} />
@@ -305,6 +314,7 @@ function App() {
           </Routes>
         {/* </div> */}
       </UserState>
+      </SocialState>
       </StaffDutyState>
       </AdmissionState>
       </StaffAttendanceState>

@@ -7,7 +7,7 @@ const { body, validationResult } = require('express-validator');
 
 
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
-router.get('/fetchalldoctors',fetchuser,async (req,res)=>{
+router.get('/fetchalldoctors',async (req,res)=>{
     try {
     
     const doctor=await Doctor.find({});

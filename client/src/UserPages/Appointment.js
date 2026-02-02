@@ -1,7 +1,56 @@
-import React from 'react'
-import { Link, useNavigate } from "react-router-dom";
+import React ,{useState,useContext,useEffect} from 'react'
 
+import { Link, useNavigate } from "react-router-dom";
+import Select from "react-select";
+
+import UserFooter from '../components/UserFooter';
+import appointmentContext from '../context/appointmentContext'
+import patientContext from '../context/patientContext'
+import doctorContext from '../context/doctorContext'
+import staffContext from '../context/staffContext'
+const customStyles = {
+  // Styles for the selected value (the text displayed in the control after selection)
+   valueContainer: (base) => ({
+    ...base,
+    justifyContent: 'flex-start', // Aligns content to the start (left)
+  }),
+  // You might also want to adjust other components if needed, e.g., the placeholder
+//   placeholder: (base) => ({
+//     ...base,
+//     marginLeft: '0px', // Optional: adjust placeholder alignment
+//   }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: '#848E9F', // Change selected text color to blue
+    marginLeft: '0', // Remove any default left margin if necessary
+    textAlign: 'left', // Ensure text alignment is left
+  }),
+  // You can also change the color of the control itself (the main container)
+  control: (provided, state) => ({
+    ...provided,
+    height: '55px',
+    borderColor: '#ced4da',
+    boxShadow: state.isFocused ? '0 0 0 4px rgb(139, 226, 238)' : provided.boxShadow,
+    '&:hover': {
+      borderColor: state.isFocused ? '#ced4da' : provided.borderColor // Ensure consistent hover color
+    }
+  }),
+};
 const Appointment = () => {
+     const context=useContext(appointmentContext);
+         const {addAppointment}=context;
+         const context2=useContext(patientContext);
+         const {patients,getPatients}=context2;
+          const context3=useContext(doctorContext);
+         const {doctors,getDoctors}=context3;
+         const context4=useContext(staffContext);
+         const {staffs,getStaffs}=context4;
+         const [credentials,setCredentials] =useState({patientId:null,doctorId:null,bookingType:"",status:"booked",notes:""})
+             const [ appointmentDate, setAppointmentDate] = useState("");
+    const handleAppointmentDateChange = (e) => {
+        console.log(e.target.value);
+    setAppointmentDate(e.target.value); // <-- Get input value here
+  };
        const scrollToTop = () => {
           window.scrollTo({
             top: 0,
@@ -11,6 +60,89 @@ const Appointment = () => {
           const handleLogout =()=>{
             localStorage.removeItem('token');
           }
+          const onChange=(e)=>{
+        if(e.target.value=="" && (e.target.name=="patientId"||e.target.name=="doctorId"))
+        {
+            setCredentials({...credentials,[e.target.name]:null})
+        }
+        else{
+            setCredentials({...credentials,[e.target.name]:e.target.value})
+        }
+      
+      
+    }
+           const handleChange = (selectedOption) => {
+        if(selectedOption=="" )
+        {
+            setCredentials({...credentials,'patientId':null})
+        }
+        else
+        {
+          setCredentials({...credentials,'patientId':selectedOption.value})
+        }
+  };
+   const handleChange2 = (selectedOption) => {
+        if(selectedOption=="" )
+        {
+            setCredentials({...credentials,'doctorId':null})
+        }
+        else
+        {
+          setCredentials({...credentials,'doctorId':selectedOption.value})
+        }
+  };
+        const getPatientById = (id) => patients.find(d => d?._id === id);
+        const getStaffById = (id) => staffs.find(d => d?._id === id);
+          const options = [
+            { value: "", label: "Select Patient" }, // empty option
+            ... patients.map(pt => ({
+                value: pt?._id,
+                label: `${pt?.firstName}`
+            }))
+            ];
+            const options2 = [
+            { value: "", label: "Select Doctor" }, // empty option
+            ... doctors.map(dt => {
+                const staff = getStaffById(dt?.staff);
+                return{
+                value: dt?._id,
+                label: `${staff?.firstName}`
+            }})
+            ];
+            const filterOption = (option, inputValue) => {
+            // Only filter based on the 'label' property, for example
+            return option.label.toLowerCase().includes(inputValue.toLowerCase());
+            };
+    const addAppointments=async (e)=>{
+         e.preventDefault();
+        const {patientId,doctorId,bookingType,status,notes}=credentials
+       // const patientobj= getPatientById(patientId);
+
+         console.log(patientId,doctorId);
+          const user=await addAppointment(patientId,doctorId,appointmentDate,bookingType,status,notes)
+          console.log(user)
+          if(user.success)
+          {
+             let message = "Appointment added successfully";
+            alert(message);
+            console.log("abc");
+            // setShowToast(true);
+            // setMsg("Appointment added successfully")
+            // setType("success")
+            // setTimeout(()=>{
+            //   setShowToast(false)
+            // },1500)
+          }
+    }
+            useEffect(() => {
+                       const fetchData = async () => {
+                    const result3 = await getDoctors();
+                    const result4 = await getPatients();
+                    const result5 = await getStaffs();
+            
+                      };
+                      fetchData();
+                      }, []); 
   return (
     <div>
       <div class="container-fluid py-2 border-bottom d-none d-lg-block">
@@ -108,48 +240,30 @@ const Appointment = () => {
                 <div class="col-lg-6">
                     <div class="bg-light text-center rounded p-5">
                         <h1 class="mb-4">Book An Appointment</h1>
-                        <form>
+                        <form onSubmit={addAppointments}>
                             <div class="row g-3">
                                 <div class="col-12 col-sm-6">
-                                    <select class="form-select bg-white border-0" style={{'height': '55px'}}>
-                                        <option selected>Choose Department</option>
-                                        <option value="1">Department 1</option>
-                                        <option value="2">Department 2</option>
-                                        <option value="3">Department 3</option>
+                                <Select id="patientId" options={options} styles={customStyles} filterOption={filterOption} onChange={handleChange} name="patientId" placeholder="Select Patient" />
+
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                <Select id="doctorId" options={options2} styles={customStyles} filterOption={filterOption} onChange={handleChange2} name="doctorId" placeholder="Select Doctor" />
+
+                                </div>
+                                
+                                <div class="col-12 col-sm-6">
+                                    <input type="datetime-local" className="form-control" id="appointmentDate" name="appointmentDate" value={appointmentDate} placeholder="Appointment Date" onChange={handleAppointmentDateChange}  aria-describedby="emailHelp" style={{'height': '55px'}} />
+
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                     <select id="mySelect" style={{'height': '55px','backgroundColor':'white'}} className="form-control " name="bookingType" onChange={onChange}>
+                                        <option value="">Select Type</option>
+                                        <option value="online">Online</option>
+                                        <option value="walk-in">Walk-In</option>
                                     </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <select class="form-select bg-white border-0" style={{'height': '55px'}}>
-                                        <option selected>Select Doctor</option>
-                                        <option value="1">Doctor 1</option>
-                                        <option value="2">Doctor 2</option>
-                                        <option value="3">Doctor 3</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control bg-white border-0" placeholder="Your Name"
-                                        style={{'height': '55px'}}/>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="email" class="form-control bg-white border-0" placeholder="Your Email"
-                                        style={{'height': '55px'}}/>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="date" id="date" data-target-input="nearest">
-                                        <input type="text" class="form-control bg-white border-0 datetimepicker-input"
-                                            placeholder="Date" data-target="#date" data-toggle="datetimepicker"
-                                            style={{'height': '55px'}}/>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="time" id="time" data-target-input="nearest">
-                                        <input type="text" class="form-control bg-white border-0 datetimepicker-input"
-                                            placeholder="Time" data-target="#time" data-toggle="datetimepicker"
-                                            style={{'height': '55px'}}/>
-                                    </div>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Make An
+                                    <button disabled={credentials.bookingType==""||credentials.patientId==null||credentials.doctorId==null||appointmentDate==""} class="btn btn-primary w-100 py-3" type="submit">Make An
                                         Appointment</button>
                                 </div>
                             </div>
@@ -161,81 +275,7 @@ const Appointment = () => {
     </div>
 
 
-    <div class="container-fluid bg-dark text-light mt-5 py-5">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
-                        Get In Touch</h4>
-                    <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed
-                        dolor</p>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@example.com</p>
-                    <p class="mb-0"><i class="fa fa-phone-alt text-primary me-3"></i>+012 345 67890</p>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
-                        Quick Links</h4>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Home</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>About Us</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Our Services</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Meet The Team</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Latest Blog</a>
-                        <a class="text-light" href="#!"><i class="fa fa-angle-right me-2"></i>Contact Us</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
-                        Popular Links</h4>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Home</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>About Us</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Our Services</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Meet The Team</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Latest Blog</a>
-                        <a class="text-light" href="#!"><i class="fa fa-angle-right me-2"></i>Contact Us</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
-                        Newsletter</h4>
-                    <form action="">
-                        <div class="input-group">
-                            <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address"/>
-                            <button class="btn btn-primary">Sign Up</button>
-                        </div>
-                    </form>
-                    <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
-                    <div class="d-flex">
-                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#!"><i
-                                class="fab fa-twitter"></i></a>
-                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#!"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#!"><i
-                                class="fab fa-linkedin-in"></i></a>
-                        <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
-                                class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid bg-dark text-light border-top border-secondary py-4">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-md-0">&copy; <a class="text-primary" href="#!">Your Site Name</a>. All Rights Reserved.
-                    </p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <p class="mb-0">Designed by <a class="text-primary" href="https://htmlcodex.com"
-                            target="_blank">HTML Codex</a>. Distributed by <a href="https://themewagon.com"
-                            target="_blank">ThemeWagon</a>.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <UserFooter/>
 
 
     <a class="btn btn-lg btn-primary btn-lg-square back-to-top" onClick={scrollToTop}><i class="bi bi-arrow-up"></i></a>

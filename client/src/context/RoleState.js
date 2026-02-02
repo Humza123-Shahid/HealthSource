@@ -30,9 +30,9 @@ const RoleState=(props)=>{
         body:JSON.stringify({name,permissions})
       });
       const role=await response.json();
-      const normalizedData = Array.isArray(role.savedRole) ? role.savedRole : [role.savedRole];
-      //setBuses(buses.concat(bus.savedBus));
-      setRoles(prevRoles => [...prevRoles, normalizedData])
+      // const normalizedData = Array.isArray(role.savedRole) ? role.savedRole : [role.savedRole];
+      // //setBuses(buses.concat(bus.savedBus));
+      // setRoles(prevRoles => [...prevRoles, normalizedData])
       return role.success;
     }
     const editRole=async(id,name,permissions)=>{
