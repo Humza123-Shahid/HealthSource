@@ -42,6 +42,7 @@ const SignUp = (props) => {
           if(json.success)
           {
             // localStorage.setItem('token',json.authtoken);
+            localStorage.setItem('token',json.authtoken);
 
             // console.log("abc");
             // setShowToast(true);
@@ -50,6 +51,7 @@ const SignUp = (props) => {
             // setTimeout(()=>{
             //   setShowToast(false)
             // },1500)
+            localStorage.setItem('utype',"patient");
             navigate("/admin",{
               state: { signUpSuccess: true},
               replace: true, // optional: prevents back button returning to login

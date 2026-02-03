@@ -34,7 +34,7 @@ const AdminUser = () => {
   //   }
   // }, []);
   console.log(users)
-  const filteredData = users.filter(item =>
+  const filteredData = users?.filter(item =>
       item.username?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   const handleView = (staffName,patientName,Name,roleName,index) => {

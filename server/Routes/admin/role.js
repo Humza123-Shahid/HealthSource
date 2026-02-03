@@ -4,7 +4,17 @@ var fetchuser=require('../../middleware/fetchuser');
 const Role = require('../../models/Role');
 const { body, validationResult } = require('express-validator');
 
-
+router.get('/fetchallrolesbyname/:name',async (req,res)=>{
+    try {
+    console.log(req.params.name);
+    const roles=await Role.find({name:req.params.name});
+    //const questions=await Questions.find({user:req.user.id});
+        res.json(roles)
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallroles',async (req,res)=>{
     try {

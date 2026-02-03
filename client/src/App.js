@@ -144,6 +144,8 @@ import AdminSocial from './AdminPages/AdminSocial';
 import AddSocial from './AdminPages/AddSocial';
 import ViewSocial from './AdminPages/ViewSocial';
 import EditSocial from './AdminPages/EditSocial';
+import ProtectedRoute from './components/ProtectedRoute';
+import NotFound from './AdminPages/NotFound';
 
 function App() {
   const [alert,setAlert]=useState(null);
@@ -198,107 +200,109 @@ function App() {
           <Routes>
           <Route exact path="/admin" element={<Admin/>} >
               
-              <Route path="user" element={<AdminUser/>} />  
+              <Route path="user" element={<ProtectedRoute RouteName={"User"}> <AdminUser/> </ProtectedRoute>} />  
               <Route path="user/adduser" element={<AddUser/>} />
               <Route path="user/getuser" element={<ViewUser/>} />  
               <Route path="user/edituser" element={<EditUser/>} />
-              <Route path="role" element={<AdminRole/>} /> 
+              <Route path="role" element={<ProtectedRoute RouteName={"Role"}><AdminRole/></ProtectedRoute>} /> 
               <Route path="role/addrole" element={<AddRole/>} />
               <Route path="role/getrole" element={<ViewRole/>} /> 
               <Route path="role/editrole" element={<EditRole/>} />
-              <Route path="patient" element={<AdminPatient/>} /> 
+              <Route path="patient" element={<ProtectedRoute RouteName={"Patient"}><AdminPatient/></ProtectedRoute>} /> 
               <Route path="patient/addpatient" element={<AddPatient/>} />
               <Route path="patient/getpatient" element={<ViewPatient/>} /> 
               <Route path="patient/editpatient" element={<EditPatient/>} />
-              <Route path="patientmedicalhistory" element={<AdminPatientMedicalHistory/>} /> 
+              <Route path="patientmedicalhistory" element={<ProtectedRoute RouteName={"Patient Medical History"}><AdminPatientMedicalHistory/></ProtectedRoute>} /> 
               <Route path="patientmedicalhistory/addpatientmedicalhistory" element={<AddPatientMedicalHistory/>} />
               <Route path="patientmedicalhistory/getpatientmedicalhistory" element={<ViewPatientMedicalHistory/>} /> 
               <Route path="patientmedicalhistory/editpatientmedicalhistory" element={<EditPatientMedicalHistory/>} />
-              <Route path="staff" element={<AdminStaff/>} /> 
+              <Route path="staff" element={<ProtectedRoute RouteName={"Staff"}><AdminStaff/></ProtectedRoute>} /> 
               <Route path="staff/addstaff" element={<AddStaff/>} />
               <Route path="staff/getstaff" element={<ViewStaff/>} /> 
               <Route path="staff/editstaff" element={<EditStaff/>} />
-              <Route path="shift" element={<AdminShift/>} /> 
+              <Route path="shift" element={<ProtectedRoute RouteName={"Shift"}><AdminShift/></ProtectedRoute>} /> 
               <Route path="shift/addshift" element={<AddShift/>} />
               <Route path="shift/getshift" element={<ViewShift/>} /> 
               <Route path="shift/editshift" element={<EditShift/>} />
-              <Route path="staffduty" element={<AdminStaffDuty/>} /> 
+              <Route path="staffduty" element={<ProtectedRoute RouteName={"Staff Duty"}><AdminStaffDuty/></ProtectedRoute>} /> 
               <Route path="staffduty/addstaffduty" element={<AddStaffDuty/>} />
               <Route path="staffduty/getstaffduty" element={<ViewStaffDuty/>} /> 
               <Route path="staffduty/editstaffduty" element={<EditStaffDuty/>} />
-              <Route path="doctor" element={<AdminDoctor/>} /> 
+              <Route path="doctor" element={<ProtectedRoute RouteName={"Doctor"}><AdminDoctor/></ProtectedRoute>} /> 
               <Route path="doctor/adddoctor" element={<AddDoctor/>} />
               <Route path="doctor/getdoctor" element={<ViewDoctor/>} /> 
               <Route path="doctor/editdoctor" element={<EditDoctor/>} />
-              <Route path="appointment" element={<AdminAppointment/>} /> 
+              <Route path="appointment" element={<ProtectedRoute RouteName={"Appointment"}><AdminAppointment/></ProtectedRoute>} /> 
               <Route path="appointment/addappointment" element={<AddAppointment/>} />
               <Route path="appointment/getappointment" element={<ViewAppointment/>} /> 
               <Route path="appointment/editappointment" element={<EditAppointment/>} />
-              <Route path="consultation" element={<AdminConsultation/>} /> 
+              <Route path="consultation" element={<ProtectedRoute RouteName={"Consultation"}><AdminConsultation/></ProtectedRoute>} /> 
               <Route path="consultation/addconsultation" element={<AddConsultation/>} />
               <Route path="consultation/getconsultation" element={<ViewConsultation/>} /> 
               <Route path="consultation/editconsultation" element={<EditConsultation/>} />
-              <Route path="surgery" element={<AdminSurgery/>} /> 
+              <Route path="surgery" element={<ProtectedRoute RouteName={"Surgery"}><AdminSurgery/></ProtectedRoute>} /> 
               <Route path="surgery/addsurgery" element={<AddSurgery/>} />
               <Route path="surgery/getsurgery" element={<ViewSurgery/>} /> 
               <Route path="surgery/editsurgery" element={<EditSurgery/>} />
-              <Route path="surgeryteam" element={<AdminSurgeryTeam/>} /> 
+              <Route path="surgeryteam" element={<ProtectedRoute RouteName={"Surgery Team"}><AdminSurgeryTeam/></ProtectedRoute>} /> 
               <Route path="surgeryteam/addsurgeryteam" element={<AddSurgeryTeam/>} />
               <Route path="surgeryteam/getsurgeryteam" element={<ViewSurgeryTeam/>} /> 
               <Route path="surgeryteam/editsurgeryteam" element={<EditSurgeryTeam/>} />
-              <Route path="operationtheatre" element={<AdminOperationTheatre/>} /> 
+              <Route path="operationtheatre" element={<ProtectedRoute RouteName={"Operation Theatre"}><AdminOperationTheatre/></ProtectedRoute>} /> 
               <Route path="operationtheatre/addoperationtheatre" element={<AddOperationTheatre/>} />
               <Route path="operationtheatre/getoperationtheatre" element={<ViewOperationTheatre/>} /> 
               <Route path="operationtheatre/editoperationtheatre" element={<EditOperationTheatre/>} />
-              <Route path="labtest" element={<AdminLabTest/>} /> 
+              <Route path="labtest" element={<ProtectedRoute RouteName={"Lab Test"}><AdminLabTest/></ProtectedRoute>} /> 
               <Route path="labtest/addlabtest" element={<AddLabTest/>} />
               <Route path="labtest/getlabtest" element={<ViewLabTest/>} /> 
               <Route path="labtest/editlabtest" element={<EditLabTest/>} />
-              <Route path="labrequest" element={<AdminLabRequest/>} /> 
+              <Route path="labrequest" element={<ProtectedRoute RouteName={"Lab Request"}><AdminLabRequest/></ProtectedRoute>} /> 
               <Route path="labrequest/addlabrequest" element={<AddLabRequest/>} />
               <Route path="labrequest/getlabrequest" element={<ViewLabRequest/>} /> 
               <Route path="labrequest/editlabrequest" element={<EditLabRequest/>} />
-              <Route path="labresult" element={<AdminLabResult/>} /> 
+              <Route path="labresult" element={<ProtectedRoute RouteName={"Lab Result"}><AdminLabResult/></ProtectedRoute>} /> 
               <Route path="labresult/addlabresult" element={<AddLabResult/>} />
               <Route path="labresult/getlabresult" element={<ViewLabResult/>} /> 
               <Route path="labresult/editlabresult" element={<EditLabResult/>} />
-              <Route path="medicine" element={<AdminMedicine/>} /> 
+              <Route path="medicine" element={<ProtectedRoute RouteName={"Medicine"}><AdminMedicine/></ProtectedRoute>} /> 
               <Route path="medicine/addmedicine" element={<AddMedicine/>} />
               <Route path="medicine/getmedicine" element={<ViewMedicine/>} /> 
               <Route path="medicine/editmedicine" element={<EditMedicine/>} />
-              <Route path="prescription" element={<AdminPrescription/>} /> 
+              <Route path="prescription" element={<ProtectedRoute RouteName={"Prescription"}><AdminPrescription/></ProtectedRoute>} /> 
               <Route path="prescription/addprescription" element={<AddPrescription/>} />
               <Route path="prescription/getprescription" element={<ViewPrescription/>} /> 
               <Route path="prescription/editprescription" element={<EditPrescription/>} />
-              <Route path="ward" element={<AdminWard/>} /> 
+              <Route path="ward" element={<ProtectedRoute RouteName={"Ward"}><AdminWard/></ProtectedRoute>} /> 
               <Route path="ward/addward" element={<AddWard/>} />
               <Route path="ward/getward" element={<ViewWard/>} /> 
               <Route path="ward/editward" element={<EditWard/>} />
-              <Route path="room" element={<AdminRoom/>} /> 
+              <Route path="room" element={<ProtectedRoute RouteName={"Room"}><AdminRoom/></ProtectedRoute>} /> 
               <Route path="room/addroom" element={<AddRoom/>} />
               <Route path="room/getroom" element={<ViewRoom/>} /> 
               <Route path="room/editroom" element={<EditRoom/>} />
-              <Route path="bed" element={<AdminBed/>} /> 
+              <Route path="bed" element={<ProtectedRoute RouteName={"Bed"}><AdminBed/></ProtectedRoute>} /> 
               <Route path="bed/addbed" element={<AddBed/>} />
               <Route path="bed/getbed" element={<ViewBed/>} /> 
               <Route path="bed/editbed" element={<EditBed/>} />
-              <Route path="nurse" element={<AdminNurse/>} /> 
+              <Route path="nurse" element={<ProtectedRoute RouteName={"Nurse"}><AdminNurse/></ProtectedRoute>} /> 
               <Route path="nurse/addnurse" element={<AddNurse/>} />
               <Route path="nurse/getnurse" element={<ViewNurse/>} /> 
               <Route path="nurse/editnurse" element={<EditNurse/>} />
-              <Route path="staffattendance" element={<AdminStaffAttendance/>} /> 
+              <Route path="staffattendance" element={<ProtectedRoute RouteName={"Staff Attendance"}><AdminStaffAttendance/></ProtectedRoute>} /> 
               <Route path="staffattendance/addstaffattendance" element={<AddStaffAttendance/>} />
               <Route path="staffattendance/getstaffattendance" element={<ViewStaffAttendance/>} /> 
               <Route path="staffattendance/editstaffattendance" element={<EditStaffAttendance/>} />
-              <Route path="admission" element={<AdminAdmission/>} /> 
+              <Route path="admission" element={<ProtectedRoute RouteName={"Admission"}><AdminAdmission/></ProtectedRoute>} /> 
               <Route path="admission/addadmission" element={<AddAdmission/>} />
               <Route path="admission/getadmission" element={<ViewAdmission/>} /> 
               <Route path="admission/editadmission" element={<EditAdmission/>} />
-              <Route path="social" element={<AdminSocial/>} /> 
+              <Route path="social" element={<ProtectedRoute RouteName={"Social"}><AdminSocial/></ProtectedRoute>} /> 
               <Route path="social/addsocial" element={<AddSocial/>} />
               <Route path="social/getsocial" element={<ViewSocial/>} /> 
               <Route path="social/editsocial" element={<EditSocial/>} />
           </Route>
+              <Route path="/404" element={<NotFound />} />
+              <Route path="*" element={<NotFound />} />
               <Route path="/login" element={<Login/>} />
               <Route path="/admin/login" element={<Login/>} />
               <Route path="/signup" element={<SignUp/>} />

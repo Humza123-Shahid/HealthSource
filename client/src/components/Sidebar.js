@@ -1,23 +1,46 @@
-import React,{ useState, useEffect}from 'react';
+import React,{ useState, useEffect,useContext}from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import '../styles/scrollBar.css';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import roleContext from '../context/roleContext'
+
 // import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
 import logo from '../img/HealthSourceLogo.png';
 
 const Sidebar = () => {
+   const context=useContext(roleContext);
+      const {roles2,setRoles2,getRolesbyName}=context;
+    const [permissions,setPermissions]=useState([])
    let navigate=useNavigate();
    const [selectedTab, setSelectedTab] = useState(
     localStorage.getItem("activeTab") || "Buses"
   );
    useEffect(() => {
     localStorage.setItem("activeTab", selectedTab);
-  }, [selectedTab]);
 
+  }, [selectedTab]);
+useEffect(() => {
+  console.log(localStorage.getItem('utype'));
+    getRolesbyName(localStorage.getItem('utype'));
+   
+  }, []);
+useEffect(() => {
+ console.log(roles2);
+  roles2.forEach((role, index) => {
+  console.log(`Permission at index ${index}: ${role.permissions}`);
+setPermissions(prevPermissions => [...prevPermissions, role.permissions]); 
+});
+  }, [roles2]);
+  useEffect(() => {
+ console.log(permissions);
+  }, [permissions]);
    const handleLogout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("utype");
         sessionStorage.setItem("reloaded", "false");
         setSelectedTab("login")
+        setPermissions([]);
+        setRoles2([]);
         //  navigate('/login')
         // Optionally, redirect to a login page or home page after logout
         // history.push('/login'); // If using useHistory hook
@@ -55,84 +78,177 @@ const Sidebar = () => {
       {/* <li className="nav-item mb-2">
         <Link className="nav-link text-black" style={{color:'black'}} to="dashboard" onClick={()=>SelectedTab("dashboard")}><i className="fas fa-tachometer-alt me-2"></i> Dashboard</Link>
       </li> */}
+      {permissions.includes('User') && (
        <li className="nav-item mb-2">
-        <Link className="nav-link "  to="user" onClick={()=>SelectedTab("user")}><i className="fas fa-user me-2"></i> User</Link>
+        <Link className="nav-link "  to="user" onClick={()=>SelectedTab("user")}><i className="iconcolor fas fa-user me-2"></i> User</Link>
       </li>
+      )}
+      {permissions.includes('Patient') && (
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="patient" onClick={()=>SelectedTab("patient")}><i className="fas fa-plus me-2"></i> Patient</Link>
+        <Link className="nav-link "  to="patient" onClick={()=>SelectedTab("patient")}><i className="iconcolor fas fa-plus me-2"></i> Patient</Link>
       </li>
+      )}
+      {permissions.includes('Patient Medical History') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="patientmedicalhistory" onClick={()=>SelectedTab("patientmedicalhistory")}><i className="fas fa-book-medical me-2"></i> Patient Medical History</Link>
+        <Link className="nav-link "  to="patientmedicalhistory" onClick={()=>SelectedTab("patientmedicalhistory")}><i className="iconcolor fas fa-book-medical me-2"></i> Patient Medical History</Link>
       </li>
+      )}
+      {permissions.includes('Role') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="role" onClick={()=>SelectedTab("role")}><i className="fas fa-users me-2"></i> Role</Link>
+        <Link className="nav-link "  to="role" onClick={()=>SelectedTab("role")}><i className="iconcolor fas fa-users me-2"></i> Role</Link>
       </li>
+      )}
+  
+      {permissions.includes('Staff') && (
+
        <li className="nav-item mb-2">
-        <Link className="nav-link "  to="staff" onClick={()=>SelectedTab("staff")}><i className="fas fa-user-tie me-2"></i> Staff</Link>
+        <Link className="nav-link "  to="staff" onClick={()=>SelectedTab("staff")}><i className="iconcolor fas fa-user-tie me-2"></i> Staff</Link>
       </li>
+      )}
+      {permissions.includes('Shift') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="shift" onClick={()=>SelectedTab("shift")}><i className="fas fa-clock me-2"></i> Shift</Link>
+        <Link className="nav-link "  to="shift" onClick={()=>SelectedTab("shift")}><i className="iconcolor fas fa-clock me-2"></i> Shift</Link>
       </li>
+      )}
+
+      {permissions.includes('Staff Duty') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="staffduty" onClick={()=>SelectedTab("staffduty")}><i className="fas fa-tasks me-2"></i>Staff Duty</Link>
+        <Link className="nav-link "  to="staffduty" onClick={()=>SelectedTab("staffduty")}><i className="iconcolor fas fa-tasks me-2"></i>Staff Duty</Link>
       </li>
+      )}
+
+      {permissions.includes('Doctor') && (
+
        <li className="nav-item mb-2">
-        <Link className="nav-link "  to="doctor" onClick={()=>SelectedTab("doctor")}><i className="fas fa-user-md me-2"></i> Doctor</Link>
+        <Link className="nav-link "  to="doctor" onClick={()=>SelectedTab("doctor")}><i className="iconcolor fas fa-user-md me-2"></i> Doctor</Link>
       </li>
+      )}
+
+      {permissions.includes('Appointment') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="appointment" onClick={()=>SelectedTab("appointment")}><i className="fas fa-calendar me-2"></i> Appointment</Link>
+        <Link className="nav-link "  to="appointment" onClick={()=>SelectedTab("appointment")}><i className="iconcolor fas fa-calendar me-2"></i> Appointment</Link>
       </li>
+      )}
+
+      {permissions.includes('Consultation') && (
+
       <li className="nav-item mb-2">
         {/* <Link className="nav-link "  to="consultation" onClick={()=>SelectedTab("consultation")}><i className="fas fa-check me-2"></i> Consultation</Link> */}
-        <Link className="nav-link "  to="consultation" onClick={()=>SelectedTab("consultation")}><i className="fas fa-inbox me-2"></i> Consultation</Link>
+        <Link className="nav-link "  to="consultation" onClick={()=>SelectedTab("consultation")}><i className="iconcolor fas fa-inbox me-2"></i> Consultation</Link>
       </li>
+      )}
+
+      {permissions.includes('Surgery') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="surgery" onClick={()=>SelectedTab("surgery")}><i className="fas fa-medkit me-2"></i> Surgery</Link>
+        <Link className="nav-link "  to="surgery" onClick={()=>SelectedTab("surgery")}><i className="iconcolor fas fa-medkit me-2"></i> Surgery</Link>
       </li>
+      )}
+
+      {permissions.includes('Surgery Team') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="surgeryteam" onClick={()=>SelectedTab("surgeryteam")}><i className="fas fa-mask-face me-2"></i> Surgery Team</Link>
+        <Link className="nav-link "  to="surgeryteam" onClick={()=>SelectedTab("surgeryteam")}><i className="iconcolor fas fa-mask-face me-2"></i> Surgery Team</Link>
       </li>
+      )}
+
+      {permissions.includes('Operation Theatre') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="operationtheatre" onClick={()=>SelectedTab("operationtheatre")}><i className="fas fa-bed-pulse me-2"></i> Operation Theatre</Link>
+        <Link className="nav-link "  to="operationtheatre" onClick={()=>SelectedTab("operationtheatre")}><i className="iconcolor fas fa-bed-pulse me-2"></i> Operation Theatre</Link>
       </li>
+      )}
+
+      {permissions.includes('Medicine') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="medicine" onClick={()=>SelectedTab("medicine")}><i className="fas fa-tablets me-2"></i> Medicine</Link>
+        <Link className="nav-link "  to="medicine" onClick={()=>SelectedTab("medicine")}><i className="iconcolor fas fa-tablets me-2"></i> Medicine</Link>
       </li>
+      )}
+
+      {permissions.includes('Prescription') && (
+
        <li className="nav-item mb-2">
-        <Link className="nav-link "  to="prescription" onClick={()=>SelectedTab("prescription")}><i className="fas fa-prescription me-2"></i> Prescription</Link>
+        <Link className="nav-link "  to="prescription" onClick={()=>SelectedTab("prescription")}><i className="iconcolor fas fa-prescription me-2"></i> Prescription</Link>
       </li>
+      )}
+
+      {permissions.includes('Lab Test') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="labtest" onClick={()=>SelectedTab("labtest")}><i className="fas fa-microscope me-2"></i> Lab Test</Link>
+        <Link className="nav-link "  to="labtest" onClick={()=>SelectedTab("labtest")}><i className="iconcolor fas fa-microscope me-2"></i> Lab Test</Link>
       </li>
+      )}
+
+      {permissions.includes('Lab Request') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="labrequest" onClick={()=>SelectedTab("labrequest")}><i className="fas fa-vial-circle-check me-2"></i> Lab Request</Link>
+        <Link className="nav-link "  to="labrequest" onClick={()=>SelectedTab("labrequest")}><i className="iconcolor fas fa-vial-circle-check me-2"></i> Lab Request</Link>
       </li>
+      )}
+
+      {permissions.includes('Lab Result') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="labresult" onClick={()=>SelectedTab("labresult")}><i className="fas fa-info-circle me-2"></i> Lab Result</Link>
+        <Link className="nav-link "  to="labresult" onClick={()=>SelectedTab("labresult")}><i className="iconcolor fas fa-info-circle me-2"></i> Lab Result</Link>
       </li>
+      )}
+
+      {permissions.includes('Ward') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="ward" onClick={()=>SelectedTab("ward")}><i className="fas fa-house-medical me-2"></i> Ward</Link>
+        <Link className="nav-link "  to="ward" onClick={()=>SelectedTab("ward")}><i className="iconcolor fas fa-house-medical me-2"></i> Ward</Link>
       </li>
+      )}
+
+      {permissions.includes('Room') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="room" onClick={()=>SelectedTab("room")}><i className="fas fa-door-open me-2"></i>Room</Link>
+        <Link className="nav-link "  to="room" onClick={()=>SelectedTab("room")}><i className="iconcolor fas fa-door-open me-2"></i>Room</Link>
       </li>
+      )}
+
+      {permissions.includes('Bed') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="bed" onClick={()=>SelectedTab("bed")}><i className="fas fa-bed me-2"></i>Bed</Link>
+        <Link className="nav-link "  to="bed" onClick={()=>SelectedTab("bed")}><i className="iconcolor fas fa-bed me-2"></i>Bed</Link>
       </li>
+      )}
+
+      {permissions.includes('Nurse') && (
+
        <li className="nav-item mb-2">
-        <Link className="nav-link "  to="nurse" onClick={()=>SelectedTab("nurse")}><i className="fas fa-user-nurse me-2"></i>Nurse</Link>
+        <Link className="nav-link "  to="nurse" onClick={()=>SelectedTab("nurse")}><i className="iconcolor fas fa-user-nurse me-2"></i>Nurse</Link>
       </li>
+      )}
+
+      {permissions.includes('Admission') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="admission" onClick={()=>SelectedTab("admission")}><i className="fas fa-plus-square me-2"></i>Admission</Link>
+        <Link className="nav-link "  to="admission" onClick={()=>SelectedTab("admission")}><i className="iconcolor fas fa-plus-square me-2"></i>Admission</Link>
       </li>
+      )}
+
+      {permissions.includes('Staff Attendance') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="staffattendance" onClick={()=>SelectedTab("staffattendance")}><i className="fas fa-fingerprint me-2"></i>Staff Attendance</Link>
+        <Link className="nav-link "  to="staffattendance" onClick={()=>SelectedTab("staffattendance")}><i className="iconcolor fas fa-fingerprint me-2"></i>Staff Attendance</Link>
       </li>
+      )}
+
+      {permissions.includes('Social') && (
+
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="social" onClick={()=>SelectedTab("social")}><i className="fas fa-hashtag me-2"></i>Social</Link>
+        <Link className="nav-link "  to="social" onClick={()=>SelectedTab("social")}><i className="iconcolor fas fa-hashtag me-2"></i>Social</Link>
       </li>
+      )}      
       <li className="nav-item mb-2">
-        <Link className="nav-link "  to="/login" onClick={handleLogout}><i className="fas fa-sign-out me-2"></i>Logout</Link>
+      <Link className="nav-link "  to="/login" onClick={handleLogout}><i className="iconcolor fas fa-sign-out me-2"></i>Logout</Link>
       </li>
     </ul>
   </div>

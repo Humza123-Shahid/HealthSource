@@ -16,7 +16,8 @@ const Admin = (props) => {
            const navigate = useNavigate();
       
 useEffect(()=>{
-  
+  if(localStorage.getItem('token')){
+
     if(localStorage.getItem('utype')=="user")
     {
       navigate("/");
@@ -39,6 +40,12 @@ useEffect(()=>{
           },1500)
           window.history.replaceState({}, document.title); 
         }
+         }
+      else
+      {
+        console.log("elseadmin")
+        navigate("/login");
+      }
       // if(localStorage.getItem('token')){
         
       //   if(localStorage.getItem('utype')=="user")

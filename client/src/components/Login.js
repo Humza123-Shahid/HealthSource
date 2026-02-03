@@ -29,7 +29,8 @@ const Login = (props) => {
         
         //props.showAlert("Logged in Successfully","success")
 
-        
+              console.log(json.userType);
+
         if(json.userType=="admin")
         {
           //localStorage.setItem('showLoginToast', 'true');
@@ -50,7 +51,38 @@ const Login = (props) => {
             replace: true, // optional: prevents back button returning to login
           });
         }
+        else if(json.userType=="patient")
+        {
+          //localStorage.setItem('showLoginToast', 'true');
+          localStorage.setItem('utype',"patient");
+          //localStorage.setItem('uclass',json.qclass);
+          navigate("/admin",{
+            state: { loginSuccess: true},
+            replace: true, // optional: prevents back button returning to login
+          });
+        }
+        else if(json.userType=="nurse")
+        {
+          //localStorage.setItem('showLoginToast', 'true');
+          localStorage.setItem('utype',"nurse");
+          //localStorage.setItem('uclass',json.qclass);
+          navigate("/admin",{
+            state: { loginSuccess: true},
+            replace: true, // optional: prevents back button returning to login
+          });
+        }
+        else if(json.userType=="doctor")
+        {
+          //localStorage.setItem('showLoginToast', 'true');
+          localStorage.setItem('utype',"doctor");
+          //localStorage.setItem('uclass',json.qclass);
+          navigate("/admin",{
+            state: { loginSuccess: true},
+            replace: true, // optional: prevents back button returning to login
+          });
+        }
       }
+      
       else{
         setShowToast(true);
         setMsg("Invalid Credentials")

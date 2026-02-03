@@ -22,13 +22,13 @@ const AddUser = () => {
     const {patients,getPatients}=context3;
 
      const onChange=(e)=>{
-        if(e.target.value=="")
-        {
-            setCredentials({...credentials,[e.target.name]:null})
-        }
-        else{
+        // if(e.target.value=="")
+        // {
+        //     setCredentials({...credentials,[e.target.name]:null})
+        // }
+        // else{
             setCredentials({...credentials,[e.target.name]:e.target.value})
-        }
+        // }
       
       
     }
@@ -96,6 +96,7 @@ const filterOption = (option, inputValue) => {
   const addUsers=async (e)=>{
          e.preventDefault();
         const {staffId,patientId,name,password,cpassword,roleId}=credentials
+        console.log(staffId,patientId,name,password,cpassword,roleId);
         const roleobj= getRoleById(roleId);
         const staffobj= getStaffById(staffId);
         const patientobj= getPatientById(patientId);
@@ -111,8 +112,8 @@ const filterOption = (option, inputValue) => {
         //props.showAlert("Passwords do not match","danger")
         return;
         }
-         console.log(staffId.value,patientId.value,name,password,roleId.value);
-          const user=await addUser(staffId.value,patientId.value,name,password,roleId.value)
+        //  console.log(staffId.value,patientId.value,name,password,roleId.value);
+          const user=await addUser(staffId,patientId,name,password,roleId)
           console.log(user)
           if(user.success)
           {
@@ -172,7 +173,7 @@ useEffect(() => {
         </div>
      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
           <label htmlFor="name" className="form-label">User Name</label>
-          <input type="text" className="form-control" id="name" name="name" onChange={onChange}  aria-describedby="emailHelp"/>
+          <input type="text" className="form-control" id="name" name="name" onChange={onChange}/>
         </div>
        
     </div>

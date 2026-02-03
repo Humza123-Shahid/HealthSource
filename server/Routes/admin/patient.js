@@ -3,8 +3,11 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const uploadpatient = require("../../middleware/uploadpatient");
 const Patient = require('../../models/Patient');
+var jwt = require('jsonwebtoken');
+
 const { body, validationResult } = require('express-validator');
 
+const JWT_SECRET="Harryisagoodboy";
 
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallpatients',async (req,res)=>{
@@ -46,8 +49,14 @@ router.post('/addpatient',uploadpatient.single("file"),[
         }
         const patient=new Patient(finalData)
         const savedPatient=await patient.save();
+         const data={
+              user:{
+                id:savedPatient.id
+              }
+            }
+            const authtoken=jwt.sign(data,JWT_SECRET)   
         success=true;
-        res.json({success,data:savedPatient})
+        res.json({success,authtoken,data:savedPatient})
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");

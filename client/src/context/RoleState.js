@@ -6,7 +6,21 @@ const RoleState=(props)=>{
   const rolesInitial=[]
 
     const [roles,setRoles]=useState(rolesInitial)
+        const [roles2,setRoles2]=useState([])
 
+    const getRolesbyName=async (name)=>{
+      console.log(name)
+      const response=await fetch(`${host}/api/role/fetchallrolesbyname/${name}`,{
+        method:'GET',
+        headers:{
+            'Content-Type':'application/json',
+            'auth-token':localStorage.getItem('token')
+            }
+      })
+      const json=await response.json();
+      console.log(json);
+      setRoles2(json)
+    }
     const getRoles=async ()=>{
       const response=await fetch(`${host}/api/role/fetchallroles`,{
         method:'GET',
@@ -77,7 +91,7 @@ const RoleState=(props)=>{
     }
     return(
         //<QuestionContext.Provider value={{state,update}}>
-        <RoleContext.Provider value={{roles,addRole,getRoles,editRole,deleteRole}}>
+        <RoleContext.Provider value={{roles,roles2,setRoles2,getRolesbyName,addRole,getRoles,editRole,deleteRole}}>
             {props.children}
         </RoleContext.Provider>
     )
