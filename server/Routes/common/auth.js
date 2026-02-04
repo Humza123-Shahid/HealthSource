@@ -45,9 +45,20 @@ router.post('/registeruser',[
     const authtoken=jwt.sign(data,JWT_SECRET)   
     success=true;  
     const userRole=await Role.findById(user.role)
-    const userType=userRole.name; 
+    const userType=userRole.name;
+    let userTypeId;
+    if(userType=='Patient')
+      {
+        userTypeId= req.body.patientId
+
+      } 
+    else if(userType=='Doctor'||userType=='Nurse')
+    {
+        userTypeId= req.body.staffId
+
+    }
     //res.json(user) 
-    res.json({success,authtoken,userType}) 
+    res.json({success,authtoken,userType,userTypeId}) 
     }
     catch(error){
         console.error(error.message);
@@ -85,8 +96,20 @@ router.post('/login',[
         const authtoken=jwt.sign(data,JWT_SECRET)  
         success=true;
         const userRole=await Role.findById(user.role)
-        const userType=userRole.name;   
-        res.json({success,authtoken,userType}) 
+        const userType=userRole.name; 
+        let userTypeId;
+        if(userType=='patient')
+          {
+
+            userTypeId= user.patient;
+
+          } 
+        else if(userType=='doctor'||userType=='nurse')
+        {
+            userTypeId= user.staff;
+
+        }   
+        res.json({success,authtoken,userType,userTypeId}) 
 
     }
     catch(error){

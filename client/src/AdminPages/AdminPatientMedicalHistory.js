@@ -17,7 +17,7 @@ const AdminPatientMedicalHistory = () => {
     const {doctors,getDoctors}=context3;
     const context4=useContext(staffContext);
     const {staffs,getStaffs}=context4;
-    
+    let filteredData;
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const handleClick = () => {
@@ -34,9 +34,23 @@ const AdminPatientMedicalHistory = () => {
   //     setQcount(Number(storedCount));
   //   }
   // }, []);
-  const filteredData = patientmedicalhistories.filter(item =>
-      item.condition?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  if(localStorage.getItem('utype')=='patient')
+  {
+    console.log(localStorage.getItem('patientID'))
+      // const filteredDatabyId=patientmedicalhistories.find(da => da.patient ==localStorage.getItem('patientID'))
+      const filteredDatabyId=patientmedicalhistories.filter(da => da.patient ==localStorage.getItem('patientID'));
+
+      console.log(filteredDatabyId);
+      filteredData = filteredDatabyId?.filter(item =>
+          item.condition?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+  }
+  else{
+      filteredData = patientmedicalhistories?.filter(item =>
+          item.condition?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+  }
+  
   const handleView = (patientmedicalhistoryId,doctorName,patientName,index) => {
     //const dataitem=buses.find(da => da._id ==id)
     const datapatientmedicalhistory=getPatientMedicalHistoryById(patientmedicalhistoryId);
@@ -86,7 +100,9 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
       
   return (
    <div>
+      {localStorage.getItem('utype')!=='patient' &&
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Patient Medical History</button>
+      }
       <div className="d-flex justify-content-between" style={{
       margin: '20px 0px 0px 15px',
       padding: '0px'}}>
@@ -122,7 +138,7 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((row,index) => {
+          {filteredData && filteredData.map((row,index) => {
             const doctor = getDoctorById(row.doctor);
             const patient = getPatientById(row.patient);
             const staff = getStaffById(doctor?.staff);
@@ -142,12 +158,15 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
                   handleView(row._id,staff?.firstName,patient?.firstName,index)}>
                 View
               </button>
+              {localStorage.getItem('utype')!=='patient' &&
               <button onClick={() => handleEdit(row._id,staff._id,row.patient)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
                 Edit
               </button>
+              &&
               <button onClick={() => handleDelete(row._id)} style={{ color:"white",backgroundColor:"red" }}>
                 Delete
               </button>
+              }
               </td>
             </tr>
             )

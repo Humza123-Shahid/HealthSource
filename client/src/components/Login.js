@@ -55,6 +55,8 @@ const Login = (props) => {
         {
           //localStorage.setItem('showLoginToast', 'true');
           localStorage.setItem('utype',"patient");
+          localStorage.setItem('patientID',json.userTypeId);
+
           //localStorage.setItem('uclass',json.qclass);
           navigate("/admin",{
             state: { loginSuccess: true},
@@ -65,6 +67,8 @@ const Login = (props) => {
         {
           //localStorage.setItem('showLoginToast', 'true');
           localStorage.setItem('utype',"nurse");
+          localStorage.setItem('nurseID',json.userTypeId);
+
           //localStorage.setItem('uclass',json.qclass);
           navigate("/admin",{
             state: { loginSuccess: true},
@@ -75,6 +79,8 @@ const Login = (props) => {
         {
           //localStorage.setItem('showLoginToast', 'true');
           localStorage.setItem('utype',"doctor");
+          localStorage.setItem('doctorID',json.userTypeId);
+
           //localStorage.setItem('uclass',json.qclass);
           navigate("/admin",{
             state: { loginSuccess: true},
