@@ -14,6 +14,8 @@ const AdminNurse = () => {
     const {staffs,getStaffs}=context2;
       const context3=useContext(wardContext);
     const {wards,getWards}=context3;
+        let filteredData;
+
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const handleClick = () => {
@@ -30,10 +32,28 @@ const AdminNurse = () => {
   //     setQcount(Number(storedCount));
   //   }
   // }, []);
-  const filteredData = nurses.filter(item =>
-      item.qualification?.toLowerCase().includes(searchTerm.toLowerCase())||
-      item.licenseNumber?.toLowerCase().includes(searchTerm.toLowerCase())
-);
+//   const filteredData = nurses.filter(item =>
+//       item.qualification?.toLowerCase().includes(searchTerm.toLowerCase())||
+//       item.licenseNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+// );
+ if(localStorage.getItem('utype')=='nurse')
+  {
+    console.log(localStorage.getItem('nurseID'))
+      // const filteredDatabyId=patientmedicalhistories.find(da => da.patient ==localStorage.getItem('patientID'))
+      const filteredDatabyId=nurses.filter(da => da.staff ==localStorage.getItem('nurseID'));
+
+      console.log(filteredDatabyId);
+      filteredData = filteredDatabyId?.filter(item =>
+          item.qualification?.toLowerCase().includes(searchTerm.toLowerCase())||
+          item.licenseNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+  }
+  else{
+      filteredData = nurses?.filter(item =>
+          item.qualification?.toLowerCase().includes(searchTerm.toLowerCase())||
+          item.licenseNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+  }
   const handleView = (id,index,staffId,wardId) => {
     const dataitem=nurses.find(da => da._id ==id)
      //const datacat=getCategoryById(catId);
@@ -78,7 +98,9 @@ const AdminNurse = () => {
       }, []); //
   return (
    <div>
-      <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Nurse</button>
+      {localStorage.getItem('utype')!=='nurse' &&
+        <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Nurse</button>
+      }
       <div className="d-flex justify-content-between" style={{
       margin: '20px 0px 0px 15px',
       padding: '0px'}}>
@@ -128,12 +150,15 @@ const AdminNurse = () => {
                   handleView(row._id,index+1,row.staff,row.assignedWard)}>
                 View
               </button>
+              {localStorage.getItem('utype')!=='nurse' &&
               <button onClick={() => handleEdit(row._id,row.staff,row.assignedWard)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
                 Edit
               </button>
+              &&
               <button onClick={() => handleDelete(row._id)} style={{ color:"white",backgroundColor:"red" }}>
                 Delete
               </button>
+              }
               </td>
             </tr>)
         })}

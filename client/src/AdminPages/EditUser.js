@@ -91,12 +91,24 @@ const options2 = [
     label: `${pt.firstName}`
   }))
 ];
+function removeDuplicatesByProperty(arr, prop) {
+  const seen = new Set();
+  return arr.filter(obj => {
+    // If the property value hasn't been seen before:
+    if (!seen.has(obj[prop])) {
+      seen.add(obj[prop]); // Add it to the set
+      return true;         // Keep the object in the filtered array
+    }
+    return false;          // Otherwise, filter it out
+  });
+}
 
+const uniqueArray = removeDuplicatesByProperty(roles, 'name');
 const options3 = [
   { value: "", label: "Select Role" }, // empty option
-  ... roles.map(rl => ({
-    value: rl._id,
-    label: `${rl.name}`
+  ... uniqueArray.map(uA => ({
+    value: uA._id,
+    label: `${uA.name}`
 }))
 ];
 const defaultValue = options.find(d=>d.value==staff);

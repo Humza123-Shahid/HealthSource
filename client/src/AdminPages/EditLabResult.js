@@ -34,9 +34,9 @@ const EditLabResult = () => {
         
         const newPath = remainingParts.join('/');
             
-            
+        
         const [existingImage, setExistingImage] = useState(`http://localhost:5000/${newPath}`); // from DB
-    
+       console.log(existingImage);
         const [file, setFile] = useState(null);
         const [preview, setPreview] = useState(null);
           const handleResultDateChange = (e) => {

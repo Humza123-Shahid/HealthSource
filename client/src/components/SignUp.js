@@ -52,6 +52,8 @@ const SignUp = (props) => {
             //   setShowToast(false)
             // },1500)
             localStorage.setItem('utype',"patient");
+            localStorage.setItem('patientID',json.userTypeId);
+
             navigate("/admin",{
               state: { signUpSuccess: true},
               replace: true, // optional: prevents back button returning to login

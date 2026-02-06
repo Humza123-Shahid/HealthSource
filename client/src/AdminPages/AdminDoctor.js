@@ -12,6 +12,7 @@ const AdminDoctor = () => {
      const context2=useContext(staffContext);
     const {staffs,getStaffs}=context2;
     const navigate = useNavigate();
+    let filteredData;
     const [searchTerm, setSearchTerm] = useState('');
     const handleClick = () => {
         navigate('adddoctor');
@@ -27,10 +28,28 @@ const AdminDoctor = () => {
   //     setQcount(Number(storedCount));
   //   }
   // }, []);
-  const filteredData = doctors.filter(item =>
-      item.specializations?.toLowerCase().includes(searchTerm.toLowerCase())||
-      item.licenseNumber?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  // const filteredData = doctors.filter(item =>
+  //     item.specializations?.toLowerCase().includes(searchTerm.toLowerCase())||
+  //     item.licenseNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  if(localStorage.getItem('utype')=='doctor')
+  {
+    console.log(localStorage.getItem('doctorID'))
+      // const filteredDatabyId=patientmedicalhistories.find(da => da.patient ==localStorage.getItem('patientID'))
+      const filteredDatabyId=doctors.filter(da => da.staff ==localStorage.getItem('doctorID'));
+
+      console.log(filteredDatabyId);
+      filteredData = filteredDatabyId?.filter(item =>
+          item.specializations?.toLowerCase().includes(searchTerm.toLowerCase())||
+          item.licenseNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+  }
+  else{
+      filteredData = doctors?.filter(item =>
+          item.specializations?.toLowerCase().includes(searchTerm.toLowerCase())||
+          item.licenseNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+  }
   const handleView = (id,index,staffId) => {
     const dataitem=doctors.find(da => da._id ==id)
      //const datacat=getCategoryById(catId);
@@ -72,7 +91,9 @@ const AdminDoctor = () => {
       }, []); //
   return (
    <div>
+    {localStorage.getItem('utype')!=='doctor' &&
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Doctor</button>
+    }
       <div className="d-flex justify-content-between" style={{
       margin: '20px 0px 0px 15px',
       padding: '0px'}}>
@@ -124,12 +145,15 @@ const AdminDoctor = () => {
                   handleView(row._id,index+1,row.staff)}>
                 View
               </button>
+              {localStorage.getItem('utype')!=='doctor' &&
               <button onClick={() => handleEdit(row._id,row.staff)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
                 Edit
               </button>
+              &&
               <button onClick={() => handleDelete(row._id)} style={{ color:"white",backgroundColor:"red" }}>
                 Delete
               </button>
+              }
               </td>
             </tr>)
         })}

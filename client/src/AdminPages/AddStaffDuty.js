@@ -439,7 +439,7 @@ useEffect(() => {
        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="bookingType" className="form-label">Enter Duty Type:</label>
             {/* <input type="text" className="form-control" id="bookingType" name="bookingType" onChange={onChange} /> */}
-            <select id="mySelect" className="form-control " name="dutyType" onChange={(event)=>onChangeType(index,event)}>
+            <select id="mySelect" className="form-control " style={{backgroundColor:'white'}} name="dutyType" onChange={(event)=>onChangeType(index,event)}>
                 <option value="ward-round">Ward-Round</option>
                 <option value="OPD">OPD</option>
                 <option value="ICU">ICU</option>
@@ -452,7 +452,7 @@ useEffect(() => {
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
             {/* <input type="text" className="form-control" id="status" name="status" onChange={onChange} /> */}
-            <select id="mySelect" className="form-control " name="status" onChange={(event)=>onChangeStatus(index,event)}>
+            <select id="mySelect" className="form-control " style={{backgroundColor:'white'}} name="status" onChange={(event)=>onChangeStatus(index,event)}>
                 <option value="assigned">Assigned</option>
                 <option value="in-progress">In-Progress</option>
                 <option value="completed">Completed</option>

@@ -56,7 +56,9 @@ router.post('/addpatient',uploadpatient.single("file"),[
             }
             const authtoken=jwt.sign(data,JWT_SECRET)   
         success=true;
-        res.json({success,authtoken,data:savedPatient})
+        userTypeId= patient._id;
+
+        res.json({success,authtoken,data:savedPatient,userTypeId})
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");

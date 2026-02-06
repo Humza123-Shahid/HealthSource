@@ -28,8 +28,11 @@ const AddStaffAttendance = () => {
     const [checkOutTime2, setCheckOutTime2] = useState("");
     const [date, setDate] = useState("");
     const [date2, setDate2] = useState("");
-    const [ dutyDate, setDutyDate] = useState(undefined);
-    const [ dutyDate2, setDutyDate2] = useState(undefined);
+    // const [ dutyDate, setDutyDate] = useState(undefined);
+    // const [ dutyDate2, setDutyDate2] = useState(undefined);
+        const [ dutyDate, setDutyDate] = useState("");
+    const [ dutyDate2, setDutyDate2] = useState("");
+
     const [checkedValue, setCheckedValue] = useState(0);
     const [selectedStaffValue, setSelectedStaffValue] = useState('');
     const [selectedShiftValue, setSelectedShiftValue] = useState("");
@@ -535,9 +538,9 @@ useEffect(() => {
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Attendance Status:</label>
             {/* <input type="number" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} /> */}
-            <select id="mySelect" className="form-control " value={allAttendanceStatusValue[index]?.value} onChange={(event)=>onChangeAttendanceStatus(index,event)}>
+            <select id="mySelect" className="form-control " style={{backgroundColor:'white'}} value={allAttendanceStatusValue[index]?.value} onChange={(event)=>onChangeAttendanceStatus(index,event)}>
                 <option value="present">Present</option>
-                <option value="absent">Absent</option>\
+                <option value="absent">Absent</option>
                 <option value="leave">Leave</option>
             </select>
       </div>
