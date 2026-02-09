@@ -52,6 +52,7 @@ app.use('/api/staffattendance',require('./Routes/admin/staffattendance'))
 app.use('/api/admission',require('./Routes/admin/admission'))
 app.use('/api/staffduty',require('./Routes/admin/staffduty'))
 app.use('/api/social',require('./Routes/admin/social'))
+app.use('/api/department',require('./Routes/admin/department'))
 
 
 

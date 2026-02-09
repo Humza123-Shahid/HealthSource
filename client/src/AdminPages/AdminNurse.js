@@ -150,14 +150,15 @@ const AdminNurse = () => {
                   handleView(row._id,index+1,row.staff,row.assignedWard)}>
                 View
               </button>
-              {localStorage.getItem('utype')!=='nurse' &&
+              {localStorage.getItem('utype')!=='nurse' ?
+              (<>
               <button onClick={() => handleEdit(row._id,row.staff,row.assignedWard)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
                 Edit
               </button>
-              &&
+              
               <button onClick={() => handleDelete(row._id)} style={{ color:"white",backgroundColor:"red" }}>
                 Delete
-              </button>
+              </button></>):(null)
               }
               </td>
             </tr>)

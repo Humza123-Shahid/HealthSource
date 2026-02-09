@@ -33,7 +33,7 @@ const ViewDoctor = () => {
               <td>{Doctor.experienceYears}</td>
               <td>{Doctor.consultationFee}</td>
               <td>{Status}</td>
-              <td>{Doctor.signatureUrl}</td>
+              <td>{Doctor.signaturePath}</td>
 
             </tr>
         </tbody>

@@ -158,14 +158,15 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
                   handleView(row._id,staff?.firstName,patient?.firstName,index)}>
                 View
               </button>
-              {localStorage.getItem('utype')!=='patient' &&
+              {localStorage.getItem('utype')!=='patient'?
+              (<>
               <button onClick={() => handleEdit(row._id,staff._id,row.patient)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
                 Edit
               </button>
-              &&
+              
               <button onClick={() => handleDelete(row._id)} style={{ color:"white",backgroundColor:"red" }}>
                 Delete
-              </button>
+              </button></>):(null)
               }
               </td>
             </tr>

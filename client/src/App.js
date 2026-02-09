@@ -146,6 +146,7 @@ import ViewSocial from './AdminPages/ViewSocial';
 import EditSocial from './AdminPages/EditSocial';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './AdminPages/NotFound';
+import DepartmentState from './context/DepartmentState';
 
 function App() {
   const [alert,setAlert]=useState(null);
@@ -195,6 +196,7 @@ function App() {
       <AdmissionState>
       <StaffDutyState>
       <SocialState>
+      <DepartmentState>
       <UserState>
         {/* <div className="container"  style={{ maxWidth: "100vw",paddingLeft:"0px",paddingRight:"0px" }}> */}
           <Routes>
@@ -318,6 +320,7 @@ function App() {
           </Routes>
         {/* </div> */}
       </UserState>
+      </DepartmentState>
       </SocialState>
       </StaffDutyState>
       </AdmissionState>

@@ -27,9 +27,9 @@ const EditDoctor = () => {
     const [selectedonCallValue, setSelectedOnCallValue] = useState(Doctor.onCall);
     const [file, setFile] = useState(null);
         const [preview, setPreview] = useState(null);
-        const parts = Doctor.signaturePath.split('\\')
-        const remainingParts = parts.slice(1);
-        const newPath = remainingParts.join('/');
+        const parts = Doctor.signaturePath?.split('\\')
+        const remainingParts = parts?.slice(1);
+        const newPath = remainingParts?.join('/');
         console.log(newPath);
         const [existingImage, setExistingImage] = useState(`http://localhost:5000/${newPath}`); // from DB
   //   const handleSignatureUrlChange = (e) => {

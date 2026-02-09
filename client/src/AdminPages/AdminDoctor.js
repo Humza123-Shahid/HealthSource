@@ -145,14 +145,16 @@ const AdminDoctor = () => {
                   handleView(row._id,index+1,row.staff)}>
                 View
               </button>
-              {localStorage.getItem('utype')!=='doctor' &&
+              {localStorage.getItem('utype')!=='doctor'? 
+              (<>
               <button onClick={() => handleEdit(row._id,row.staff)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
                 Edit
               </button>
-              &&
+              
               <button onClick={() => handleDelete(row._id)} style={{ color:"white",backgroundColor:"red" }}>
                 Delete
               </button>
+              </>):(null)
               }
               </td>
             </tr>)

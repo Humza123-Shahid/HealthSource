@@ -60,6 +60,7 @@ const Home = () => {
   const nextRef = useRef(null);
   const prevRef2 = useRef(null);
   const nextRef2 = useRef(null);
+  const imgRef = useRef(null);
   const [facebookLink, setFacebookLink] = useState('');
   const [instagramLink, setInstagramLink] = useState('');
   const [twitterLink, setTwitterLink] = useState('');
@@ -75,6 +76,14 @@ const Home = () => {
     const {staffs,getStaffs}=context4;
     const [credentials,setCredentials] =useState({patientId:null,doctorId:null,bookingType:"",status:"booked",notes:""})
         const [ appointmentDate, setAppointmentDate] = useState("");
+    // const dynamicNumber=1;
+    // const dynamicSrc="img/team-"+ dynamicNumber+".jpg";
+    // console.log(dynamicSrc);
+    // const myImage=document.getElementById("doctorImage1");
+    // console.log(myImage);
+    // myImage.src=dynamicSrc;
+
+
     const handleAppointmentDateChange = (e) => {
         console.log(e.target.value);
     setAppointmentDate(e.target.value); // <-- Get input value here
@@ -199,6 +208,10 @@ const Home = () => {
           };
       
           fetchData();
+    //       if (imgRef.current) {
+    //             console.log("Image element found:", imgRef.current);
+    //             imgRef.current.src = dynamicSrc; 
+    // }
   }, []); 
 useEffect(() => {
       const facebook=socials.find(d => d.platformName == "Facebook");
@@ -676,18 +689,20 @@ useEffect(() => {
 						//pagination={{ clickable: true }}
                         
 						>
+                {Array.isArray(doctors) &&doctors.slice(0, 3).map((row,index) => {
+                    const staff = getStaffById(row?.staff);
+                    return(
                 <SwiperSlide>
                 <div class="team-item">
                     <div class="row g-0 bg-light rounded overflow-hidden" style={{'height':'350px'}}>
                         <div class="col-12 col-sm-5 h-100">
-                            <img class="img-fluid h-100" src="img/team-1.jpg" style={{'objectFit': 'cover'}}/>
+                            <img id="doctorImage1" class="img-fluid h-100" src={require(`../img/team-${index+1}.jpg`)} style={{'objectFit': 'cover'}}/>
                         </div>
                         <div class="col-12 col-sm-7 h-100 d-flex flex-column">
                             <div class="mt-auto p-4">
-                                <h3>Doctor Name</h3>
-                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
-                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
-                                    dolor</p>
+                                <h3>{staff?.firstName}</h3>
+                                <h6 class="fw-normal fst-italic text-primary mb-4">{row.specializations}</h6>
+                                <p class="m-0">{staff?.firstName} has {row.experienceYears} Years of Experience and his/her Consultation Fee is {row.consultationFee} PKR.</p>
                             </div>
                             <div class="d-flex mt-auto border-top p-4">
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
@@ -701,58 +716,10 @@ useEffect(() => {
                     </div>
                 </div>
                 </SwiperSlide>
-                <SwiperSlide>
+                    )
+                })}
 
-                <div class="team-item">
-                    <div class="row g-0 bg-light rounded overflow-hidden" style={{'height':'350px'}}>
-                        <div class="col-12 col-sm-5 h-100">
-                            <img class="img-fluid h-100" src="img/team-2.jpg" style={{'objectFit': 'cover'}}/>
-                        </div>
-                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
-                            <div class="mt-auto p-4">
-                                <h3>Doctor Name</h3>
-                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
-                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
-                                    dolor</p>
-                            </div>
-                            <div class="d-flex mt-auto border-top p-4">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
-                                        class="fab fa-twitter"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
-                                        class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
-                                        class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </SwiperSlide>
-                <SwiperSlide>
-
-                <div class="team-item">
-                    <div class="row g-0 bg-light rounded overflow-hidden" style={{'height':'350px'}}>
-                        <div class="col-12 col-sm-5 h-100">
-                            <img class="img-fluid h-100" src="img/team-3.jpg" style={{'objectFit': 'cover'}}/>
-                        </div>
-                        <div class="col-12 col-sm-7 h-100 d-flex flex-column">
-                            <div class="mt-auto p-4">
-                                <h3>Doctor Name</h3>
-                                <h6 class="fw-normal fst-italic text-primary mb-4">Cardiology Specialist</h6>
-                                <p class="m-0">Dolor lorem eos dolor duo eirmod sea. Dolor sit magna rebum clita rebum
-                                    dolor</p>
-                            </div>
-                            <div class="d-flex mt-auto border-top p-4">
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
-                                        class="fab fa-twitter"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="#!"><i
-                                        class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#!"><i
-                                        class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </SwiperSlide>
+                
                 <button ref={prevRef} className="custom-prev">
                     <i className="bi bi-arrow-left fs-4"/>
                     </button>
