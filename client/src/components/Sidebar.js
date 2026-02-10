@@ -120,7 +120,13 @@ setPermissions(prevPermissions => [...prevPermissions, role.permissions]);
         <Link className="nav-link "  to="staffduty" onClick={()=>SelectedTab("staffduty")}><i className="iconcolor fas fa-tasks me-2"></i>Staff Duty</Link>
       </li>
       )}
+      
+      {permissions.includes('Department') && (
 
+       <li className="nav-item mb-2">
+        <Link className="nav-link "  to="department" onClick={()=>SelectedTab("department")}><i className="iconcolor far fa-building me-2" aria-hidden="true"></i> Department</Link>
+      </li>
+      )}
       {permissions.includes('Doctor') && (
 
        <li className="nav-item mb-2">

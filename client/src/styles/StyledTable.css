@@ -36,3 +36,9 @@
 .styled-table button:hover {
   opacity: 0.8;
 }
+
+.dashboard-content {
+  overflow-x: auto;     /* show horizontal scrollbar */
+  overflow-y: hidden;   /* optional */
+  white-space: nowrap; /* prevents wrapping */
+}

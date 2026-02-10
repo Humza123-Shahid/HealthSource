@@ -20,7 +20,7 @@ const StaffState=(props)=>{
       console.log(json);
       setStaffs(json)
     }
-    const addStaff=async (firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,file,status)=>{
+    const addStaff=async (firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,department,salary,shift,file,status)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
       const formData = new FormData();
       formData.append("firstName", firstName);
@@ -35,6 +35,8 @@ const StaffState=(props)=>{
       formData.append("qualification", qualification);
       formData.append("joiningDate", joiningDate);
       formData.append("employmentType", employmentType);
+      console.log(department);
+      formData.append("department", department);
       formData.append("salary", salary);
       formData.append("shift", shift);
       formData.append("file", file);
@@ -68,7 +70,7 @@ const StaffState=(props)=>{
       const newStaffs=staffs.filter((staff)=>{return staff._id!==id})
       setStaffs(newStaffs)
     }
-    const editStaff=async(id,firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,file,status)=>{
+    const editStaff=async(id,firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,department,salary,shift,file,status)=>{
       console.log(localStorage.getItem('token'));
       const formData = new FormData();
       formData.append("firstName", firstName);
@@ -83,6 +85,8 @@ const StaffState=(props)=>{
       formData.append("qualification", qualification);
       formData.append("joiningDate", joiningDate);
       formData.append("employmentType", employmentType);
+      formData.append("department", department);
+
       formData.append("salary", salary);
       formData.append("shift", shift);
       formData.append("file", file);
@@ -115,6 +119,7 @@ const StaffState=(props)=>{
           newStaffs[index].qualification=qualification;
           newStaffs[index].joiningDate=joiningDate;
           newStaffs[index].employmentType=employmentType;
+          newStaffs[index].department=department;
           newStaffs[index].salary=salary;
           newStaffs[index].shift=shift;
           newStaffs[index].file=file;

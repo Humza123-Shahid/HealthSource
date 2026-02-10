@@ -1,6 +1,8 @@
 import React,{useState,useContext,useEffect} from 'react'
 import staffContext from '../context/staffContext'
 import shiftContext from '../context/shiftContext'
+import departmentContext from '../context/departmentContext'
+
 import Select from "react-select";
 
 import InfoMessage from '../components/InfoMessage';
@@ -11,11 +13,14 @@ const AddStaff = () => {
       const {addStaff}=context;
       const context2=useContext(shiftContext);
       const {shifts,getShifts}=context2;
+      const context3=useContext(departmentContext);
+      const {departments,getDepartments}=context3;
     const [showToast,setShowToast]=useState(false)
         const [msg,setMsg]=useState('')
         const [type,setType]=useState('')
         
     const [shiftName, setShiftName] = useState(null);
+    const [departmentName, setDepartmentName] = useState(null);
     const [status, setStatus] = useState('active');
     const [ firstName, setFirstName] = useState('');
     const [ lastName, setLastName] = useState('');
@@ -87,7 +92,17 @@ const AddStaff = () => {
     setShiftName(e.target.value); // <-- Get input value here
   };
   const handleChange = (selectedOption) => {
-    if(selectedOption=="" )
+    if(selectedOption.value=="" )
+    {
+        setDepartmentName(null)
+    }
+    else
+    {
+      setDepartmentName(selectedOption.value)
+    }
+  }
+  const handleChange2 = (selectedOption) => {
+    if(selectedOption.value=="" )
     {
         setShiftName(null)
     }
@@ -97,6 +112,13 @@ const AddStaff = () => {
     }
   }
    const options = [
+  { value: "", label: "Select Department" }, // empty option
+  ... departments.map(dpt => ({
+    value: dpt._id,
+    label: `${dpt.name}`
+  }))
+];
+const options2 = [
   { value: "", label: "Select Shift" }, // empty option
   ... shifts.map(st => ({
     value: st._id,
@@ -109,7 +131,7 @@ const filterOption = (option, inputValue) => {
 };
   const addStaffs=async (e)=>{
           e.preventDefault();
-          const success= await addStaff(firstName,lastName,designation,nationalId,gender,birthDate2,address,contact,qualification,joinDate2,employType,salary,shiftName,file,status)
+          const success= await addStaff(firstName,lastName,designation,nationalId,gender,birthDate2,address,contact,qualification,joinDate2,employType,departmentName,salary,shiftName,file,status)
           console.log(success);
           if(success)
           {
@@ -125,6 +147,8 @@ useEffect(() => {
            const fetchData = async () => {
     
             const result=await getShifts()
+            const result2=await getDepartments()
+
            
 
           };
@@ -197,11 +221,17 @@ useEffect(() => {
               </select>
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+            <label htmlFor="staff" className="form-label">Select Department</label>
+            <Select id="departmentId" options={options} filterOption={filterOption} onChange={handleChange} name="departmentId" placeholder="Select Department" />
+            {/* <Select id="staffId" options={options} filterOption={filterOption} value={{'value':stf._id,'label':stf.firstName}} onChange={(selectedOption) =>handleChange(selectedOption, index)} name="staffId" placeholder="Select Staff" /> */}
+        </div>
+        
+        </div>
+         <div className='mx-0' style={{display:'flex'}}>
+          <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="salary" className="form-label">Enter Salary:</label>
             <input type="number" className="form-control" id="salary" value={salary} name="salary" onChange={handleSalaryChange} />
       </div>
-        </div>
-         <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="shift" className="form-label">Select Shift</label>
             {/* <select id="shfitId" className="form-control " value={shiftName} name="shiftId" onChange={handleShiftChange}>
@@ -210,7 +240,7 @@ useEffect(() => {
                   <option value={row._id}>{row.name}</option>
                   ))}
             </select> */}
-            <Select id="shiftId" options={options} filterOption={filterOption} onChange={handleChange} name="shiftId" placeholder="Select Shift" />
+            <Select id="shiftId" options={options2} filterOption={filterOption} onChange={handleChange2} name="shiftId" placeholder="Select Shift" />
 
         </div>
       
@@ -223,7 +253,11 @@ useEffect(() => {
               onChange={(e) => setFile(e.target.files[0])}
             />
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     
+      </div>
+      <div className='mx-0' style={{display:'flex'}}>
+
+       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
             {/* <input type="text" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} /> */}
              <select id="mySelect" className="form-control " value={status} onChange={handleStatusChange}>
@@ -233,7 +267,15 @@ useEffect(() => {
                 <option value="terminated">Terminated</option>
             </select>
       </div>
-      </div>
+      <div className="mb-3 ms-3" style={{width:'100%'}}>
+          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
+          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
+    </div>
+     <div className="mb-3 ms-3" style={{width:'100%'}}>
+          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
+          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
+    </div>
+    </div>
       
     
       <button disabled={firstName==''||designation==''||birthDate.length<1||nationalId.length<1||contact.length<1||address.length<1||status.length<1||qualification.length<1||employType.length<1} type="submit" className="btn btn-primary" >Add Patient</button>

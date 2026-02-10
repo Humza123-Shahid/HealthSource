@@ -85,6 +85,7 @@ const AdminStaff = () => {
         <FaSearch style={{color: '#888',marginLeft: '0px',cursor:'pointer'}} onClick={handleSearchClick}/>
         </div>
       </div>
+      <div className="dashboard-content">
       <table  className="styled-table ms-4">
         <thead>
           <tr>
@@ -147,8 +148,9 @@ const AdminStaff = () => {
         })}
         </tbody>
       </table>
-    </div>
-  );
+      </div>
+      </div>
+        );
 }
 
 export default AdminStaff

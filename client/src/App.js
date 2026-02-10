@@ -147,6 +147,10 @@ import EditSocial from './AdminPages/EditSocial';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './AdminPages/NotFound';
 import DepartmentState from './context/DepartmentState';
+import AdminDepartment from './AdminPages/AdminDepartment';
+import AddDepartment from './AdminPages/AddDepartment';
+import ViewDepartment from './AdminPages/ViewDepartment';
+import EditDepartment from './AdminPages/EditDepartment';
 
 function App() {
   const [alert,setAlert]=useState(null);
@@ -230,6 +234,10 @@ function App() {
               <Route path="staffduty/addstaffduty" element={<AddStaffDuty/>} />
               <Route path="staffduty/getstaffduty" element={<ViewStaffDuty/>} /> 
               <Route path="staffduty/editstaffduty" element={<EditStaffDuty/>} />
+              <Route path="department" element={<ProtectedRoute RouteName={"Department"}><AdminDepartment/></ProtectedRoute>} /> 
+              <Route path="department/adddepartment" element={<AddDepartment/>} />
+              <Route path="department/getdepartment" element={<ViewDepartment/>} /> 
+              <Route path="department/editdepartment" element={<EditDepartment/>} />
               <Route path="doctor" element={<ProtectedRoute RouteName={"Doctor"}><AdminDoctor/></ProtectedRoute>} /> 
               <Route path="doctor/adddoctor" element={<AddDoctor/>} />
               <Route path="doctor/getdoctor" element={<ViewDoctor/>} /> 

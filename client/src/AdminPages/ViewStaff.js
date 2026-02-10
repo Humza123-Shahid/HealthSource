@@ -1,14 +1,20 @@
 import React,{useState,useContext,useEffect} from 'react'
 import { useLocation } from 'react-router-dom';
 import shiftContext from '../context/shiftContext'
+import departmentContext from '../context/departmentContext'
 
 const ViewStaff = () => {
      const location = useLocation();
     const Staff=location.state?.staff || {};
     const index=location.state?.idx;
-     const context2=useContext(shiftContext);
+     const context2=useContext(shiftContext);     
     const {shifts,getShifts}=context2;
+    const context3=useContext(departmentContext);
+    const {departments,getDepartments}=context3;
+
     const targetShift = shifts?.find(shift => shift._id == Staff.shift);
+        const targetDepartment = departments?.find(department => department._id == Staff.department);
+
     const formattedBirthDate = new Date(Staff?.dob).toLocaleString('en-US', {
              year: 'numeric',
             month: '2-digit',
@@ -26,6 +32,7 @@ const ViewStaff = () => {
                const fetchData = async () => {
         
                 const result=await getShifts()
+                const result2=await getDepartments()
                
     
               };
@@ -49,6 +56,7 @@ const ViewStaff = () => {
             <th>Qualification</th>
             <th>Joining Date</th>
             <th>Employment Type</th>
+            <th>Department</th>
             <th>Salary</th>
             <th>Shift</th>
             <th>Photo Url</th>
@@ -71,6 +79,7 @@ const ViewStaff = () => {
               <td>{Staff.qualification}</td>
               <td>{formattedJoiningDate}</td>
               <td>{Staff?.employmentType}</td>
+              <td>{targetDepartment?.name}</td>
               <td>{Staff.salary}</td>
               <td>{targetShift?.name}</td>
               <td>{Staff.photoUrl}</td>

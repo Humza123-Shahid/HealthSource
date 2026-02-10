@@ -24,14 +24,22 @@ router.post('/addstaff',fetchuser,uploadstaff.single("file"),[
 ],async (req,res)=>{
     try {
         let success = false;
-        const {firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,status}=req.body;
+        let {firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,department,salary,shift,status}=req.body;
         const errors = validationResult(req);
         console.log(errors)
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
+        if(department=="null")
+        {
+            department=null;
+        }
+         if(shift=="null")
+        {
+            shift=null;
+        }
         const staff=new Staff({
-           firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,photoPath: req.file?.path,status
+           firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,department,salary,shift,photoPath: req.file?.path,status
         })
         const savedStaff=await staff.save();
         success=true;
@@ -43,7 +51,11 @@ router.post('/addstaff',fetchuser,uploadstaff.single("file"),[
 })
 // ROUTE 3: Update an existing Question using :PUT "/api/questions/updatequestion".Login required
 router.put('/updatestaff/:id',fetchuser,uploadstaff.single("file"),async (req,res)=>{
-    const {firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,salary,shift,status}=req.body;
+    let {firstName,lastName,designation,nationalId,gender,dob,address,contact,qualification,joiningDate,employmentType,department,salary,shift,status}=req.body;
+            console.log(department);
+
+    
+         
     const newStaff={};
     if(firstName){newStaff.firstName=firstName};
     if(lastName){newStaff.lastName=lastName};
@@ -56,14 +68,26 @@ router.put('/updatestaff/:id',fetchuser,uploadstaff.single("file"),async (req,re
     if(qualification){newStaff.qualification=qualification};
     if(joiningDate){newStaff.joiningDate=joiningDate};
     if(employmentType){newStaff.employmentType=employmentType};
+    if(department=="null")
+        {
+        console.log("department");
+
+            newStaff.department=null;
+        }
+    else if(department){newStaff.department=department};
+
     if(salary){newStaff.salary=salary};
-    if(shift){newStaff.shift=shift};
+    if(shift=="null")
+        {
+            newStaff.shift=null;
+        }
+    else if(shift){newStaff.shift=shift};
     // if(photoUrl){newStaff.photoUrl=photoUrl};
     if (req.file) {
     newStaff.photoPath = req.file.path; // overwrite only if new file
   }
     if(status){newStaff.status=status};
-
+    console.log(newStaff.department);
     let staff=await Staff.findById(req.params.id);
     if(!staff){return res.status(404).send("Not Found")}
 

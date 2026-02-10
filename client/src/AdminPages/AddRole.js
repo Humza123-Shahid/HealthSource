@@ -93,6 +93,8 @@ useEffect(() => {
   permissionsSelection[22]={value:'Admission',isChecked:false}
   permissionsSelection[23]={value:'Staff Attendance',isChecked:false}
   permissionsSelection[24]={value:'Social',isChecked:false}
+  permissionsSelection[25]={value:'Department',isChecked:false}
+
  setAllPermsssionsValue(permissionsSelection)
   }, []);
   return (
@@ -168,6 +170,8 @@ useEffect(() => {
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(22,event)} style={{ transform: "scale(1.5)" }}/> Admission</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(23,event)} style={{ transform: "scale(1.5)" }} /> Staff Attendance</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(24,event)} style={{ transform: "scale(1.5)" }}/> Social</label>
+        <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(25,event)} style={{ transform: "scale(1.5)" }}/> Department</label>
+
       </div>
       <br/>
       <button disabled={name.length<1} type="submit" className="btn btn-primary" >Add Role</button>

@@ -3,6 +3,7 @@ import Select from "react-select";
 import { useLocation } from 'react-router-dom';
 import staffContext from '../context/staffContext'
 import shiftContext from '../context/shiftContext'
+import departmentContext from '../context/departmentContext'
 
 import InfoMessage from '../components/InfoMessage';
 
@@ -12,6 +13,8 @@ const EditStaff = () => {
       const {editStaff}=context;
       const context2=useContext(shiftContext);
       const {shifts,getShifts}=context2;
+       const context3=useContext(departmentContext);
+      const {departments,getDepartments}=context3;
     const [showToast,setShowToast]=useState(false)
         const [msg,setMsg]=useState('')
         const [type,setType]=useState('')
@@ -21,6 +24,8 @@ const EditStaff = () => {
      const location = useLocation(); 
       const Staff=location.state?.staff || {};
     const [shiftName, setShiftName] = useState(Staff.shift);
+    const [departmentName, setDepartmentName] = useState(Staff.department);
+
     const [status, setStatus] = useState(Staff.status);
     const [ firstName, setFirstName] = useState(Staff.firstName);
     const [ lastName, setLastName] = useState(Staff.lastName);
@@ -38,9 +43,9 @@ const EditStaff = () => {
     const [ photoUrl, setPhotoUrl] = useState(Staff.photoUrl);
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
-    const parts = Staff.photoPath.split('\\')
-    const remainingParts = parts.slice(1);
-    const newPath = remainingParts.join('/');
+    const parts = Staff.photoPath?.split('\\')
+    const remainingParts = parts?.slice(1);
+    const newPath = remainingParts?.join('/');
     
     const [existingImage, setExistingImage] = useState(`http://localhost:5000/${newPath}`); // from DB
   const handleStatusChange = (e) => {
@@ -89,7 +94,18 @@ const EditStaff = () => {
     setShiftName(e.target.value); // <-- Get input value here
   };
 const handleChange = (selectedOption) => {
-    if(selectedOption=="" )
+    if(selectedOption.value=="" )
+    {
+      console.log('here');
+        setDepartmentName(null)
+    }
+    else
+    {
+      setDepartmentName(selectedOption.value)
+    }
+  }
+  const handleChange2 = (selectedOption) => {
+    if(selectedOption.value=="" )
     {
         setShiftName(null)
     }
@@ -98,14 +114,22 @@ const handleChange = (selectedOption) => {
       setShiftName(selectedOption.value)
     }
   }
-   const options = [
+  const options = [
+  { value: "", label: "Select Department" }, // empty option
+  ... departments.map(dpt => ({
+    value: dpt._id,
+    label: `${dpt.name}`
+  }))
+];
+const options2 = [
   { value: "", label: "Select Shift" }, // empty option
   ... shifts.map(st => ({
     value: st._id,
     label: `${st.name}`
   }))
 ];
-const defaultValue = options.find(d=>d.value==Staff.shift);
+const defaultValue = options.find(d=>d.value==Staff.department);
+const defaultValue2 = options2.find(d=>d.value==Staff.shift);
 
 const filterOption = (option, inputValue) => {
   // Only filter based on the 'label' property, for example
@@ -121,7 +145,8 @@ const filterOption = (option, inputValue) => {
     };
   const editStaffs=async (e)=>{
           e.preventDefault();
-          const success= await editStaff(Staff._id,firstName,lastName,designation,nationalId,gender,birthDate,address,contact,qualification,joinDate,employType,salary,shiftName,file,status)
+          console.log(departmentName);
+          const success= await editStaff(Staff._id,firstName,lastName,designation,nationalId,gender,birthDate,address,contact,qualification,joinDate,employType,departmentName,salary,shiftName,file,status)
           console.log(success);
           if(success)
           {
@@ -137,7 +162,8 @@ useEffect(() => {
            const fetchData = async () => {
     
             const result=await getShifts()
-           
+             const result2=await getDepartments()
+          
 
           };
           fetchData();
@@ -208,12 +234,18 @@ useEffect(() => {
                   <option value="contract">Contract</option>
               </select>
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+            <label htmlFor="staff" className="form-label">Select Department</label>
+            <Select id="departmentId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="departmentId" placeholder="Select Department" />
+            {/* <Select id="staffId" options={options} filterOption={filterOption} value={{'value':stf._id,'label':stf.firstName}} onChange={(selectedOption) =>handleChange(selectedOption, index)} name="staffId" placeholder="Select Staff" /> */}
+        </div>
+       
+        </div>
+         <div className='mx-0' style={{display:'flex'}}>
+           <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="salary" className="form-label">Enter Salary:</label>
             <input type="number" className="form-control" id="salary" value={salary} name="salary" onChange={handleSalaryChange} />
       </div>
-        </div>
-         <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="shift" className="form-label">Select Shift</label>
             {/* <select id="shfitId" className="form-control " value={shiftName} name="shiftId" onChange={handleShiftChange}>
@@ -222,7 +254,7 @@ useEffect(() => {
                   <option value={row._id}>{row.name}</option>
                   ))}
             </select> */}
-            <Select id="shfitId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="shfitId" placeholder="Select Shift" />
+            <Select id="shfitId" options={options2} filterOption={filterOption} defaultValue={defaultValue2} onChange={handleChange2} name="shfitId" placeholder="Select Shift" />
         </div>
       
        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
@@ -234,7 +266,11 @@ useEffect(() => {
               onChange={handleFileChange}
             />
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     
+      
+      </div>
+       <div className='mx-0' style={{display:'flex'}}>
+         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
         <div>
               {/* {preview ? (
                 <>
@@ -262,9 +298,6 @@ useEffect(() => {
             </a>
         </div>
       </div>
-      
-      </div>
-       <div className='mx-0' style={{display:'flex'}}>
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
             {/* <input type="text" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} /> */}
@@ -276,10 +309,6 @@ useEffect(() => {
             </select>
       </div>
       <div className="mb-3 ms-3" style={{width:'100%'}}>
-          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
-          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
-        </div>
-        <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
