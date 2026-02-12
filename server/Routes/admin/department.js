@@ -5,7 +5,7 @@ const Department = require('../../models/Department');
 const { body, validationResult } = require('express-validator');
 
 // ROUTE 1: Get All the Departments using :GET "/api/departments/fetchalldepartments".Login required
-router.get('/fetchalldepartments',fetchuser,async (req,res)=>{
+router.get('/fetchalldepartments',async (req,res)=>{
     try {
     
     const departments=await Department.find({});

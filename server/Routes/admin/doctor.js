@@ -19,20 +19,26 @@ router.get('/fetchalldoctors',async (req,res)=>{
     }
 })
 // ROUTE 2: Add a new Question using :POST "/api/questions/addquestion".Login required
-router.post('/adddoctor',fetchuser,uploaddoctor.single("file"),[
+// router.post('/adddoctor',fetchuser,uploaddoctor.single("file"),[
+router.post('/adddoctor',fetchuser,uploaddoctor.fields([
+  { name: 'signature', maxCount: 1 }, // Expects a single file from the 'profile' field
+  { name: 'photo', maxCount: 1 }  // Expects up to 5 files from the 'gallery' field
+]),[
     body('specializations').isLength({ min: 1 }),
     body('licenseNumber').isLength({ min: 1 })
 ],async (req,res)=>{
     try {
         let success = false;
         const {staff,specializations,licenseNumber,experienceYears,consultationFee,onCall}=req.body;
-        console.log(req.file?.path)
+        console.log(req.files[0]?.path)
+        console.log(req.files[1]?.path)
+        // const profileFile = req.files['profile'] ? req.files['profile'][0] : null;
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
         const doctor=new Doctor({
-            staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signaturePath:req.file?.path
+            staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,signaturePath:req.files['signature'][0]?.path,photoPath:req.files['photo'][0]?.path
         })
         const savedDoctor=await doctor.save();
         console.log(savedDoctor);
@@ -44,7 +50,10 @@ router.post('/adddoctor',fetchuser,uploaddoctor.single("file"),[
     }
 })
 // ROUTE 3: Update an existing Question using :PUT "/api/questions/updatequestion".Login required
-router.put('/updatedoctor/:id',fetchuser,uploaddoctor.single("file"),async (req,res)=>{
+router.put('/updatedoctor/:id',fetchuser,uploaddoctor.fields([
+  { name: 'signature', maxCount: 1 }, // Expects a single file from the 'profile' field
+  { name: 'photo', maxCount: 1 }  // Expects up to 5 files from the 'gallery' field
+]),async (req,res)=>{
     const {staff,specializations,licenseNumber,experienceYears,consultationFee,onCall}=req.body;
     const newDoctor={};
     if(staff){newDoctor.staff=staff};
@@ -53,8 +62,11 @@ router.put('/updatedoctor/:id',fetchuser,uploaddoctor.single("file"),async (req,
     if(experienceYears){newDoctor.experienceYears=experienceYears};
     if(consultationFee){newDoctor.consultationFee=consultationFee};
     newDoctor.onCall=onCall;
-    if (req.file) {
-    newDoctor.signaturePath = req.file.path; // overwrite only if new file
+    if (req.files['signature']) {
+    newDoctor.signaturePath = req.files['signature'][0]?.path; // overwrite only if new file
+  }
+  if (req.files['photo']) {
+    newDoctor.photoPath = req.files['photo'][0]?.path // overwrite only if new file
   }
     // if(signatureUrl){newDoctor.signatureUrl=signatureUrl};
 

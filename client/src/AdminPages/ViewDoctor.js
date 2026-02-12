@@ -21,6 +21,7 @@ const ViewDoctor = () => {
             <th>Consultation Fee</th>
             <th>On Call</th>
             <th>Signature Url</th>
+            <th>Photo Url</th>
 
           </tr>
         </thead>
@@ -34,6 +35,7 @@ const ViewDoctor = () => {
               <td>{Doctor.consultationFee}</td>
               <td>{Status}</td>
               <td>{Doctor.signaturePath}</td>
+              <td>{Doctor.photoPath}</td>
 
             </tr>
         </tbody>

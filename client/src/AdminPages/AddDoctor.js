@@ -24,7 +24,7 @@ const AddDoctor = () => {
     const [signatureUrl, setSignatureUrl] = useState('');
     const [selectedonCallValue, setSelectedOnCallValue] = useState(false);
     const [file, setFile] = useState(null);
-    
+     const [file2, setFile2] = useState(null);
     const handleSignatureUrlChange = (e) => {
     setSignatureUrl(e.target.value); // <-- Get input value here
   };
@@ -71,7 +71,7 @@ const filterOption = (option, inputValue) => {
   const addDoctors=async (e)=>{
           e.preventDefault();
           console.log(selectedStaffValue);
-          const success= await addDoctor(selectedStaffValue,specializations,licenseNumber,experienceYears,consultationFee,selectedonCallValue,file)
+          const success= await addDoctor(selectedStaffValue,specializations,licenseNumber,experienceYears,consultationFee,selectedonCallValue,file,file2)
           console.log(success);
           if(success)
           {
@@ -148,14 +148,23 @@ useEffect(() => {
               onChange={(e) => setFile(e.target.files[0])}
             />
       </div>
+     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+            <label htmlFor="photoUrl" className="form-label">Select Photo:</label>
+            <br/>
+            {/* <input type="text" className="form-control" id="signatureUrl" value={signatureUrl} name="signatureUrl" onChange={handleSignatureUrlChange} /> */}
+           <input
+              type="file"
+              onChange={(e) => setFile2(e.target.files[0])}
+            />
+      </div>
     <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
-     <div className="mb-3 ms-3" style={{width:'100%'}}>
+     {/* <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
-    </div>
+    </div> */}
       </div>
       <button disabled={specializations.length<1||licenseNumber.length<1||experienceYears.length<1||consultationFee.length<1||selectedStaffValue==''} type="submit" className="btn btn-primary" >Add Doctor</button>
       </form>

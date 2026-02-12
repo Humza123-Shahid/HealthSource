@@ -89,10 +89,10 @@ const Service = () => {
                             </div>
                         </div>
                         {/* <a href="login.html" class="nav-item nav-link">Log In</a> */}
-                        {!localStorage.getItem('token')?
-                        <li><Link to="/login" className="nav-item nav-link"> Login</Link></li>
-                        :localStorage.getItem('utype')=="user"?<li><Link to="/login" className="nav-item nav-link" onClick={handleLogout}>Logout</Link></li>
-                        :<li><Link to="/admin" className="nav-item nav-link">Dashboard</Link></li>}
+                         {!localStorage.getItem('token')?
+                        <Link to="/login" className="nav-item nav-link"> Login</Link>
+                        :localStorage.getItem('utype')=="user"?<Link to="/login" className="nav-item nav-link" onClick={handleLogout}>Logout</Link>
+                        :<Link to="/admin" className="nav-item nav-link">Dashboard</Link>}
                         {/* <a href="contact.html" class="nav-item nav-link">Contact</a> */}
                     </div>
                 </div>

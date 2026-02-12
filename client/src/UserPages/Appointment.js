@@ -37,6 +37,8 @@ const customStyles = {
   }),
 };
 const Appointment = () => {
+       let navigate=useNavigate();
+    
      const context=useContext(appointmentContext);
          const {addAppointment}=context;
          const context2=useContext(patientContext);
@@ -113,11 +115,14 @@ const Appointment = () => {
             // Only filter based on the 'label' property, for example
             return option.label.toLowerCase().includes(inputValue.toLowerCase());
             };
+const handleSignUpClick = () => {
+    navigate('/signup');
+  };
     const addAppointments=async (e)=>{
          e.preventDefault();
-        const {patientId,doctorId,bookingType,status,notes}=credentials
+        const {doctorId,bookingType,status,notes}=credentials
        // const patientobj= getPatientById(patientId);
-
+       const patientId=localStorage.getItem('patientID')
          console.log(patientId,doctorId);
           const user=await addAppointment(patientId,doctorId,appointmentDate,bookingType,status,notes)
           console.log(user)
@@ -211,10 +216,10 @@ const Appointment = () => {
                             </div>
                         </div>
                         {/* <a href="login.html" class="nav-item nav-link">Log In</a> */}
-                        {!localStorage.getItem('token')?
-                        <li><Link to="/login" className="nav-item nav-link"> Login</Link></li>
-                        :localStorage.getItem('utype')=="user"?<li><Link to="/login" className="nav-item nav-link" onClick={handleLogout}>Logout</Link></li>
-                        :<li><Link to="/admin" className="nav-item nav-link">Dashboard</Link></li>}
+                         {!localStorage.getItem('token')?
+                        <Link to="/login" className="nav-item nav-link"> Login</Link>
+                        :localStorage.getItem('utype')=="user"?<Link to="/login" className="nav-item nav-link" onClick={handleLogout}>Logout</Link>
+                        :<Link to="/admin" className="nav-item nav-link">Dashboard</Link>}
                     </div>
                 </div>
             </nav>
@@ -240,12 +245,13 @@ const Appointment = () => {
                 <div class="col-lg-6">
                     <div class="bg-light text-center rounded p-5">
                         <h1 class="mb-4">Book An Appointment</h1>
+                        {localStorage.getItem('utype')=="patient"?
                         <form onSubmit={addAppointments}>
                             <div class="row g-3">
-                                <div class="col-12 col-sm-6">
+                                {/* <div class="col-12 col-sm-6">
                                 <Select id="patientId" options={options} styles={customStyles} filterOption={filterOption} onChange={handleChange} name="patientId" placeholder="Select Patient" />
 
-                                </div>
+                                </div> */}
                                 <div class="col-12 col-sm-6">
                                 <Select id="doctorId" options={options2} styles={customStyles} filterOption={filterOption} onChange={handleChange2} name="doctorId" placeholder="Select Doctor" />
 
@@ -263,11 +269,14 @@ const Appointment = () => {
                                     </select>
                                 </div>
                                 <div class="col-12">
-                                    <button disabled={credentials.bookingType==""||credentials.patientId==null||credentials.doctorId==null||appointmentDate==""} class="btn btn-primary w-100 py-3" type="submit">Make An
+                                    <button disabled={credentials.bookingType==""||credentials.doctorId==null||appointmentDate==""} class="btn btn-primary w-100 py-3" type="submit">Make An
                                         Appointment</button>
                                 </div>
                             </div>
-                        </form>
+                        </form>:<>
+                            <button  class="btn btn-primary w-100 py-3" onClick={handleSignUpClick}>Sign Up to Make An
+                                Appointment</button>
+                        </>}
                     </div>
                 </div>
             </div>

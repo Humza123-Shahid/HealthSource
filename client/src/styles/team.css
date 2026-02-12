@@ -1,0 +1,52 @@
+.page-container {
+  display: flex;
+  height: 75vh;
+}
+
+.left-panel {
+  width: 25%;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.left-panel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.left-panel li {
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+
+.left-panel li:hover {
+  background-color: #f4f4f4;
+  color:black;
+}
+.left-panel li.active {
+  background-color: #007bff;
+  color: white;
+}
+.right-panel {
+  width: 75%;
+  padding: 20px;
+}
+
+.accordion-header {
+  width: 100%;
+  text-align: left;
+  padding: 15px;
+  background-color: #eee;
+  border: none;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.accordion-content {
+  padding: 15px;
+  border: 1px solid #eee;
+  border-top: none;
+}

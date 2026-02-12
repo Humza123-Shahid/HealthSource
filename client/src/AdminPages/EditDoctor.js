@@ -26,12 +26,20 @@ const EditDoctor = () => {
     // const [signatureUrl, setSignatureUrl] = useState(Doctor.signatureUrl);
     const [selectedonCallValue, setSelectedOnCallValue] = useState(Doctor.onCall);
     const [file, setFile] = useState(null);
+         const [file2, setFile2] = useState(null);
+    
         const [preview, setPreview] = useState(null);
         const parts = Doctor.signaturePath?.split('\\')
         const remainingParts = parts?.slice(1);
         const newPath = remainingParts?.join('/');
         console.log(newPath);
         const [existingImage, setExistingImage] = useState(`http://localhost:5000/${newPath}`); // from DB
+         const [preview2, setPreview2] = useState(null);
+        const parts2 = Doctor.photoPath?.split('\\')
+        const remainingParts2 = parts2?.slice(1);
+        const newPath2 = remainingParts2?.join('/');
+        console.log(newPath2);
+        const [existingImage2, setExistingImage2] = useState(`http://localhost:5000/${newPath2}`);
   //   const handleSignatureUrlChange = (e) => {
   //   setSignatureUrl(e.target.value); // <-- Get input value here
   // };
@@ -84,9 +92,19 @@ const handleFileChange = (e) => {
         setPreview(URL.createObjectURL(file)); // preview new image
       }
     };
+    const handleFileChange2 = (e) => {
+      const filechange2 = e.target.files[0];
+      setFile2(filechange2);
+
+      if (filechange2) {
+        setPreview2(URL.createObjectURL(filechange2)); // preview new image
+      }
+    };
   const editDoctors=async (e)=>{
+    console.log(file2);
           e.preventDefault();
-          const success= await editDoctor(Doctor._id,selectedStaffValue,specializations,licenseNumber,experienceYears,consultationFee,selectedonCallValue,file)
+        
+          const success= await editDoctor(Doctor._id,selectedStaffValue,specializations,licenseNumber,experienceYears,consultationFee,selectedonCallValue,file,file2)
           console.log(success);
           if(success)
           {
@@ -180,15 +198,48 @@ useEffect(() => {
             </a>
         </div>
       </div>
+      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+            <label htmlFor="signatureUrl" className="form-label">Select Photo:</label>
+            <br/>
+            {/* <input type="text" className="form-control" id="signatureUrl" value={signatureUrl} name="signatureUrl" onChange={handleSignatureUrlChange} /> */}
+            <input
+              type="file"
+              onChange={handleFileChange2}
+            />
+      </div>
+      </div>
+      <div className='mx-0' style={{display:'flex'}}>
+        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div>
+          <label className="form-label">Photo Preview:</label>
+          <br/>
+          <a
+              href={preview2 ? preview2 : existingImage2}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={preview2 ? preview2 : existingImage2}
+                width="200"
+                style={{ cursor: 'zoom-in' }}
+              />
+            </a>
+        </div>
+      </div>
     <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
+    </div>
+    <div className="mb-3 ms-3" style={{width:'100%'}}>
+          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
+          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
+    </div>
     </div>
      {/* <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div> */}
-      </div>
+      
       <button disabled={specializations.length<1||licenseNumber.length<1||experienceYears.length<1||consultationFee.length<1||selectedStaffValue==''} type="submit" className="btn btn-primary" >Update Doctor</button>
       </form>
     </div>

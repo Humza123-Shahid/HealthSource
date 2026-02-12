@@ -80,7 +80,7 @@ const Contact = () => {
                             </div>
                         </div>
                         {/* <a href="login.html" class="nav-item nav-link">Log In</a> */}
-                        {!localStorage.getItem('token')?
+                         {!localStorage.getItem('token')?
                         <Link to="/login" className="nav-item nav-link"> Login</Link>
                         :localStorage.getItem('utype')=="user"?<Link to="/login" className="nav-item nav-link" onClick={handleLogout}>Logout</Link>
                         :<Link to="/admin" className="nav-item nav-link">Dashboard</Link>}

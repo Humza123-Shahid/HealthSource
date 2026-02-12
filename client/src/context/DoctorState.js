@@ -20,7 +20,7 @@ const DoctorState=(props)=>{
       console.log(json);
       setDoctors(json)
     }
-    const addDoctor=async (staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,file)=>{
+    const addDoctor=async (staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,file,file2)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
        const formData = new FormData();
       formData.append("staff", staff);
@@ -29,8 +29,13 @@ const DoctorState=(props)=>{
       formData.append("experienceYears", experienceYears);
       formData.append("consultationFee", consultationFee);
       formData.append("onCall", onCall);
-      formData.append("file", file);
-
+       if (file) {
+        formData.append('signature', file); // Field name must match backend
+      }
+      if (file2) {
+      formData.append("photo", file2);
+      
+      }
       const response=await fetch(`${host}/api/doctor/adddoctor`,{
         method:'POST',
         headers:{
@@ -57,7 +62,7 @@ const DoctorState=(props)=>{
       const newDoctors=doctors.filter((doc)=>{return doc._id!==id})
       setDoctors(newDoctors)
     }
-    const editDoctor=async(id,staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,file)=>{
+    const editDoctor=async(id,staff,specializations,licenseNumber,experienceYears,consultationFee,onCall,file,file2)=>{
       console.log(localStorage.getItem('token'));
        const formData = new FormData();
       formData.append("staff", staff);
@@ -66,7 +71,16 @@ const DoctorState=(props)=>{
       formData.append("experienceYears", experienceYears);
       formData.append("consultationFee", consultationFee);
       formData.append("onCall", onCall);
-      formData.append("file", file);
+      if (file) {
+        formData.append('signature', file); // Field name must match backend
+      }
+      if (file2) {
+        console.log("here in file2")
+      formData.append("photo", file2);
+
+      }
+            console.log(file2);
+
       const response=await fetch(`${host}/api/doctor/updatedoctor/${id}`,{
         method:'PUT',
         headers:{
@@ -91,6 +105,7 @@ const DoctorState=(props)=>{
           newDoctors[index].consultationFee=consultationFee;
           newDoctors[index].onCall=onCall;
           newDoctors[index].file=file;
+          newDoctors[index].file2=file2;
           break;
         }
       }

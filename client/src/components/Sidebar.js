@@ -37,6 +37,7 @@ setPermissions(prevPermissions => [...prevPermissions, role.permissions]);
    const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("utype");
+        localStorage.removeItem("patientID");
         sessionStorage.setItem("reloaded", "false");
         setSelectedTab("login")
         setPermissions([]);

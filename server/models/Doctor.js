@@ -8,7 +8,8 @@ licenseNumber: String,
 experienceYears: Number,
 consultationFee: Number,
 onCall: { type: Boolean, default: false },
-signaturePath: String
+signaturePath: String,
+photoPath: String
 }, { timestamps: true });
 
 module.exports=mongoose.model('Doctor', DoctorSchema);
