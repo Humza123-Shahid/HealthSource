@@ -8,6 +8,8 @@ import appointmentContext from '../context/appointmentContext'
 import patientContext from '../context/patientContext'
 import doctorContext from '../context/doctorContext'
 import staffContext from '../context/staffContext'
+import socialContext from "../context/socialContext";
+
 const customStyles = {
   // Styles for the selected value (the text displayed in the control after selection)
    valueContainer: (base) => ({
@@ -47,6 +49,13 @@ const Appointment = () => {
          const {doctors,getDoctors}=context3;
          const context4=useContext(staffContext);
          const {staffs,getStaffs}=context4;
+          const context5 = useContext(socialContext);
+  const { socials, getSocials } = context5;
+  const [facebookLink, setFacebookLink] = useState("");
+        const [instagramLink, setInstagramLink] = useState("");
+        const [twitterLink, setTwitterLink] = useState("");
+        const [youtubeLink, setYoutubeLink] = useState("");
+        const [linkedinLink, setLinkedInLink] = useState("");
          const [credentials,setCredentials] =useState({patientId:null,doctorId:null,bookingType:"",status:"booked",notes:""})
              const [ appointmentDate, setAppointmentDate] = useState("");
     const handleAppointmentDateChange = (e) => {
@@ -144,11 +153,24 @@ const handleSignUpClick = () => {
                     const result3 = await getDoctors();
                     const result4 = await getPatients();
                     const result5 = await getStaffs();
-            
+                    const result2 = await getSocials();
+
                       };
                       fetchData();
                       }, []); 
-  return (
+                       useEffect(() => {
+                        const facebook = socials.find((d) => d.platformName == "Facebook");
+                        const instagram = socials.find((d) => d.platformName == "Instagram");
+                        const twitter = socials.find((d) => d.platformName == "Twitter");
+                        const youtube = socials.find((d) => d.platformName == "Youtube");
+                        const linkedin = socials.find((d) => d.platformName == "LinkedIn");
+                        setFacebookLink(facebook?.url);
+                        setInstagramLink(instagram?.url);
+                        setTwitterLink(twitter?.url);
+                        setYoutubeLink(youtube?.url);
+                        setLinkedInLink(linkedin?.url);
+                        }, [socials]);
+return (
     <div>
       <div class="container-fluid py-2 border-bottom d-none d-lg-block">
         <div class="container">
@@ -165,20 +187,20 @@ const handleSignUpClick = () => {
                 </div>
                 <div class="col-md-6 text-center text-lg-end">
                     <div class="d-inline-flex align-items-center">
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-facebook-f"></i>
+                        <a class="text-body px-2" target="_blank" href={facebookLink}>
+                        <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-twitter"></i>
+                        <a class="text-body px-2" target="_blank" href={twitterLink}>
+                        <i class="fab fa-twitter"></i>
                         </a>
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-linkedin-in"></i>
+                        <a class="text-body px-2" target="_blank" href={linkedinLink}>
+                        <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-instagram"></i>
+                        <a class="text-body px-2" target="_blank" href={instagramLink}>
+                        <i class="fab fa-instagram"></i>
                         </a>
-                        <a class="text-body ps-2" href="#!">
-                            <i class="fab fa-youtube"></i>
+                        <a class="text-body ps-2" target="_blank" href={youtubeLink}>
+                        <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
@@ -191,9 +213,11 @@ const handleSignUpClick = () => {
     <div class="container-fluid sticky-top bg-white shadow-sm mb-5">
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-                <a href="index.html" class="navbar-brand">
-                    <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>Medinova</h1>
-                </a>
+               <Link to="/" class="navbar-brand">
+                            <h1 class="m-0 text-uppercase text-primary">
+                              <i class="fa fa-clinic-medical me-2"></i>Medinova
+                            </h1>
+                          </Link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>

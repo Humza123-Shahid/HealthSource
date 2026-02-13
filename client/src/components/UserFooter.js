@@ -1,4 +1,6 @@
 import React,{useEffect,useContext,useState} from 'react'
+import { Link, useNavigate } from "react-router-dom";
+
 import socialContext from '../context/socialContext'
 
 const UserFooter = () => {
@@ -9,6 +11,11 @@ const UserFooter = () => {
       const [twitterLink, setTwitterLink] = useState('');
       const [youtubeLink, setYoutubeLink] = useState('');
       const [linkedinLink, setLinkedInLink] = useState('');
+             let navigate=useNavigate();
+      
+      const handleSignUpClick = () => {
+    navigate('/signup');
+  };
       useEffect(() => {
       const fetchData = async () => {
                   const result2 = await getSocials();
@@ -49,24 +56,25 @@ const UserFooter = () => {
                     <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
                         Quick Links</h4>
                     <div class="d-flex flex-column justify-content-start">
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Home</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>About Us</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Our Services</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Meet The Team</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Latest Blog</a>
-                        <a class="text-light" href="#!"><i class="fa fa-angle-right me-2"></i>Contact Us</a>
+                        <Link to="/" class="text-light mb-2"><i class="fa fa-angle-right me-2"></i>Home</Link>
+                        <Link to="/aboutus" class="text-light mb-2"><i class="fa fa-angle-right me-2"></i>About Us</Link>
+                        <Link to="/service" class="text-light mb-2"><i class="fa fa-angle-right me-2"></i>Our Services</Link>
+                        <Link to="/team" class="text-light mb-2"><i class="fa fa-angle-right me-2"></i>Meet The Team</Link>
+                        <Link to="/contact" class="text-light mb-2"><i class="fa fa-angle-right me-2"></i>Contact Us</Link>
+
+                        {/* <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Latest Blog</a> */}
+                    
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
                         Popular Links</h4>
                     <div class="d-flex flex-column justify-content-start">
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Home</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>About Us</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Our Services</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Meet The Team</a>
-                        <a class="text-light mb-2" href="#!"><i class="fa fa-angle-right me-2"></i>Latest Blog</a>
-                        <a class="text-light" href="#!"><i class="fa fa-angle-right me-2"></i>Contact Us</a>
+                        <Link to="/" class="text-light mb-2"><i class="fa fa-angle-right me-2"></i>Home</Link>
+                        <Link to="/aboutus" class="text-light mb-2"><i class="fa fa-angle-right me-2"></i>About Us</Link>
+                        <Link to="/service" class="text-light mb-2"><i class="fa fa-angle-right me-2"></i>Our Services</Link>
+                        <Link to="/team" class="text-light mb-2"><i class="fa fa-angle-right me-2"></i>Meet The Team</Link>
+                        <Link to="/contact" class="text-light mb-2"><i class="fa fa-angle-right me-2"></i>Contact Us</Link>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -75,7 +83,7 @@ const UserFooter = () => {
                     <form action="">
                         <div class="input-group">
                             <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address"/>
-                            <button class="btn btn-primary">Sign Up</button>
+                            <button class="btn btn-primary" onClick={handleSignUpClick}>Sign Up</button>
                         </div>
                     </form>
                     <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>

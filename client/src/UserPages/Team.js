@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import staffContext from "../context/staffContext";
 import doctorContext from "../context/doctorContext";
 import departmentContext from "../context/departmentContext";
+import socialContext from "../context/socialContext";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Navigation } from "swiper/modules";
@@ -24,6 +26,13 @@ const Team = () => {
   const { doctors, getDoctors } = context2;
   const context3 = useContext(departmentContext);
   const { departments, getDepartments } = context3;
+  const context5 = useContext(socialContext);
+  const { socials, getSocials } = context5;
+  const [facebookLink, setFacebookLink] = useState("");
+        const [instagramLink, setInstagramLink] = useState("");
+        const [twitterLink, setTwitterLink] = useState("");
+        const [youtubeLink, setYoutubeLink] = useState("");
+        const [linkedinLink, setLinkedInLink] = useState("");
   //   const [departments, setDepartments] = useState([]);
   //   const [doctors, setDoctors] = useState([]);
   const [activeDept, setActiveDept] = useState(null);
@@ -33,9 +42,22 @@ const Team = () => {
       const result = await getStaffs();
       const result2 = await getDepartments();
       const result3 = await getDoctors();
+      const result4 = await getSocials();
     };
     fetchData();
   }, []);
+  useEffect(() => {
+          const facebook = socials.find((d) => d.platformName == "Facebook");
+          const instagram = socials.find((d) => d.platformName == "Instagram");
+          const twitter = socials.find((d) => d.platformName == "Twitter");
+          const youtube = socials.find((d) => d.platformName == "Youtube");
+          const linkedin = socials.find((d) => d.platformName == "LinkedIn");
+          setFacebookLink(facebook?.url);
+          setInstagramLink(instagram?.url);
+          setTwitterLink(twitter?.url);
+          setYoutubeLink(youtube?.url);
+          setLinkedInLink(linkedin?.url);
+        }, [socials]);
   const getDoctorById = (id) => doctors.find(d => d.staff === id);
 
   const handleAccordionToggle = (docId) => {
@@ -68,19 +90,19 @@ const Team = () => {
             </div>
             <div class="col-md-6 text-center text-lg-end">
               <div class="d-inline-flex align-items-center">
-                <a class="text-body px-2" href="#!">
+               <a class="text-body px-2" target="_blank" href={facebookLink}>
                   <i class="fab fa-facebook-f"></i>
                 </a>
-                <a class="text-body px-2" href="#!">
+                <a class="text-body px-2" target="_blank" href={twitterLink}>
                   <i class="fab fa-twitter"></i>
                 </a>
-                <a class="text-body px-2" href="#!">
+                <a class="text-body px-2" target="_blank" href={linkedinLink}>
                   <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a class="text-body px-2" href="#!">
+                <a class="text-body px-2" target="_blank" href={instagramLink}>
                   <i class="fab fa-instagram"></i>
                 </a>
-                <a class="text-body ps-2" href="#!">
+                <a class="text-body ps-2" target="_blank" href={youtubeLink}>
                   <i class="fab fa-youtube"></i>
                 </a>
               </div>
@@ -92,11 +114,11 @@ const Team = () => {
       <div class="container-fluid sticky-top bg-white shadow-sm mb-5">
         <div class="container">
           <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-            <a href="index.html" class="navbar-brand">
-              <h1 class="m-0 text-uppercase text-primary">
-                <i class="fa fa-clinic-medical me-2"></i>Medinova
-              </h1>
-            </a>
+             <Link to="/" class="navbar-brand">
+                          <h1 class="m-0 text-uppercase text-primary">
+                            <i class="fa fa-clinic-medical me-2"></i>Medinova
+                          </h1>
+                        </Link>
             <button
               class="navbar-toggler"
               type="button"

@@ -6,6 +6,7 @@ import Select from "react-select";
 import departmentContext from '../context/departmentContext'
 import staffContext from '../context/staffContext'
 import doctorContext from '../context/doctorContext'
+import socialContext from "../context/socialContext";
 
 import UserFooter from "../components/UserFooter";
 const customStyles = {
@@ -47,6 +48,13 @@ const [departmentName, setDepartmentName] = useState(department_name);
       const {staffs,getStaffs}=context2;
       const context3=useContext(doctorContext);
       const {doctors,getDoctors}=context3;
+      const context5 = useContext(socialContext);
+  const { socials, getSocials } = context5;
+  const [facebookLink, setFacebookLink] = useState("");
+        const [instagramLink, setInstagramLink] = useState("");
+        const [twitterLink, setTwitterLink] = useState("");
+        const [youtubeLink, setYoutubeLink] = useState("");
+        const [linkedinLink, setLinkedInLink] = useState("");
       const [filteredStaff, setFilteredStaff] = useState([]);
 
       const [filterText, setFilterText] = useState(filtered_text);
@@ -167,26 +175,28 @@ console.log('here in filter')
         const result6=await getDepartments()
         const result7=await getStaffs()
         const result8=await getDoctors()
+        const result2 = await getSocials();
 
       };
       fetchData();
     }, []);
      useEffect(() => {
-      console.log(mergedData)
-    }, [mergedData]);
-    useEffect(() => {
-      console.log(mergedDatatext)
-    }, [mergedDatatext]);
+        const facebook = socials.find((d) => d.platformName == "Facebook");
+        const instagram = socials.find((d) => d.platformName == "Instagram");
+        const twitter = socials.find((d) => d.platformName == "Twitter");
+        const youtube = socials.find((d) => d.platformName == "Youtube");
+        const linkedin = socials.find((d) => d.platformName == "LinkedIn");
+        setFacebookLink(facebook?.url);
+        setInstagramLink(instagram?.url);
+        setTwitterLink(twitter?.url);
+        setYoutubeLink(youtube?.url);
+        setLinkedInLink(linkedin?.url);
+      }, [socials]);
      useEffect(() => {
       const filteredStf=staffs.filter(staff=>staff.department==departmentName)
       setFilteredStaff(filteredStf);
     }, [departmentName]);
-    useEffect(() => {
-     console.log(filteredStaff);
-    }, [filteredStaff]);
-    useEffect(() => {
-     console.log(filteredDoctors);
-    }, [filteredDoctors]);
+    
   return (
     <div>
       <div class="container-fluid py-2 border-bottom d-none d-lg-block">
@@ -205,19 +215,19 @@ console.log('here in filter')
             </div>
             <div class="col-md-6 text-center text-lg-end">
               <div class="d-inline-flex align-items-center">
-                <a class="text-body px-2" href="#!">
+               <a class="text-body px-2" target="_blank" href={facebookLink}>
                   <i class="fab fa-facebook-f"></i>
                 </a>
-                <a class="text-body px-2" href="#!">
+                <a class="text-body px-2" target="_blank" href={twitterLink}>
                   <i class="fab fa-twitter"></i>
                 </a>
-                <a class="text-body px-2" href="#!">
+                <a class="text-body px-2" target="_blank" href={linkedinLink}>
                   <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a class="text-body px-2" href="#!">
+                <a class="text-body px-2" target="_blank" href={instagramLink}>
                   <i class="fab fa-instagram"></i>
                 </a>
-                <a class="text-body ps-2" href="#!">
+                <a class="text-body ps-2" target="_blank" href={youtubeLink}>
                   <i class="fab fa-youtube"></i>
                 </a>
               </div>
@@ -229,11 +239,11 @@ console.log('here in filter')
       <div class="container-fluid sticky-top bg-white shadow-sm mb-5">
         <div class="container">
           <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-            <a href="index.html" class="navbar-brand">
-              <h1 class="m-0 text-uppercase text-primary">
-                <i class="fa fa-clinic-medical me-2"></i>Medinova
-              </h1>
-            </a>
+            <Link to="/" class="navbar-brand">
+                         <h1 class="m-0 text-uppercase text-primary">
+                           <i class="fa fa-clinic-medical me-2"></i>Medinova
+                         </h1>
+                       </Link>
             <button
               class="navbar-toggler"
               type="button"

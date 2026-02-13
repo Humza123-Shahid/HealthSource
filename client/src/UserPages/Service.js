@@ -1,5 +1,6 @@
-import React from 'react'
+import React,{useContext,useState,useEffect} from 'react'
 import { Link, useNavigate } from "react-router-dom";
+import socialContext from "../context/socialContext";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination} from "swiper/modules";
@@ -11,6 +12,13 @@ import "swiper/css/navigation";
 import '../styles/swiperPagination.css';
 import UserFooter from '../components/UserFooter';
 const Service = () => {
+    const context5 = useContext(socialContext);
+  const { socials, getSocials } = context5;
+  const [facebookLink, setFacebookLink] = useState("");
+        const [instagramLink, setInstagramLink] = useState("");
+        const [twitterLink, setTwitterLink] = useState("");
+        const [youtubeLink, setYoutubeLink] = useState("");
+        const [linkedinLink, setLinkedInLink] = useState("");
           const scrollToTop = () => {
           window.scrollTo({
             top: 0,
@@ -20,6 +28,26 @@ const Service = () => {
       const handleLogout =()=>{
         localStorage.removeItem('token');
       }
+      useEffect(() => {
+                const fetchData = async () => {
+                  const result2 = await getSocials();
+                };
+            
+                fetchData();
+                
+              }, []);
+           useEffect(() => {
+              const facebook = socials.find((d) => d.platformName == "Facebook");
+              const instagram = socials.find((d) => d.platformName == "Instagram");
+              const twitter = socials.find((d) => d.platformName == "Twitter");
+              const youtube = socials.find((d) => d.platformName == "Youtube");
+              const linkedin = socials.find((d) => d.platformName == "LinkedIn");
+              setFacebookLink(facebook?.url);
+              setInstagramLink(instagram?.url);
+              setTwitterLink(twitter?.url);
+              setYoutubeLink(youtube?.url);
+              setLinkedInLink(linkedin?.url);
+            }, [socials]);
   return (
     <div>
       <div class="container-fluid py-2 border-bottom d-none d-lg-block">
@@ -37,20 +65,20 @@ const Service = () => {
                 </div>
                 <div class="col-md-6 text-center text-lg-end">
                     <div class="d-inline-flex align-items-center">
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-facebook-f"></i>
+                        <a class="text-body px-2" target="_blank" href={facebookLink}>
+                        <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-twitter"></i>
+                        <a class="text-body px-2" target="_blank" href={twitterLink}>
+                        <i class="fab fa-twitter"></i>
                         </a>
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-linkedin-in"></i>
+                        <a class="text-body px-2" target="_blank" href={linkedinLink}>
+                        <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-instagram"></i>
+                        <a class="text-body px-2" target="_blank" href={instagramLink}>
+                        <i class="fab fa-instagram"></i>
                         </a>
-                        <a class="text-body ps-2" href="#!">
-                            <i class="fab fa-youtube"></i>
+                        <a class="text-body ps-2" target="_blank" href={youtubeLink}>
+                        <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
@@ -62,9 +90,11 @@ const Service = () => {
     <div class="container-fluid sticky-top bg-white shadow-sm mb-5">
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-                <a href="index.html" class="navbar-brand">
-                    <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>Medinova</h1>
-                </a>
+                 <Link to="/" class="navbar-brand">
+                              <h1 class="m-0 text-uppercase text-primary">
+                                <i class="fa fa-clinic-medical me-2"></i>Medinova
+                              </h1>
+                            </Link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -209,7 +239,13 @@ const Service = () => {
                         Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero
                         eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit.
                         Sea dolore sanctus sed et. Takimata takimata sanctus sed.</p>
-                    <a class="btn btn-dark rounded-pill py-3 px-5 me-3" href="#!">Find Doctor</a>
+                    {/* <a class="btn btn-dark rounded-pill py-3 px-5 me-3" href="#!">Find Doctor</a> */}
+                    <Link
+                        to="/search"
+                        class="btn btn-dark rounded-pill py-3 px-5 me-3"
+                    >
+                        Find Doctor
+                    </Link>
                     <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#!">Read More</a>
                 </div>
                 <div class="col-lg-6">

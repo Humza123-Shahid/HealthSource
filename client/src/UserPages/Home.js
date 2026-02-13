@@ -216,11 +216,14 @@ const handleFilterChange = (event) => {
     // Only filter based on the 'label' property, for example
     return option.label.toLowerCase().includes(inputValue.toLowerCase());
   };
+  const handleSignUpClick = () => {
+    navigate('/signup');
+  };
   const addAppointments = async (e) => {
     e.preventDefault();
-    const { patientId, doctorId, bookingType, status, notes } = credentials;
+    const { doctorId, bookingType, status, notes } = credentials;
     // const patientobj= getPatientById(patientId);
-
+const patientId=localStorage.getItem('patientID')
     console.log(patientId, doctorId);
     const user = await addAppointment(
       patientId,
@@ -338,11 +341,12 @@ const handleFilterChange = (event) => {
       <div class="container-fluid sticky-top bg-white shadow-sm">
         <div class="container">
           <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-            <a href="index.html" class="navbar-brand">
+            {/* <a href="index.html" class="navbar-brand"> */}
+            <Link to="/" class="navbar-brand">
               <h1 class="m-0 text-uppercase text-primary">
                 <i class="fa fa-clinic-medical me-2"></i>Medinova
               </h1>
-            </a>
+            </Link>
             <button
               class="navbar-toggler"
               type="button"
@@ -431,7 +435,7 @@ const handleFilterChange = (event) => {
                 Best Healthcare Solution In Your City
               </h1>
               <div class="pt-2">
-                <a
+                {/* <a
                   href="#!"
                   class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2"
                 >
@@ -442,7 +446,19 @@ const handleFilterChange = (event) => {
                   class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2"
                 >
                   Appointment
-                </a>
+                </a> */}
+                <Link
+                  to="/search"
+                  class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2"
+                >
+                  Find Doctor
+                </Link>
+                <Link
+                  to="/appointment"
+                  class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2"
+                >
+                  Appointment
+                </Link>
               </div>
             </div>
           </div>
@@ -642,9 +658,12 @@ const handleFilterChange = (event) => {
                 magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus
                 sed.
               </p>
-              <a class="btn btn-dark rounded-pill py-3 px-5 me-3" href="#!">
-                Find Doctor
-              </a>
+               <Link
+                  to="/search"
+                  class="btn btn-dark rounded-pill py-3 px-5 me-3"
+                >
+                  Find Doctor
+                </Link>
               <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#!">
                 Read More
               </a>
@@ -652,6 +671,7 @@ const handleFilterChange = (event) => {
             <div class="col-lg-6">
               <div class="bg-white text-center rounded p-5">
                 <h1 class="mb-4">Book An Appointment</h1>
+                {localStorage.getItem('utype')=="patient"?
                 <form onSubmit={addAppointments}>
                   <div class="row g-3">
                     {/* <div class="col-12 col-sm-6">
@@ -707,7 +727,7 @@ const handleFilterChange = (event) => {
                       <button
                         disabled={
                           credentials.bookingType == "" ||
-                          credentials.patientId == null ||
+                          
                           credentials.doctorId == null ||
                           appointmentDate == ""
                         }
@@ -718,7 +738,8 @@ const handleFilterChange = (event) => {
                       </button>
                     </div>
                   </div>
-                </form>
+                </form>:<><button  class="btn btn-primary w-100 py-3" onClick={handleSignUpClick}>Sign Up to Make An
+                    Appointment</button></>}
               </div>
             </div>
           </div>

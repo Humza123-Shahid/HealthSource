@@ -1,5 +1,8 @@
-import React from 'react'
+import React,{useContext,useState,useEffect} from 'react'
 import { Link, useNavigate } from "react-router-dom";
+import Select from "react-select";
+import socialContext from "../context/socialContext";
+import departmentContext from '../context/departmentContext'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination} from "swiper/modules";
@@ -10,20 +13,111 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import '../styles/swiperPagination.css';
 import UserFooter from '../components/UserFooter';
+const customStyles2 = {
+  control: (provided,state) => ({
+    ...provided,
+    minHeight: '60px', // Set your desired height
+    minWidth:'150px',
+    color:'#848E9F',
+    borderTopLeftRadius: '8px',
+    borderBottomLeftRadius: '8px',
+    borderColor: "#13C5DD !important",
+    zIndex:3,
+    boxShadow: state.isFocused
+      ? "0 0 0 .25rem rgba(19,197,221,0.25)"
+      : provided.boxShadow,
+    "&:hover": {
+      borderColor: state.isFocused ? "#ced4da" : provided.borderColor, // Ensure consistent hover color
+    },
+  }),
+   singleValue: (provided) => ({
+    ...provided,
+    color: '#848E9F',
+  }),
+   input: (provided) => ({
+    ...provided,
+    color: '#848E9F',
+  }),
+};
 const AboutUs = () => {
+    const context5 = useContext(socialContext);
+  const { socials, getSocials } = context5;
+  const context6=useContext(departmentContext);
+      const {departments,getDepartments}=context6;
+        const navigate = useNavigate();
+  
+  const [facebookLink, setFacebookLink] = useState("");
+        const [instagramLink, setInstagramLink] = useState("");
+        const [twitterLink, setTwitterLink] = useState("");
+        const [youtubeLink, setYoutubeLink] = useState("");
+        const [linkedinLink, setLinkedInLink] = useState("");
     const prevRef = useRef(null);
       const nextRef = useRef(null);
       const prevRef2 = useRef(null);
       const nextRef2 = useRef(null);
+            const [departmentName, setDepartmentName] = useState('');
+              const [filterText, setFilterText] = useState('');
+      
+      const handleFilterChange = (event) => {
+    setFilterText(event.target.value);
+  };
+  const handleSearchClick = (event) => {
+  navigate('/search', { state: { dname:departmentName,searchText:filterText} });
+
+  };
       const scrollToTop = () => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth' // Adds a smooth scrolling animation
       });
     };
+     const handleChange3 = (selectedOption) => {
+    if(selectedOption.value=="" )
+    {
+        setDepartmentName('')
+    }
+    else
+    {
+      setDepartmentName(selectedOption.value)
+    }
+  }
+    const options3 = [
+    { value: "", label: "Department" }, // empty option
+    ...departments?.map((dpt) => ({
+      // (department || [])
+      value: dpt._id,
+      label: `${dpt.name}`,
+    })),
+  ];
+  const filterOption = (option, inputValue) => {
+    // Only filter based on the 'label' property, for example
+    return option.label.toLowerCase().includes(inputValue.toLowerCase());
+  };
       const handleLogout =()=>{
         localStorage.removeItem('token');
       }
+      useEffect(() => {
+          const fetchData = async () => {
+            const result2 = await getSocials();
+            const result6=await getDepartments()
+
+          };
+      
+          fetchData();
+          
+        }, []);
+     useEffect(() => {
+        const facebook = socials.find((d) => d.platformName == "Facebook");
+        const instagram = socials.find((d) => d.platformName == "Instagram");
+        const twitter = socials.find((d) => d.platformName == "Twitter");
+        const youtube = socials.find((d) => d.platformName == "Youtube");
+        const linkedin = socials.find((d) => d.platformName == "LinkedIn");
+        setFacebookLink(facebook?.url);
+        setInstagramLink(instagram?.url);
+        setTwitterLink(twitter?.url);
+        setYoutubeLink(youtube?.url);
+        setLinkedInLink(linkedin?.url);
+      }, [socials]);
   return (
     <div>
       <div class="container-fluid py-2 border-bottom d-none d-lg-block">
@@ -41,21 +135,21 @@ const AboutUs = () => {
                 </div>
                 <div class="col-md-6 text-center text-lg-end">
                     <div class="d-inline-flex align-items-center">
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a class="text-body px-2" href="#!">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a class="text-body ps-2" href="#!">
-                            <i class="fab fa-youtube"></i>
-                        </a>
+                <a class="text-body px-2" target="_blank" href={facebookLink}>
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a class="text-body px-2" target="_blank" href={twitterLink}>
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a class="text-body px-2" target="_blank" href={linkedinLink}>
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a class="text-body px-2" target="_blank" href={instagramLink}>
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a class="text-body ps-2" target="_blank" href={youtubeLink}>
+                  <i class="fab fa-youtube"></i>
+                </a>
                     </div>
                 </div>
             </div>
@@ -66,9 +160,11 @@ const AboutUs = () => {
     <div class="container-fluid sticky-top bg-white shadow-sm mb-5">
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-                <a href="index.html" class="navbar-brand">
-                    <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>Medinova</h1>
-                </a>
+                 <Link to="/" class="navbar-brand">
+                              <h1 class="m-0 text-uppercase text-primary">
+                                <i class="fa fa-clinic-medical me-2"></i>Medinova
+                              </h1>
+                            </Link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -166,14 +262,23 @@ const AboutUs = () => {
             </div>
             <div class="mx-auto" style={{'width': '100%', 'max-width': '600px'}}>
                 <div class="input-group">
-                    <select class="form-select border-primary w-25" style={{'height': '60px'}}>
-                        <option selected>Department</option>
-                        <option value="1">Department 1</option>
-                        <option value="2">Department 2</option>
-                        <option value="3">Department 3</option>
-                    </select>
-                    <input type="text" class="form-control border-primary w-50" placeholder="Keyword"/>
-                    <button class="btn btn-dark border-0 w-25">Search</button>
+                     <Select
+                        id="departmentId"
+                        options={options3}
+                        filterOption={filterOption}
+                        onChange={handleChange3}
+                        name="departmentId"
+                        placeholder="Department"
+                        styles={customStyles2}
+                        
+                    />
+                    <input
+                        type="text"
+                        class="form-control border-primary w-49"
+                        placeholder="Keyword"
+                        onChange={handleFilterChange}
+                     />
+                    <button class="btn btn-dark border-0 w-25" onClick={handleSearchClick}>Search</button>
                 </div>
             </div>
         </div>
