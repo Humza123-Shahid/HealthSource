@@ -20,11 +20,13 @@ const PatientState=(props)=>{
       console.log(json);
       setPatients(json)
     }
-    const addPatient=async (firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,file,status)=>{
+    const addPatient=async (firstName,lastName,email,password,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,file,status)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
       const formData = new FormData();
       formData.append("firstName", firstName);
       formData.append("lastName", lastName);
+      formData.append("email", email);
+      formData.append("password", password);
       formData.append("fatherName", fatherName);
       formData.append("gender", gender);
       formData.append("dateOfBirth", dateOfBirth);
@@ -68,11 +70,13 @@ const PatientState=(props)=>{
       const newPatients=patients.filter((patient)=>{return patient._id!==id})
       setPatients(newPatients)
     }
-    const editPatient=async(id,firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,file,status)=>{
+    const editPatient=async(id,firstName,lastName,fatherName,email,password,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,file,status)=>{
       console.log(localStorage.getItem('token'));
       const formData = new FormData();
       formData.append("firstName", firstName);
       formData.append("lastName", lastName);
+      formData.append("email", email);
+      formData.append("password", password);
       formData.append("fatherName", fatherName);
       formData.append("gender", gender);
       formData.append("dateOfBirth", dateOfBirth);
@@ -109,6 +113,8 @@ const PatientState=(props)=>{
         {
           newPatients[index].firstName=firstName;
           newPatients[index].lastName=lastName;
+          newPatients[index].email=email;
+          newPatients[index].password=password;
           newPatients[index].fatherName=fatherName;
           newPatients[index].gender=gender;
           newPatients[index].dateOfBirth=dateOfBirth;

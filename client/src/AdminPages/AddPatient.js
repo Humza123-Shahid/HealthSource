@@ -16,6 +16,8 @@ const AddPatient = () => {
         
 
     const [status, setStatus] = useState("active");
+     const [ email, setEmail] = useState('');
+    const [ password, setPassword] = useState('');
     const [ firstName, setFirstName] = useState('');
     const [ lastName, setLastName] = useState('');
     const [ fatherName, setFatherName] = useState('');
@@ -38,6 +40,12 @@ const AddPatient = () => {
 
   const handleStatusChange = (e) => {
     setStatus(e.target.value); // <-- Get input value here
+  };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value); // <-- Get input value here
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value); // <-- Get input value here
   };
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value); // <-- Get input value here
@@ -95,13 +103,23 @@ const AddPatient = () => {
           //move file to the server
           //keep the name of the file and create a variable : photoUrl = '/public/patients/profile_photo/'<name of the file>
           
-          const success= await addPatient(firstName,lastName,fatherName,gender,birthDate2,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,regDate2,file,status)
-          console.log(success);
-          if(success)
+          const json= await addPatient(firstName,lastName,email,password,fatherName,gender,birthDate2,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,regDate2,file,status)
+          console.log(json);
+          if(json.success)
           {
+            localStorage.setItem('token',json.authtoken);
+
             setShowToast(true);
             setMsg("Patient added successfully")
             setType("success")
+            setTimeout(()=>{
+              setShowToast(false)
+            },1500)
+          }
+          else{
+            setShowToast(true);
+            setMsg(json.error)
+            setType("error")
             setTimeout(()=>{
               setShowToast(false)
             },1500)
@@ -121,11 +139,22 @@ const AddPatient = () => {
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addPatients}>
     <div className='mx-0' style={{display:'flex'}}>
+      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+          <label htmlFor="email" className="form-label">Email address</label>
+          <input type="email" className="form-control" id="email" name="email" value={email} onChange={handleEmailChange} aria-describedby="emailHelp"/>
+        </div>
+         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+            <label htmlFor="password" className="form-label">Password</label>
+          <input type="password" className="form-control" id="password" name="password" value={password} onChange={handlePasswordChange} minLength={3} required/>
+      </div>
     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="fname" className="form-label">Enter First Name:</label>
             <input type="text" className="form-control" id="fname" value={firstName} name="fname" onChange={handleFirstNameChange} />
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      
+    </div>
+        <div className='mx-0' style={{display:'flex'}}>
+          <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="lname" className="form-label">Enter Last Name:</label>
             <input type="text" className="form-control" id="lname" value={lastName} name="lname" onChange={handleLastNameChange} />
       </div>
@@ -133,8 +162,6 @@ const AddPatient = () => {
             <label htmlFor="fathername" className="form-label">Enter Father Name:</label>
             <input type="text" className="form-control" id="fathername" value={fatherName} name="fathername" onChange={handleFatherNameChange} />
       </div>
-    </div>
-        <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="gender" className="form-label">Enter Gender:</label>
             {/* <input type="text" className="form-control" id="gender" value={gender} name="gender" onChange={handleGenderChange} /> */}
@@ -144,7 +171,10 @@ const AddPatient = () => {
                   <option value="other">Other</option>
             </select>
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     
+      </div>
+      <div className='mx-0' style={{display:'flex'}}>
+         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="bdate" className="form-label">Select Date of Birth:</label>
             <input type="date" className="form-control" id="bdate" value={birthDate} name="bdate" onChange={handleBirthDateChange} />
       </div>
@@ -152,13 +182,14 @@ const AddPatient = () => {
             <label htmlFor="age" className="form-label">Enter Age:</label>
             <input type="number" className="form-control" id="age" value={age} name="age" onChange={handleAgeChange} />
       </div>
-      </div>
-      <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="nid" className="form-label">Enter National Id:</label>
                 <input type="text" className="form-control" id="nid" value={nationalId} name="nid" onChange={handleNationalIdChange} />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       
+        </div>
+        <div className='mx-0' style={{display:'flex'}}>
+           <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="contact" className="form-label">Enter Contact:</label>
                 <input type="text" className="form-control" id="contact" value={contact} name="contact" onChange={handleContactChange} />
         </div>
@@ -166,8 +197,6 @@ const AddPatient = () => {
                 <label htmlFor="address" className="form-label">Enter Address:</label>
                 <textarea className="form-control" id="address" value={address} name="address" onChange={handleAddressChange} />
         </div>
-        </div>
-        <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="mstatus" className="form-label">Enter Marital Status:</label>
                 {/* <input type="text" className="form-control" id="mstatus" value={maritalStatus} name="mstatus" onChange={handleMaritalStatusChange} /> */}
@@ -177,7 +206,11 @@ const AddPatient = () => {
                   <option value="other">Other</option>
                  </select>
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        
+        </div>
+        
+         <div className='mx-0' style={{display:'flex'}}>
+          <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="bgroup" className="form-label">Enter Blood Group:</label>
                 <select id="mySelect" className="form-control "  value={bloodGroup} onChange={handleBloodGroupChange}>
                   <option value="a+">A+</option>
@@ -195,12 +228,14 @@ const AddPatient = () => {
                 <label htmlFor="disabilities" className="form-label">Enter Disabilities:</label>
                 <textarea className="form-control" id="disabilities" value={disabilities} name="disabilities" onChange={handleDisabilitiesChange} />
         </div>
-        </div>
-         <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="conditions" className="form-label">Enter Chronic Conditions:</label>
             <textarea className="form-control" id="conditions" value={chronicConditions} name="conditions" onChange={handleChronicConditionsChange} />
       </div>
+      
+      </div>
+      
+    <div className='mx-0' style={{display:'flex'}}>
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="regDate" className="form-label">Select Registration Date:</label>
             <input type="date" className="form-control" id="regDate" value={regDate} name="regDate" onChange={handleRegistrationDateChange} />
@@ -214,10 +249,6 @@ const AddPatient = () => {
               onChange={(e) => setFile(e.target.files[0])}
             />
       </div>
-      </div>
-      
-    <div className='mx-0' style={{display:'flex'}}>
-
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
             {/* <input type="text" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} /> */}
@@ -227,17 +258,17 @@ const AddPatient = () => {
                 <option value="deceased">Deceased</option>
             </select>
       </div>
-      <div className="mb-3 ms-3" style={{width:'100%'}}>
+      {/* <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
         <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
-        </div>
+        </div> */}
       
       </div>
-      <button disabled={firstName==''||fatherName==''||birthDate.length<1||nationalId.length<1||contact.length<1||address.length<1||bloodGroup.length<1||disabilities.length<1||chronicConditions.length<1} type="submit" className="btn btn-primary" >Add Patient</button>
+      <button disabled={email==''||password==''||firstName==''||fatherName==''||birthDate.length<1||nationalId.length<1||contact.length<1||address.length<1||bloodGroup.length<1||disabilities.length<1||chronicConditions.length<1} type="submit" className="btn btn-primary" >Add Patient</button>
       {/* <button disabled={firstName==''||fatherName==''||birthDate.length<1||nationalId.length<1||contact.length<1||address.length<1||bloodGroup.length<1||disabilities.length<1||chronicConditions.length<1} type="button" onClick={addPatients} className="btn btn-primary" >Add Patient</button> */}
     </form>
     </div>

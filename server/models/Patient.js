@@ -5,6 +5,8 @@ const PatientSchema = new Schema({
 // hospitalId: { type: String, index: true },
 firstName: { type: String, required: true },
 lastName: String,
+email:{type:String,required:true,unique:true},
+password:{type:String,required:true},
 fatherName: String,
 gender: { type: String, enum: ['male','female','other'] },
 dateOfBirth: {type:Date,required: false},

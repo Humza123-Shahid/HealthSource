@@ -6,7 +6,8 @@ import InfoMessage from "./InfoMessage";
 const Login = (props) => {
   //const location = useLocation();
   const [credentials, setCredentials] = useState({
-    username: "",
+    // username: "",
+    email: "",
     password: "",
   });
   const [showToast, setShowToast] = useState(false);
@@ -22,7 +23,7 @@ const Login = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username: credentials.username,
+        email: credentials.email,
         password: credentials.password,
       }),
     });
@@ -120,7 +121,7 @@ const Login = (props) => {
         />
         <h2 style={{ textAlign: "center", width: "50vh" }}>Sign In</h2>
         <div className="mb-3">
-          <label htmlFor="username" className="form-label">
+          {/* <label htmlFor="username" className="form-label">
             User Name
           </label>
           <input
@@ -131,9 +132,12 @@ const Login = (props) => {
             id="username"
             name="username"
             aria-describedby="emailHelp"
-          />
+          /> */}
+          <label htmlFor="email" className="form-label">Email address</label>
+          <input type="email" className="form-control" value={credentials.email} onChange={onChange} id="email" name="email" aria-describedby="emailHelp"/>
+
           <div id="emailHelp" className="form-text">
-            We'll never share your username with anyone else.
+            We'll never share your email with anyone else.
           </div>
         </div>
         <div className="mb-3">

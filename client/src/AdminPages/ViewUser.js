@@ -5,7 +5,7 @@ const ViewUser = () => {
      const location = useLocation();
     const Name=location.state?.name || {};
     const staffName=location.state?.staff || null;
-    const patientName=location.state?.patient || null;
+    const Email=location.state?.email || null;
     const roleName=location.state?.role|| null;
     const index=location.state?.idx;
 
@@ -17,7 +17,7 @@ const ViewUser = () => {
           <tr>
             <th>#</th>
             <th>Staff</th>
-            <th>Patient</th>
+            <th>Email Address</th>
             <th>User Name</th>
             <th>Role</th>
           </tr>
@@ -26,7 +26,7 @@ const ViewUser = () => {
             <tr>
               <td>{index}</td>
               <td>{staffName}</td>
-              <td>{patientName}</td>
+              <td>{Email}</td>
               <td>{Name}</td>
               <td>{roleName}</td>
             </tr>

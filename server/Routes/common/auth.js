@@ -1,5 +1,7 @@
 const express=require('express');
 const User =require('../../models/User')
+const Patient =require('../../models/Patient')
+
 const Role =require('../../models/Role')
 const router= express.Router();
 const { body, validationResult } = require('express-validator');
@@ -75,16 +77,26 @@ router.post('/login',[
     if (!errors.isEmpty()) {
       return res.status(400).json({ success,errors: errors.array() });
     }
-    const {username,password}=req.body
+    const {email,password}=req.body
     try{
-        let user=await User.findOne({username});
-        if(!user)
+        // let user=await User.findOne({username});
+        let user=await User.findOne({email});
+        let patient=await Patient.findOne({email});
+        console.log(user)
+                console.log(patient)
+
+        if(!user && !patient)
         {
           return res.status(400).json({success,error:"Please try to login with correct credentials"});
         }
-        const passwordCompare= bcrypt.compare(password,user.password);
+        if(user)
+        {
+          console.log("in user staff")
+           //const passwordCompare= await bcrypt.compare(String(password),String(user.password));
+           console.log(password)
+            console.log(user.password)
         // const passwordCompare= password==user.password
-        if(!passwordCompare)
+        if(user.password!=password)
         {
           return res.status(400).json({success,error:"Please try to login with correct credentials"});
         }  
@@ -98,18 +110,42 @@ router.post('/login',[
         const userRole=await Role.findById(user.role)
         const userType=userRole.name; 
         let userTypeId;
-        if(userType=='patient')
-          {
+        userTypeId= user.staff;
+        // if(userType=='patient')
+        //   {
 
-            userTypeId= user.patient;
+        //     userTypeId= user.patient;
 
-          } 
-        else if(userType=='doctor'||userType=='nurse')
-        {
-            userTypeId= user.staff;
+        //   } 
+        // else if(userType=='doctor'||userType=='nurse')
+        // {
+            
 
-        }   
+        //}   
         res.json({success,authtoken,userType,userTypeId}) 
+        }
+        else{
+           console.log("in patient staff")
+          // const passwordCompare=await bcrypt.compare(password,patient.password);
+          if(patient.password!=password)
+          {
+            return res.status(400).json({success,error:"Please try to login with correct credentials"});
+          }  
+           const data={
+           patient:{
+              id:patient._id
+                }
+              }
+              const authtoken=jwt.sign(data,JWT_SECRET)  
+              success=true;
+              //const userRole=await Role.findById(user.role)
+              const userType="patient"; 
+              let userTypeId;
+              userTypeId= patient._id;
+              res.json({success,authtoken,userType,userTypeId}) 
+
+        }
+       
 
     }
     catch(error){

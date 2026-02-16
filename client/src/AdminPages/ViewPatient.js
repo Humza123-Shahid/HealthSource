@@ -30,6 +30,7 @@ const ViewPatient = () => {
             <th>#</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Email Address</th>
             <th>Father Name</th>
             <th>Gender</th>
             <th>Date of Birth</th>
@@ -51,6 +52,7 @@ const ViewPatient = () => {
               <td>{index}</td>
               <td>{Patient?.firstName}</td>
               <td>{Patient.lastName}</td>
+              <td>{Patient.email}</td>
               <td>{Patient.fatherName}</td>
               <td>{Patient.gender}</td>
               <td>{formattedBirthDate}</td>

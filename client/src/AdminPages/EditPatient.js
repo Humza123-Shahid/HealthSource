@@ -19,6 +19,8 @@ const EditPatient = () => {
 
 
     const [status, setStatus] = useState(Patient.status);
+     const [ email, setEmail] = useState(Patient.email);
+        const [ password, setPassword] = useState(Patient.password);
     const [ firstName, setFirstName] = useState(Patient.firstName);
     const [ lastName, setLastName] = useState(Patient.lastName);
     const [ fatherName, setFatherName] = useState(Patient.fatherName);
@@ -34,14 +36,14 @@ const EditPatient = () => {
     const [ chronicConditions, setChronicConditions] = useState(Patient.chronicConditions);
     const [ regDate, setRegDate] = useState(formatDate(new Date(Patient.registrationDate)));
     const [ photoUrl, setPhotoUrl] = useState(Patient.photoUrl);
-    const parts = Patient.photoPath.split('\\')
+    const parts = Patient.photoPath?.split('\\')
 console.log(parts)
 // Remove the first part (which might be an empty string if the path starts with '/')
 // and the second part (the first "word", e.g., "home")
-const remainingParts = parts.slice(1);
+const remainingParts = parts?.slice(1);
 console.log(remainingParts);
 // Join the remaining parts back together
-const newPath = remainingParts.join('/');
+const newPath = remainingParts?.join('/');
 console.log(newPath);
 
     const [existingImage, setExistingImage] = useState(`http://localhost:5000/${newPath}`); // from DB
@@ -52,6 +54,12 @@ console.log(newPath);
 
   const handleStatusChange = (e) => {
     setStatus(e.target.value); // <-- Get input value here
+  };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value); // <-- Get input value here
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value); // <-- Get input value here
   };
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value); // <-- Get input value here
@@ -110,13 +118,21 @@ console.log(newPath);
     };
   const editPatients=async (e)=>{
           e.preventDefault();
-          const success= await editPatient(Patient._id,firstName,lastName,fatherName,gender,birthDate,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,regDate,file,status)
-          console.log(success);
-          if(success)
+          const json= await editPatient(Patient._id,firstName,lastName,email,password,fatherName,gender,birthDate,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,regDate,file,status)
+          console.log(json.success);
+          if(json.success)
           {
             setShowToast(true);
             setMsg("Patient updated successfully")
             setType("success")
+            setTimeout(()=>{
+              setShowToast(false)
+            },1500)
+          }
+          else{
+            setShowToast(true);
+            setMsg(json.error)
+            setType("error")
             setTimeout(()=>{
               setShowToast(false)
             },1500)
@@ -129,11 +145,22 @@ console.log(newPath);
     <form onSubmit={editPatients}>
 
     <div className='mx-0' style={{display:'flex'}}>
+      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+          <label htmlFor="email" className="form-label">Email address</label>
+          <input type="email" className="form-control" id="email" name="email" value={email} onChange={handleEmailChange} aria-describedby="emailHelp"/>
+        </div>
+         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+            <label htmlFor="password" className="form-label">Password</label>
+          <input type="password" className="form-control" id="password" name="password" value={password} onChange={handlePasswordChange} minLength={3} required/>
+      </div>
     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="fname" className="form-label">Enter First Name:</label>
             <input type="text" className="form-control" id="fname" value={firstName} name="fname" onChange={handleFirstNameChange} />
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     
+    </div>
+        <div className='mx-0' style={{display:'flex'}}>
+           <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="lname" className="form-label">Enter Last Name:</label>
             <input type="text" className="form-control" id="lname" value={lastName} name="lname" onChange={handleLastNameChange} />
       </div>
@@ -141,8 +168,6 @@ console.log(newPath);
             <label htmlFor="fathername" className="form-label">Enter Father Name:</label>
             <input type="text" className="form-control" id="fathername" value={fatherName} name="fathername" onChange={handleFatherNameChange} />
       </div>
-    </div>
-        <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="gender" className="form-label">Enter Gender:</label>
             {/* <input type="text" className="form-control" id="gender" value={gender} name="gender" onChange={handleGenderChange} /> */}
@@ -152,7 +177,10 @@ console.log(newPath);
                   <option value="other">Other</option>
             </select>
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     
+      </div>
+      <div className='mx-0' style={{display:'flex'}}>
+         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="bdate" className="form-label">Select Date of Birth:</label>
             <input type="date" className="form-control" id="bdate" value={birthDate} name="bdate" onChange={handleBirthDateChange} />
       </div>
@@ -160,13 +188,14 @@ console.log(newPath);
             <label htmlFor="age" className="form-label">Enter Age:</label>
             <input type="number" className="form-control" id="age" value={age} name="age" onChange={handleAgeChange} />
       </div>
-      </div>
-      <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="nid" className="form-label">Enter National Id:</label>
                 <input type="text" className="form-control" id="nid" value={nationalId} name="nid" onChange={handleNationalIdChange} />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       
+        </div>
+        <div className='mx-0' style={{display:'flex'}}>
+           <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="contact" className="form-label">Enter Contact:</label>
                 <input type="text" className="form-control" id="contact" value={contact} name="contact" onChange={handleContactChange} />
         </div>
@@ -174,8 +203,6 @@ console.log(newPath);
                 <label htmlFor="address" className="form-label">Enter Address:</label>
                 <textarea className="form-control" id="address" value={address} name="address" onChange={handleAddressChange} />
         </div>
-        </div>
-        <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="mstatus" className="form-label">Enter Marital Status:</label>
                 {/* <input type="text" className="form-control" id="mstatus" value={maritalStatus} name="mstatus" onChange={handleMaritalStatusChange} /> */}
@@ -185,7 +212,10 @@ console.log(newPath);
                   <option value="other">Other</option>
                  </select>
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        
+        </div>
+         <div className='mx-0' style={{display:'flex'}}>
+          <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="bgroup" className="form-label">Enter Blood Group:</label>
                 {/* <input type="text" className="form-control" id="bgroup" value={bloodGroup} name="bgroup" onChange={handleBloodGroupChange} /> */}
                  <select id="mySelect" className="form-control "  value={bloodGroup} onChange={handleBloodGroupChange}>
@@ -203,12 +233,15 @@ console.log(newPath);
                 <label htmlFor="disabilities" className="form-label">Enter Disabilities:</label>
                 <textarea className="form-control" id="disabilities" value={disabilities} name="disabilities" onChange={handleDisabilitiesChange} />
         </div>
-        </div>
-         <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="conditions" className="form-label">Enter Chronic Conditions:</label>
            <textarea className="form-control" id="conditions" value={chronicConditions} name="conditions" onChange={handleChronicConditionsChange} />
       </div>
+      
+      
+       
+    </div>
+    <div className='mx-0' style={{display:'flex'}}>
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="regDate" className="form-label">Select Registration Date:</label>
             <input type="date" className="form-control" id="regDate" value={regDate} name="regDate" onChange={handleRegistrationDateChange} />
@@ -223,10 +256,6 @@ console.log(newPath);
             />
              
       </div>
-      
-       
-    </div>
-    <div className='mx-0' style={{display:'flex'}}>
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
         <div>
               {/* {preview ? (
@@ -255,6 +284,8 @@ console.log(newPath);
             </a>
         </div>
       </div>
+      </div>
+      <div className='mx-0' style={{display:'flex'}}>
       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
             {/* <input type="text" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} /> */}
@@ -268,13 +299,14 @@ console.log(newPath);
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
-        {/* <div className="mb-3 ms-3" style={{width:'100%'}}>
+        <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
-        </div> */}
+        </div>
       
       </div>
-      <button disabled={firstName==''||fatherName==''||birthDate.length<1||nationalId.length<1||contact.length<1||address.length<1||bloodGroup.length<1||disabilities.length<1||chronicConditions.length<1} type="submit" className="btn btn-primary" >Update Patient</button>
+      
+      <button disabled={email==''||password==''||firstName==''||fatherName==''||birthDate.length<1||nationalId.length<1||contact.length<1||address.length<1||bloodGroup.length<1||disabilities.length<1||chronicConditions.length<1} type="submit" className="btn btn-primary" >Update Patient</button>
       </form>
     </div>
   )

@@ -92,13 +92,13 @@ const AdminPatient = () => {
             <th>#</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Email Address</th>
             <th>Father Name</th>
             <th>Gender</th>
             <th>Date of Birth</th>
             <th>Age</th>
             <th>National Id</th>
             <th>Contact</th>
-            <th>Address</th>
             <th>Marital Status</th>
             <th>Action</th>
           </tr>
@@ -118,13 +118,13 @@ const AdminPatient = () => {
               <td>{index+1}</td>
               <td>{row?.firstName}</td>
               <td>{row.lastName}</td>
+              <td>{row.email}</td>
               <td>{row.fatherName}</td>
               <td>{row.gender}</td>
               <td>{formattedBirthDate}</td>
               <td>{row?.age}</td>
               <td>{row.nationalId}</td>
               <td>{row.contact}</td>
-              <td>{row.address}</td>
               <td>{row.maritalStatus}</td>
               <td style={{width:"30%"}}>
                 <button style={{ marginRight: "8px", color: "white",backgroundColor:"blue"}} onClick={()=>

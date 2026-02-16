@@ -17,7 +17,7 @@ const SignUp = (props) => {
     // const [roles,setRoles]=useState([]);
   // const [credentials,setCredentials] =useState({staffId:"",patientId:"",name:"",email:"",phone_number:'',password:"",cpassword:"",roleId:""})
 
-  const [credentials,setCredentials] =useState({firstName:"",age:"",nationalId:""})
+  const [credentials,setCredentials] =useState({email:"",password:"",firstName:"",age:"",nationalId:""})
       
   const [ gender, setGender] = useState('male');
     const [ maritalStatus, setMaritalStatus] = useState('single');
@@ -35,9 +35,10 @@ const SignUp = (props) => {
   };
   const handleSubmit=async(e)=>{
      e.preventDefault();
-    let {firstName,age,nationalId}=credentials
+    let {email,password,firstName,age,nationalId}=credentials
     console.log(firstName,gender,age,nationalId,maritalStatus,bloodGroup)
-    const json=await addPatient(firstName,undefined,undefined,gender,"",age,nationalId,undefined,undefined,maritalStatus,bloodGroup,undefined,undefined,"",undefined,undefined)
+    // const json=await addPatient(firstName,undefined,email,password,undefined,gender,"",age,nationalId,undefined,undefined,maritalStatus,bloodGroup,undefined,undefined,"",undefined,undefined)
+    const json=await addPatient(firstName,"",email,password,"",gender,"",age,nationalId,"","",maritalStatus,bloodGroup,"","","","",undefined) 
           console.log(json.success)
           if(json.success)
           {
@@ -65,7 +66,14 @@ const SignUp = (props) => {
            }
            else{
                   setShowToast(true);
-                setMsg("Invalid Credentials")
+                // setMsg("Invalid Credentials")
+                if(json.error){
+                  setMsg(json.error)
+
+                }
+                else{
+                  setMsg("Invalid Credentials")
+                }
                 setType("error")
                 setTimeout(()=>{
                   setShowToast(false)
@@ -176,6 +184,16 @@ const SignUp = (props) => {
       <form className='mt-3 mb-3 pt-4 px-3' onSubmit={handleSubmit} style={{backgroundColor:"white",borderRadius: '10px',width:'50vw'}} >  
         <img src={logimg} className="center" style={{display:'block',margin:'0 auto',width:'100px'}}alt="..."/>
         <h2 className='mb-3' style={{textAlign:"center",width:'100%'}}>Sign Up</h2>
+        <div className='mx-0' style={{display:'flex'}}>
+        <div className="mb-3" style={{width:'100%'}}>
+          <label htmlFor="email" className="form-label">Email address</label>
+          <input type="email" className="form-control" id="email" name="email" onChange={onChange} aria-describedby="emailHelp"/>
+        </div>
+         <div className="mb-3 ms-3 me-3" style={{width:'100%'}}>
+            <label htmlFor="password" className="form-label">Password</label>
+          <input type="password" className="form-control" id="password" name="password" onChange={onChange} minLength={3} required/>
+      </div>
+      </div>
        <div className='mx-0' style={{display:'flex'}}>
         <div className="mb-3" style={{width:'100%'}}>
           <label htmlFor="firstName" className="form-label">First Name</label>

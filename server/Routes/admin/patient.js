@@ -3,6 +3,8 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const uploadpatient = require("../../middleware/uploadpatient");
 const Patient = require('../../models/Patient');
+const User = require('../../models/User');
+
 var jwt = require('jsonwebtoken');
 
 const { body, validationResult } = require('express-validator');
@@ -23,6 +25,7 @@ router.get('/fetchallpatients',async (req,res)=>{
 })
 // ROUTE 2: Add a new Question using :POST "/api/questions/addquestion".Login required
 router.post('/addpatient',uploadpatient.single("file"),[
+    body('email').isEmail(),
     body('firstName').isLength({ min: 1 })
 ],async (req,res)=>{
     try {
@@ -37,16 +40,21 @@ router.post('/addpatient',uploadpatient.single("file"),[
         // const patient=new Patient({
         //    firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoPath: req.file?.path,status
         // })
-        const {firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,status}=req.body;        
+        const {firstName,lastName,email,password,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,status}=req.body;        
         const errors = validationResult(req);
         console.log(req.file?.path)
-        const finalData = { firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoPath: req.file?.path };
+        const finalData = { firstName,lastName,email,password,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoPath: req.file?.path };
             if (status!="undefined") {
                 finalData.status = status;
         }
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
+        let userone=await User.findOne({email:email})
+        let userpatient=await Patient.findOne({email:email})
+            if(userone||userpatient){
+                return res.status(400).json({success,error:"Sorry a user with this email already exists"})
+            }
         const patient=new Patient(finalData)
         const savedPatient=await patient.save();
          const data={
@@ -66,11 +74,13 @@ router.post('/addpatient',uploadpatient.single("file"),[
 })
 // ROUTE 3: Update an existing Question using :PUT "/api/questions/updatequestion".Login required
 router.put('/updatepatient/:id',fetchuser,uploadpatient.single('file'),async (req,res)=>{
-    const {firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,status}=req.body;
+    const {firstName,lastName,fatherName,email,password,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,status}=req.body;
     const newPatient={};
     console.log(req.file)
     if(firstName){newPatient.firstName=firstName};
     if(lastName){newPatient.lastName=lastName};
+    if(email){newPatient.email=email};
+    if(password){newPatient.password=password};
     if(fatherName){newPatient.fatherName=fatherName};
     if(gender){newPatient.gender=gender};
     if(dateOfBirth){newPatient.dateOfBirth=dateOfBirth};
@@ -92,7 +102,11 @@ router.put('/updatepatient/:id',fetchuser,uploadpatient.single('file'),async (re
 
     let patient=await Patient.findById(req.params.id);
     if(!patient){return res.status(404).send("Not Found")}
-
+    let userone=await User.findOne({email:email})
+    let userpatient=await Patient.findOne({email:email})
+        if(userone||userpatient){
+            return res.status(400).json({success,error:"Sorry a user with this email already exists"})
+        }
 
     patient =await Patient.findByIdAndUpdate(req.params.id,{$set:newPatient},{new:true})
     res.json({success: true, data:patient});

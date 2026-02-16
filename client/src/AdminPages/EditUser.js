@@ -21,7 +21,7 @@ const EditUser = () => {
         const role=location.state?.roleId || "";
 
     console.log(role);
-     const [credentials,setCredentials] =useState({staffId:location.state?.staffId|| null,patientId:location.state?.patientId|| null,name:location.state?.name|| {},password:location.state?.password|| {},cpassword:location.state?.password|| {},roleId:location.state?.roleId|| null})
+     const [credentials,setCredentials] =useState({staffId:location.state?.staffId|| null,patientId:location.state?.patientId|| null,email:location.state?.email|| "",name:location.state?.name|| {},password:location.state?.password|| {},cpassword:location.state?.password|| {},roleId:location.state?.roleId|| null})
      const context=useContext(userContext);
     const {editUser}=context;
      const context2=useContext(staffContext);
@@ -104,9 +104,11 @@ function removeDuplicatesByProperty(arr, prop) {
 }
 
 const uniqueArray = removeDuplicatesByProperty(roles, 'name');
+const filteredUniqueArray=uniqueArray.filter(ua=>ua.name!=='patient').filter(ua=>ua.name!=='Patient')
+
 const options3 = [
   { value: "", label: "Select Role" }, // empty option
-  ... uniqueArray.map(uA => ({
+  ... filteredUniqueArray.map(uA => ({
     value: uA._id,
     label: `${uA.name}`
 }))
@@ -123,10 +125,10 @@ const filterOption = (option, inputValue) => {
 };
   const editUsers=async (e)=>{
          e.preventDefault();
-        const {staffId,patientId,name,password,cpassword,roleId}=credentials
+        const {staffId,email,name,password,cpassword,roleId}=credentials
         const roleobj= getRoleById(roleId);
         const staffobj= getStaffById(staffId);
-        const patientobj= getPatientById(patientId);
+        // const patientobj= getPatientById(patientId);
 
         if(password!=cpassword)
         {
@@ -140,8 +142,8 @@ const filterOption = (option, inputValue) => {
         return;
         }
          const id=location.state?.userId||{};
-         console.log(staffId,patientId,roleId)
-          const user=await editUser(id,staffId,patientId,name,password,roleId)
+         console.log(staffId,roleId)
+          const user=await editUser(id,staffId,email,name,password,roleId)
           console.log(user)
           if(user.success)
           {
@@ -150,6 +152,14 @@ const filterOption = (option, inputValue) => {
             setShowToast(true);
             setMsg("User updated successfully")
             setType("success")
+            setTimeout(()=>{
+              setShowToast(false)
+            },1500)
+          }
+          else{
+            setShowToast(true);
+            setMsg(user.error)
+            setType("error")
             setTimeout(()=>{
               setShowToast(false)
             },1500)
@@ -192,28 +202,34 @@ useEffect(() => {
             </select> */}
              <Select id="staffId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="staffId" placeholder="Select Staff" />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="patient" className="form-label">Patient</label>
-            {/* <select id="patientId" className="form-control " value={credentials.patientId} name="patientId" onChange={onChange}>
+            <select id="patientId" className="form-control " value={credentials.patientId} name="patientId" onChange={onChange}>
                
                 <option value="">-Patient-</option>
                     {Array.isArray(patients) && patients.map((row) => (
                     <option value={row._id}>{row.firstName}</option>
                     ))}
-            </select> */}
+            </select>
             <Select id="patientId" options={options2} filterOption={filterOption} defaultValue={defaultValue2} onChange={handleChange2} name="patientId" placeholder="Select Patient" />
+
+        </div> */}
+        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+          <label htmlFor="email" className="form-label">Email address</label>
+          <input type="email" className="form-control" id="email" value={credentials.email} name="email" onChange={onChange} aria-describedby="emailHelp"/>
+          {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
 
         </div>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
           <label htmlFor="name" className="form-label">User Name</label>
           <input type="text" className="form-control" id="name" value={credentials.name} name="name" onChange={onChange}  aria-describedby="emailHelp"/>
         </div>
-    
+  
        
     </div>
       <div className='mx-0' style={{display:'flex'}}>
 
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
           <label htmlFor="password" className="form-label">Password</label>
           <input type="text" className="form-control" id="password" value={credentials.password} name="password" onChange={onChange} minLength={3} required/>
         </div>
@@ -233,13 +249,17 @@ useEffect(() => {
           <Select id="roleId" options={options3} filterOption={filterOption} defaultValue={defaultValue3} onChange={handleChange3} name="roleId" placeholder="Select Role" />
 
         </div>
+        {/* <div className="mb-3 ms-3" style={{width:'100%'}}>
+          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
+          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
+       </div> */}
          
     </div>
         
     
     
     
-      <button disabled={credentials.name.length<1||credentials.password.length<1||credentials.cpassword.length<1} type="submit" className="btn btn-primary">Update User</button>
+      <button disabled={credentials.email.length<1||credentials.name.length<1||credentials.password.length<1||credentials.cpassword.length<1} type="submit" className="btn btn-primary">Update User</button>
       </form>
     </div>
   )

@@ -20,7 +20,7 @@ const UserState=(props)=>{
       console.log(json);
       setUsers(json)
     }
-    const addUser=async (staff,patient,username,password,role)=>{
+    const addUser=async (staff,email,username,password,role)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
       const response=await fetch(`${host}/api/user/adduser`,{
         method:'POST',
@@ -28,7 +28,9 @@ const UserState=(props)=>{
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
         },
-        body:JSON.stringify({staff,patient,username,password,role})
+        // body:JSON.stringify({staff,patient,username,password,role})
+        body:JSON.stringify({staff,email,username,password,role})
+
       });
       const user=await response.json();
       const normalizedData = Array.isArray(user.data) ? user.data : [user.data];
@@ -50,7 +52,7 @@ const UserState=(props)=>{
       const newUsers=users.filter((user)=>{return user._id!==id})
       setUsers(newUsers)
     }
-    const editUser=async(id,staff,patient,username,password,role)=>{
+    const editUser=async(id,staff,email,username,password,role)=>{
       console.log(localStorage.getItem('token'));
       const response=await fetch(`${host}/api/user/updateuser/${id}`,{
         method:'PUT',
@@ -58,7 +60,7 @@ const UserState=(props)=>{
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
           },
-        body:JSON.stringify({staff,patient,username,password,role})
+        body:JSON.stringify({staff,email,username,password,role})
       });
       const json=await response.json();
       let newUsers=JSON.parse(JSON.stringify(users));
@@ -69,7 +71,8 @@ const UserState=(props)=>{
         if(element._id===id)
         {
           newUsers[index].staff=staff;
-          newUsers[index].patient=patient;
+          // newUsers[index].patient=patient;
+          newUsers[index].email=email;
           newUsers[index].username=username;
           newUsers[index].password=password;
           newUsers[index].role=role;

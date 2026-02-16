@@ -37,17 +37,17 @@ const AdminUser = () => {
   const filteredData = users?.filter(item =>
       item.username?.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  const handleView = (staffName,patientName,Name,roleName,index) => {
+  const handleView = (staffName,Name,Email,roleName,index) => {
     //const dataitem=buses.find(da => da._id ==id)
     //const datadriver=getDriverById(driverId);
     // console.log(staffName,patientName,Name,roleName,index);
-    navigate('getuser', { state: { staff:staffName,patient:patientName,name:Name,role:roleName,idx:index+1} });
+    navigate('getuser', { state: { staff:staffName,name:Name,email:Email,role:roleName,idx:index+1} });
      
   };
-  const handleEdit = async (id,staff_id,patient_id,Name,Password,role_id) => {
+  const handleEdit = async (id,staff_id,Name,Email,Password,role_id) => {
     // const dataitem=buses.find(da => da._id ==id)
     // const datadriver=getDriverById(driverId);
-    navigate('edituser', { state: { userId:id,staffId:staff_id,patientId:patient_id,name:Name,password:Password,roleId:role_id} });
+    navigate('edituser', { state: { userId:id,staffId:staff_id,name:Name,email:Email,password:Password,roleId:role_id} });
 
     //navigate('edituser', { state: { userId:id,name:Name,email:Email,phone:Phone,password:Password,roleId:role_id} });
   };
@@ -115,7 +115,7 @@ const getPatientById = (id) => patients.find(d => d._id === id);
           <tr>
            <th>#</th>
             <th>Staff</th>
-            <th>Patient</th>
+            <th>Email Address</th>
             <th>User Name</th>
             <th>Role</th>
             <th>Action</th>
@@ -125,7 +125,7 @@ const getPatientById = (id) => patients.find(d => d._id === id);
           {filteredData.map((row,index) => {
             const role = getRoleById(row.role);
             const staff = getStaffById(row.staff);
-            const patient = getPatientById(row.patient);
+            // const patient = getPatientById(row.patient);
             return(
             <tr key={row._id}>
               <td>{index+1}</td>
@@ -133,15 +133,15 @@ const getPatientById = (id) => patients.find(d => d._id === id);
               {/* {getDriverName(row.driver_id)}  */}
               
               <td>{staff?.firstName}</td>
-              <td>{patient?.firstName}</td>
+              <td>{row?.email}</td>
               <td>{row.username}</td>
               <td>{role?.name}</td>
               <td style={{width:"30%"}}>
                 <button style={{ marginRight: "8px", color: "white",backgroundColor:"blue"}} onClick={()=>
-                  handleView(staff?.firstName,patient?.firstName,row.username,role?.name,index)}>
+                  handleView(staff?.firstName,row.username,row.email,role?.name,index)}>
                 View
               </button>
-              <button onClick={() => handleEdit(row._id,staff?._id,patient?._id,row.username,row.password,role?._id)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
+              <button onClick={() => handleEdit(row._id,staff?._id,row.username,row.email,row.password,role?._id)} style={{ marginRight: "8px",color:"white",backgroundColor:"green" }}>
                 Edit
               </button>
               <button onClick={() => handleDelete(row._id)} style={{ color:"white",backgroundColor:"red" }}>
