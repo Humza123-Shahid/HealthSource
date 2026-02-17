@@ -1,5 +1,8 @@
+// import { Resend } from 'resend';
 const express=require('express');
 const router= express.Router();
+// const { Resend } = require("resend");
+const nodemailer = require('nodemailer');
 var fetchuser=require('../../middleware/fetchuser');
 const uploadpatient = require("../../middleware/uploadpatient");
 const Patient = require('../../models/Patient');
@@ -10,7 +13,7 @@ var jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 
 const JWT_SECRET="Harryisagoodboy";
-
+// const resend = new Resend('re_PkjWpM7Z_8KwhZak8yBrochjoZPWbsUCU');
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallpatients',async (req,res)=>{
     try {
@@ -51,7 +54,9 @@ router.post('/addpatient',uploadpatient.single("file"),[
         return res.status(400).json({ success,errors: errors.array() });
         }
         let userone=await User.findOne({email:email})
+        console.log(userone)
         let userpatient=await Patient.findOne({email:email})
+        console.log(userpatient)
             if(userone||userpatient){
                 return res.status(400).json({success,error:"Sorry a user with this email already exists"})
             }
@@ -62,11 +67,48 @@ router.post('/addpatient',uploadpatient.single("file"),[
                 id:savedPatient.id
               }
             }
-            const authtoken=jwt.sign(data,JWT_SECRET)   
+            const authtoken=jwt.sign(data,JWT_SECRET) 
+            // const { dataEmail, error } = await resend.emails.send({
+            // from: 'onboarding@resend.dev', // Use your verified domain in production
+            // to: [email],
+            // subject: 'Welcome to HealthSource!',
+            // html: `<strong>Hey ${firstName},</strong><br>Thanks for signing up!`,
+            // });
+
+            // if (error) {
+            //     console.log(error);
+            // return res.status(400).json({ error });
+            // }
+            const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'humzashahid2068@gmail.com',
+                pass: 'waqc dkqq kvrq rbxe' // NOT your regular password
+            }
+            });
+
+            const mailOptions = {
+            from: '"Humza Shahid" <humzashahid2068@gmail.com>',
+            to: [email],
+            subject: 'Welcome to HealthSource!',
+            html:`<strong>Hey ${firstName},</strong><br>Thanks for signing up!`
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+            if (error) 
+            // {console.log(error);
+        {
+            return res.status(400).json({ error });
+
+            }
+            else{ console.log('Email sent: ' + info.response);
+            }
+            });
         success=true;
         userTypeId= patient._id;
-
         res.json({success,authtoken,data:savedPatient,userTypeId})
+
+        // res.json({success,authtoken,data:savedPatient,data2:dataEmail,message: 'User created and email sent!',userTypeId})
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
