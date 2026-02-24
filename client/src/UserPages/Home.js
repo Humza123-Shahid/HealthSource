@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
-
+import "../styles/appointment.css";
 // import '../lib/owlcarousel/assets/owl.carousel.min.css';
 // import '../lib/owlcarousel/assets/owl.theme.default.min.css';
 // import $ from "jquery";
@@ -103,7 +103,7 @@ const Home = () => {
   const [youtubeLink, setYoutubeLink] = useState("");
   const [linkedinLink, setLinkedInLink] = useState("");
   const context = useContext(appointmentContext);
-  const { addAppointment } = context;
+  const { addAppointmentbyPatient } = context;
   const context2 = useContext(patientContext);
   const { patients, getPatients } = context2;
   const context3 = useContext(doctorContext);
@@ -164,14 +164,14 @@ const handleFilterChange = (event) => {
     if (selectedOption == "") {
       setCredentials({ ...credentials, patientId: null });
     } else {
-      setCredentials({ ...credentials, patientId: selectedOption.value });
+      setCredentials({ ...credentials, patientId: selectedOption });
     }
   };
   const handleChange2 = (selectedOption) => {
     if (selectedOption == "") {
       setCredentials({ ...credentials, doctorId: null });
     } else {
-      setCredentials({ ...credentials, doctorId: selectedOption.value });
+      setCredentials({ ...credentials, doctorId: selectedOption });
     }
   };
   const handleChange3 = (selectedOption) => {
@@ -224,10 +224,17 @@ const handleFilterChange = (event) => {
     const { doctorId, bookingType, status, notes } = credentials;
     // const patientobj= getPatientById(patientId);
 const patientId=localStorage.getItem('patientID')
-    console.log(patientId, doctorId);
-    const user = await addAppointment(
+const patientName=getPatientById(patientId)
+const emailPatient=localStorage.getItem('patientEmail')
+
+    console.log(patientName.firstName, doctorId.label);
+
+    const user = await addAppointmentbyPatient(
+      emailPatient,
       patientId,
-      doctorId,
+      doctorId.value,
+      patientName.firstName,
+      doctorId.label,
       appointmentDate,
       bookingType,
       status,
@@ -235,6 +242,8 @@ const patientId=localStorage.getItem('patientID')
     );
     console.log(user);
     if (user.success) {
+    // let success=false;
+    // if(success){
       let message = "Appointment added successfully";
       alert(message);
       console.log("abc");
@@ -660,7 +669,8 @@ const patientId=localStorage.getItem('patientID')
               </p>
                <Link
                   to="/search"
-                  class="btn btn-dark rounded-pill py-3 px-5 me-3"
+                  class="btn btn-dark rounded-pill py-3 px-5 me-3 force-color"
+                  
                 >
                   Find Doctor
                 </Link>

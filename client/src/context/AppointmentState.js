@@ -38,6 +38,24 @@ const AppointmentState=(props)=>{
       return appointment;
 
     }
+    const addAppointmentbyPatient=async (patientEmail,patient,doctor,patientName,doctorName,appointmentDate,bookingType,status,notes)=>{
+      //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
+      const response=await fetch(`${host}/api/appointment/addappointmentbypatient`,{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'auth-token':localStorage.getItem('token')
+        },
+        body:JSON.stringify({patientEmail,patient,doctor,patientName,doctorName,appointmentDate,bookingType,status,notes})
+      });
+      const appointment=await response.json();
+      const normalizedData = Array.isArray(appointment.data) ? appointment.data : [appointment.data];
+      //setBuses(buses.concat(bus.savedBus));
+      setAppointments(prevAppointments => [...prevAppointments, normalizedData])
+      // return appointment.success;
+      return appointment;
+
+    }
     const deleteAppointment= async(id)=>{
       const response=await fetch(`${host}/api/appointment/deleteappointment/${id}`,{
         method:'DELETE',
@@ -85,7 +103,7 @@ const AppointmentState=(props)=>{
     
     return(
         //<QuestionContext.Provider value={{state,update}}>
-        <AppointmentContext.Provider value={{appointments,addAppointment,deleteAppointment,editAppointment,getAppointments}}>
+        <AppointmentContext.Provider value={{appointments,addAppointment,addAppointmentbyPatient,deleteAppointment,editAppointment,getAppointments}}>
             {props.children}
         </AppointmentContext.Provider>
     )

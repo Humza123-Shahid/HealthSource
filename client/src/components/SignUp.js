@@ -10,7 +10,7 @@ const SignUp = (props) => {
     // const context=useContext(staffContext);
     // const {staffs,getStaffs}=context;
     const context2=useContext(patientContext);
-    const {addPatient}=context2;
+    const {addPatientOnSignUp}=context2;
     const [showToast,setShowToast]=useState(false)
     const [msg,setMsg]=useState('')
     const [type,setType]=useState('')
@@ -38,7 +38,7 @@ const SignUp = (props) => {
     let {email,password,firstName,age,nationalId}=credentials
     console.log(firstName,gender,age,nationalId,maritalStatus,bloodGroup)
     // const json=await addPatient(firstName,undefined,email,password,undefined,gender,"",age,nationalId,undefined,undefined,maritalStatus,bloodGroup,undefined,undefined,"",undefined,undefined)
-    const json=await addPatient(firstName,"",email,password,"",gender,"",age,nationalId,"","",maritalStatus,bloodGroup,"","","","",undefined) 
+    const json=await addPatientOnSignUp(firstName,"",email,password,"",gender,"",age,nationalId,"","",maritalStatus,bloodGroup,"","","","",undefined) 
           console.log(json.success)
           if(json.success)
           {
@@ -54,7 +54,7 @@ const SignUp = (props) => {
             // },1500)
             localStorage.setItem('utype',"patient");
             localStorage.setItem('patientID',json.userTypeId);
-
+            localStorage.setItem("patientEmail", email);
             navigate("/admin",{
               state: { signUpSuccess: true},
               replace: true, // optional: prevents back button returning to login

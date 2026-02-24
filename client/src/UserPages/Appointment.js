@@ -2,7 +2,7 @@ import React ,{useState,useContext,useEffect} from 'react'
 
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
-
+import "../styles/appointment.css";
 import UserFooter from '../components/UserFooter';
 import appointmentContext from '../context/appointmentContext'
 import patientContext from '../context/patientContext'
@@ -42,7 +42,7 @@ const Appointment = () => {
        let navigate=useNavigate();
     
      const context=useContext(appointmentContext);
-         const {addAppointment}=context;
+         const {addAppointmentbyPatient}=context;
          const context2=useContext(patientContext);
          const {patients,getPatients}=context2;
           const context3=useContext(doctorContext);
@@ -99,7 +99,7 @@ const Appointment = () => {
         }
         else
         {
-          setCredentials({...credentials,'doctorId':selectedOption.value})
+          setCredentials({...credentials,'doctorId':selectedOption})
         }
   };
         const getPatientById = (id) => patients.find(d => d?._id === id);
@@ -132,8 +132,21 @@ const handleSignUpClick = () => {
         const {doctorId,bookingType,status,notes}=credentials
        // const patientobj= getPatientById(patientId);
        const patientId=localStorage.getItem('patientID')
+       const patientName=getPatientById(patientId)
+        const emailPatient=localStorage.getItem('patientEmail')
          console.log(patientId,doctorId);
-          const user=await addAppointment(patientId,doctorId,appointmentDate,bookingType,status,notes)
+        //   const user=await addAppointment(patientId,doctorId,appointmentDate,bookingType,status,notes)
+        const user = await addAppointmentbyPatient(
+            emailPatient,
+            patientId,
+            doctorId.value,
+            patientName,
+            doctorId.label,
+            appointmentDate,
+            bookingType,
+            status,
+            notes,
+            );
           console.log(user)
           if(user.success)
           {
@@ -263,8 +276,8 @@ return (
                         dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero eos vero ea
                         et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit. Sea dolore
                         sanctus sed et. Takimata takimata sanctus sed.</p>
-                    <a class="btn btn-primary rounded-pill py-3 px-5 me-3" href="#!">Find Doctor</a>
-                    <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="#!">Read More</a>
+                    <a class="btn btn-primary rounded-pill py-3 px-5 me-3 force-color" href="#!">Find Doctor</a>
+                    <a class="btn btn-outline-primary rounded-pill py-3 px-5 force-color-2" href="#!">Read More</a>
                 </div>
                 <div class="col-lg-6">
                     <div class="bg-light text-center rounded p-5">

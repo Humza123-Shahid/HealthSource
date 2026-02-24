@@ -13,6 +13,30 @@ var jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 
 const JWT_SECRET="Harryisagoodboy";
+const welcomeTemplate = (userName) => `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+    <div style="background-color: #0056b3; padding: 20px; text-align: center;">
+      <h1 style="color: #ffffff; margin: 0;">HealthSource</h1>
+    </div>
+    <div style="padding: 30px; line-height: 1.6; color: #333333;">
+      <h2 style="color: #0056b3;">Welcome to the Hospital, ${userName}!</h2>
+      <p>Thank you for registering with our medical portal. We are committed to providing you with the best digital healthcare experience.</p>
+      <p><strong>Next Steps:</strong></p>
+      <ul>
+        <li>Check your medical history profile.</li>
+        <li>Book your first appointment online.</li>
+        <li>Securely message your primary physician.</li>
+      </ul>
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="http://localhost:3000/login" style="background-color: #28a745; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Access Your Patient Portal</a>
+      </div>
+    </div>
+    <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #777777;">
+      <p>This is an automated message. Please do not reply directly to this email.</p>
+      <p>Confidentiality Notice: This email is intended solely for the recipient.</p>
+    </div>
+  </div>
+`;
 // const resend = new Resend('re_PkjWpM7Z_8KwhZak8yBrochjoZPWbsUCU');
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallpatients',async (req,res)=>{
@@ -67,6 +91,48 @@ router.post('/addpatient',uploadpatient.single("file"),[
                 id:savedPatient.id
               }
             }
+            const authtoken=jwt.sign(data,JWT_SECRET)     
+        success=true;
+        userTypeId= patient._id;
+        res.json({success,authtoken,data:savedPatient,userTypeId})
+
+        // res.json({success,authtoken,data:savedPatient,data2:dataEmail,message: 'User created and email sent!',userTypeId})
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
+router.post('/addpatientonsignup',uploadpatient.single("file"),[
+    body('email').isEmail(),
+    body('firstName').isLength({ min: 1 })
+],async (req,res)=>{
+    try {
+        let success = false;
+        
+        const {firstName,lastName,email,password,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,status}=req.body;        
+        const errors = validationResult(req);
+        console.log(req.file?.path)
+        const finalData = { firstName,lastName,email,password,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoPath: req.file?.path };
+            if (status!="undefined") {
+                finalData.status = status;
+        }
+        if (!errors.isEmpty()) {
+        return res.status(400).json({ success,errors: errors.array() });
+        }
+        let userone=await User.findOne({email:email})
+        console.log(userone)
+        let userpatient=await Patient.findOne({email:email})
+        console.log(userpatient)
+            if(userone||userpatient){
+                return res.status(400).json({success,error:"Sorry a user with this email already exists"})
+            }
+        const patient=new Patient(finalData)
+        const savedPatient=await patient.save();
+         const data={
+              user:{
+                id:savedPatient.id
+              }
+            }
             const authtoken=jwt.sign(data,JWT_SECRET) 
             // const { dataEmail, error } = await resend.emails.send({
             // from: 'onboarding@resend.dev', // Use your verified domain in production
@@ -91,9 +157,9 @@ router.post('/addpatient',uploadpatient.single("file"),[
             from: '"Humza Shahid" <humzashahid2068@gmail.com>',
             to: [email],
             subject: 'Welcome to HealthSource!',
-            html:`<strong>Hey ${firstName},</strong><br>Thanks for signing up!`
+            html:welcomeTemplate(firstName)
             };
-
+// `<strong>Hey ${firstName},</strong><br>Thanks for signing up!`
             transporter.sendMail(mailOptions, (error, info) => {
             if (error) 
             // {console.log(error);

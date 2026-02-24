@@ -57,7 +57,7 @@ const Login = (props) => {
         //localStorage.setItem('showLoginToast', 'true');
         localStorage.setItem("utype", "patient");
         localStorage.setItem("patientID", json.userTypeId);
-
+        localStorage.setItem("patientEmail", credentials.email);
         //localStorage.setItem('uclass',json.qclass);
         navigate("/admin", {
           state: { loginSuccess: true },

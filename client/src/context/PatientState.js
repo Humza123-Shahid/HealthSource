@@ -58,6 +58,44 @@ const PatientState=(props)=>{
       return patient;
 
     }
+    const addPatientOnSignUp=async (firstName,lastName,email,password,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,file,status)=>{
+      //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("fatherName", fatherName);
+      formData.append("gender", gender);
+      formData.append("dateOfBirth", dateOfBirth);
+      formData.append("age", age);
+      formData.append("nationalId", nationalId);
+      formData.append("contact", contact);
+      formData.append("address", address);
+      formData.append("maritalStatus", maritalStatus);
+      formData.append("bloodGroup", bloodGroup);
+      formData.append("disabilities", disabilities);
+      formData.append("chronicConditions", chronicConditions);
+      formData.append("registrationDate", registrationDate);
+      formData.append("file", file);
+      formData.append("status", status);
+
+      const response=await fetch(`${host}/api/patient/addpatientonsignup`,{
+        method:'POST',
+        headers:{
+            'auth-token':localStorage.getItem('token')
+        },
+        // body:JSON.stringify({firstName,lastName,fatherName,gender,dateOfBirth,age,nationalId,contact,address,maritalStatus,bloodGroup,disabilities,chronicConditions,registrationDate,photoUrl,status})
+        body:formData     
+      });
+      const patient=await response.json();
+      const normalizedData = Array.isArray(patient.data) ? patient.data : [patient.data];
+      //setBuses(buses.concat(bus.savedBus));
+      setPatients(prevPatients => [...prevPatients, normalizedData])
+      // return patient.success;
+      return patient;
+
+    }
     const deletePatient= async(id)=>{
       const response=await fetch(`${host}/api/patient/deletepatient/${id}`,{
         method:'DELETE',
@@ -140,7 +178,7 @@ const PatientState=(props)=>{
     
     return(
         //<QuestionContext.Provider value={{state,update}}>
-        <PatientContext.Provider value={{patients,addPatient,deletePatient,editPatient,getPatients}}>
+        <PatientContext.Provider value={{patients,addPatient,addPatientOnSignUp,deletePatient,editPatient,getPatients}}>
             {props.children}
         </PatientContext.Provider>
     )

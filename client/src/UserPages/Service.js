@@ -242,7 +242,7 @@ const Service = () => {
                     {/* <a class="btn btn-dark rounded-pill py-3 px-5 me-3" href="#!">Find Doctor</a> */}
                     <Link
                         to="/search"
-                        class="btn btn-dark rounded-pill py-3 px-5 me-3"
+                        class="btn btn-dark rounded-pill py-3 px-5 me-3 force-color"
                     >
                         Find Doctor
                     </Link>
