@@ -246,7 +246,7 @@ const Service = () => {
                     >
                         Find Doctor
                     </Link>
-                    <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#!">Read More</a>
+                    {/* <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#!">Read More</a> */}
                 </div>
                 <div class="col-lg-6">
                     <div class="bg-white text-center rounded p-5">

@@ -153,5 +153,95 @@ router.post('/login',[
       res.status(500).send("Internal Server Error");
     }
 })
+router.post('/forgot-password',async (req,res)=>{
+ try {
+    const { email } = req.body;
 
+    const user = await User.findOne({ email });
+    const patient = await Patient.findOne({ email });
+
+    if (!user && !patient) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    let resetToken =null;
+    let resetEmail=null;
+    if(user)
+    {
+      resetToken  = jwt.sign({ userId: user._id }, JWT_SECRET, {expiresIn: "10m",});
+      resetEmail=user.email;
+    }
+    else if(patient)
+    {
+      resetToken  = jwt.sign({ patientId: patient._id }, JWT_SECRET, {expiresIn: "10m",});
+      resetEmail=patient.email;
+    }
+    // Reset URL (React route)
+    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+
+    // Email Transport
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "humzashahid2068@gmail.com",
+        pass: "waqc dkqq kvrq rbxe",
+      },
+    });
+
+    await transporter.sendMail({
+      to: resetEmail,
+      subject: "Password Reset",
+      html: `
+        <h3>Password Reset Request</h3>
+        <p>Click link below to reset password:</p>
+        <a href="${resetUrl}">${resetUrl}</a>
+      `,
+    });
+
+    res.json({ message: "Reset link sent to email" });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+})
+router.post('/reset-password/:token',async (req,res)=>{
+ try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    // Hash incoming token
+    const decodedToken = jwt.verify(
+      token,
+      JWT_SECRET
+    );
+    if (!decodedToken) {
+      return res.status(400).json({ message: "Invalid or expired token" });
+    }
+
+    // find the user with the id from the token
+    const user = await User.findOne({ _id: decodedToken.userId });
+    const patient = await Patient.findOne({ _id: decodedToken.patientId });
+
+    if (!user && !patient) {
+      return res.status(400).json({ message: "no user found" });
+    }
+
+    
+
+    // Hash password
+    if(user)
+    {
+   user.password =password;
+    await user.save();
+    }
+ else if(patient)
+    {
+      patient.password =password;
+    await patient.save();
+    }
+    res.json({ message: "Password reset successful" });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+})
 module.exports =router

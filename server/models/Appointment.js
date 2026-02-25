@@ -9,6 +9,10 @@ appointmentDate:{ type: Date, default: Date.now },
 bookingType: { type: String, enum: ['online','walk-in'] },
 status: { type: String, enum: ['booked','cancelled','completed','no-show'], default: 'booked' },
 notes: String,
+reminderSent: {
+    type: Boolean,
+    default: false
+}
 // createdBy: { type: Types.ObjectId, ref: 'Staff' },
 }, { timestamps: true });
 

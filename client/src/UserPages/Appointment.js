@@ -277,7 +277,7 @@ return (
                         et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit. Sea dolore
                         sanctus sed et. Takimata takimata sanctus sed.</p>
                     <a class="btn btn-primary rounded-pill py-3 px-5 me-3 force-color" href="#!">Find Doctor</a>
-                    <a class="btn btn-outline-primary rounded-pill py-3 px-5 force-color-2" href="#!">Read More</a>
+                    {/* <a class="btn btn-outline-primary rounded-pill py-3 px-5 force-color-2" href="#!">Read More</a> */}
                 </div>
                 <div class="col-lg-6">
                     <div class="bg-light text-center rounded p-5">

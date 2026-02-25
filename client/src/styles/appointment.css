@@ -1,6 +1,12 @@
-.force-color {
-  color: white !important;
+.forgotforce {
+   display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    margin-right:0.1rem;
 }
-.force-color-2 {
+.forgotforce2 {
+  color: #13C5DD !important;
+}
+.forcesignup {
   color: #13C5DD !important;
 }

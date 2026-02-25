@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logimg from "../img/userlogtransparent.png";
 import InfoMessage from "./InfoMessage";
+import "../css/style.css";
 
 const Login = (props) => {
   //const location = useLocation();
@@ -153,7 +154,11 @@ const Login = (props) => {
             name="password"
           />
         </div>
-
+        <div className="forgotforce">
+          <Link className="forgotforce2">
+              Forgot Password?
+            </Link>
+          </div>
         <button
           type="submit"
           className="btn btn-primary mb-4"
@@ -161,9 +166,10 @@ const Login = (props) => {
         >
           Log In
         </button>
+        
         <p className="mb-5" style={{ textAlign: "center" }}>
           Don't have an account?{" "}
-          <Link to="/signup" style={{ textDecoration: "underline" }}>
+          <Link className="forcesignup" to="/signup">
             Sign Up
           </Link>
         </p>

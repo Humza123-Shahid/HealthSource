@@ -48,7 +48,7 @@ const customStyles = {
     ...provided,
     height: "55px",
     borderColor: "#ced4da",
-   
+
     boxShadow: state.isFocused
       ?"0 0 0 .25rem rgba(19,197,221,0.25)"
       : provided.boxShadow,
@@ -96,7 +96,7 @@ const Home = () => {
   const nextRef2 = useRef(null);
   const imgRef = useRef(null);
       const navigate = useNavigate();
-  
+
   const [facebookLink, setFacebookLink] = useState("");
   const [instagramLink, setInstagramLink] = useState("");
   const [twitterLink, setTwitterLink] = useState("");
@@ -121,7 +121,7 @@ const Home = () => {
   });
       const [departmentName, setDepartmentName] = useState('');
         const [filterText, setFilterText] = useState('');
-  
+
   const [appointmentDate, setAppointmentDate] = useState("");
   // const dynamicNumber=1;
   // const dynamicSrc="img/team-"+ dynamicNumber+".jpg";
@@ -670,13 +670,13 @@ const emailPatient=localStorage.getItem('patientEmail')
                <Link
                   to="/search"
                   class="btn btn-dark rounded-pill py-3 px-5 me-3 force-color"
-                  
+
                 >
                   Find Doctor
                 </Link>
-              <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#!">
+              {/* <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#!">
                 Read More
-              </a>
+              </a> */}
             </div>
             <div class="col-lg-6">
               <div class="bg-white text-center rounded p-5">
@@ -737,7 +737,7 @@ const emailPatient=localStorage.getItem('patientEmail')
                       <button
                         disabled={
                           credentials.bookingType == "" ||
-                          
+
                           credentials.doctorId == null ||
                           appointmentDate == ""
                         }
@@ -824,12 +824,12 @@ const emailPatient=localStorage.getItem('patientEmail')
                     <p>Highly Experienced Doctors</p>
                     <p>Highest Success Rate</p>
                     <p>Telephone Service</p>
-                    <a
+                    {/* <a
                       href="#!"
                       class="btn btn-primary rounded-pill py-3 px-5 my-2"
                     >
                       Apply Now
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </SwiperSlide>
@@ -868,12 +868,12 @@ const emailPatient=localStorage.getItem('patientEmail')
                     <p>Highly Experienced Doctors</p>
                     <p>Highest Success Rate</p>
                     <p>Telephone Service</p>
-                    <a
+                    {/* <a
                       href="#!"
                       class="btn btn-primary rounded-pill py-3 px-5 my-2"
                     >
                       Apply Now
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </SwiperSlide>
@@ -912,12 +912,12 @@ const emailPatient=localStorage.getItem('patientEmail')
                     <p>Highly Experienced Doctors</p>
                     <p>Highest Success Rate</p>
                     <p>Telephone Service</p>
-                    <a
+                    {/* <a
                       href="#!"
                       class="btn btn-primary rounded-pill py-3 px-5 my-2"
                     >
                       Apply Now
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </SwiperSlide>
@@ -956,12 +956,12 @@ const emailPatient=localStorage.getItem('patientEmail')
                     <p>Highly Experienced Doctors</p>
                     <p>Highest Success Rate</p>
                     <p>Telephone Service</p>
-                    <a
+                    {/* <a
                       href="#!"
                       class="btn btn-primary rounded-pill py-3 px-5 my-2"
                     >
                       Apply Now
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </SwiperSlide>
@@ -1105,7 +1105,7 @@ const emailPatient=localStorage.getItem('patientEmail')
                 name="departmentId"
                 placeholder="Department"
                 styles={customStyles2}
-                
+
               />
               <input
                 type="text"
