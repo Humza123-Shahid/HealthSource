@@ -1,7 +1,7 @@
 const express=require('express');
 const User =require('../../models/User')
 const Patient =require('../../models/Patient')
-
+const nodemailer = require("nodemailer");
 const Role =require('../../models/Role')
 const router= express.Router();
 const { body, validationResult } = require('express-validator');
@@ -156,7 +156,6 @@ router.post('/login',[
 router.post('/forgot-password',async (req,res)=>{
  try {
     const { email } = req.body;
-
     const user = await User.findOne({ email });
     const patient = await Patient.findOne({ email });
 
@@ -200,11 +199,12 @@ router.post('/forgot-password',async (req,res)=>{
     res.json({ message: "Reset link sent to email" });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: err.message });
   }
 })
 router.post('/reset-password/:token',async (req,res)=>{
  try {
+  let success=false;
     const { token } = req.params;
     const { password } = req.body;
 
@@ -214,7 +214,7 @@ router.post('/reset-password/:token',async (req,res)=>{
       JWT_SECRET
     );
     if (!decodedToken) {
-      return res.status(400).json({ message: "Invalid or expired token" });
+      return res.status(400).json({ success,message: "Invalid or expired token" });
     }
 
     // find the user with the id from the token
@@ -222,7 +222,7 @@ router.post('/reset-password/:token',async (req,res)=>{
     const patient = await Patient.findOne({ _id: decodedToken.patientId });
 
     if (!user && !patient) {
-      return res.status(400).json({ message: "no user found" });
+      return res.status(400).json({ success,message: "no user found" });
     }
 
     
@@ -238,10 +238,11 @@ router.post('/reset-password/:token',async (req,res)=>{
       patient.password =password;
     await patient.save();
     }
-    res.json({ message: "Password reset successful" });
+    success=true;
+    res.json({success, message: "Password reset successful" });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({success:false, message: err.message });
   }
 })
 module.exports =router

@@ -155,7 +155,7 @@ const Login = (props) => {
           />
         </div>
         <div className="forgotforce">
-          <Link className="forgotforce2">
+          <Link to="/forgot-password" className="forgotforce2">
               Forgot Password?
             </Link>
           </div>

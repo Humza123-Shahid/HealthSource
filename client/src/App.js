@@ -151,6 +151,8 @@ import AdminDepartment from './AdminPages/AdminDepartment';
 import AddDepartment from './AdminPages/AddDepartment';
 import ViewDepartment from './AdminPages/ViewDepartment';
 import EditDepartment from './AdminPages/EditDepartment';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 
 function App() {
   const [alert,setAlert]=useState(null);
@@ -316,6 +318,8 @@ function App() {
               <Route path="/login" element={<Login/>} />
               <Route path="/admin/login" element={<Login/>} />
               <Route path="/signup" element={<SignUp/>} />
+              <Route path="/forgot-password" element={<ForgotPassword/>} />
+              <Route path="/reset-password/:token" element={<ResetPassword/>} />
               <Route path="/" element={<Home />}/>
               <Route path="aboutus" element={<AboutUs />}/> 
               <Route path="service" element={<Service />}/> 
