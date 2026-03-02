@@ -2,8 +2,49 @@ const express=require('express');
 const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const Bed = require('../../models/Bed');
+const Room = require('../../models/Room');
+
 const { body, validationResult } = require('express-validator');
 
+router.post('/addbulkbed',async (req,res)=>{
+  try {
+let success = false;
+    // Fetch all rooms
+    const rooms = await Room.find().select("_id");
+
+    if (rooms.length === 0) {
+      console.log("No rooms found. Insert rooms first.");
+      return;
+    }
+
+    const statusList = ['occupied', 'available', 'cleaning'];
+
+    const beds = [];
+
+    for (let i = 1; i <= 1000; i++) {
+      const randomRoom =
+        rooms[Math.floor(Math.random() * rooms.length)];
+
+      const randomStatus =
+        statusList[Math.floor(Math.random() * statusList.length)];
+
+      beds.push({
+        room: randomRoom._id,
+        bedNumber: `BED-${1000 + i}`,
+        status: randomStatus
+      });
+    }
+
+    await Bed.insertMany(beds);
+
+    console.log("1000 Bed records inserted successfully");
+    success=true;
+    res.json({success})
+    res.status(500).send("Internal Server Error");
+  } catch (error) {
+    console.error(error);
+  }
+})
 // ROUTE 1: Get All the Beds using :GET "/api/beds/fetchallbeds".Login required
 router.get('/fetchallbeds',fetchuser,async (req,res)=>{
     try {

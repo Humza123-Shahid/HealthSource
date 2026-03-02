@@ -4,6 +4,59 @@ var fetchuser=require('../../middleware/fetchuser');
 const StaffShift = require('../../models/StaffShift');
 const { body, validationResult } = require('express-validator');
 
+const shiftNames = ["Morning", "Evening", "Night", "General"];
+
+function getRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// create random time for a given hour
+function createTime(hour, minute = 0) {
+  const date = new Date();
+  date.setHours(hour);
+  date.setMinutes(minute);
+  date.setSeconds(0);
+  return date;
+}
+
+// async function seedStaffShifts() {
+router.post('/addbulkshift',async (req,res)=>{
+  try {
+    let success = false;
+    const shifts = [];
+
+    for (let i = 0; i < 1000; i++) {
+
+      // Random start hour between 0–23
+      const startHour = Math.floor(Math.random() * 24);
+
+      // Random duration 6–10 hours
+      const duration = Math.floor(Math.random() * 5) + 6;
+
+      const startTime = createTime(startHour);
+      const endTime = createTime((startHour + duration) % 24);
+
+      shifts.push({
+        name: getRandom(shiftNames) + " Shift " + i,
+        startTime,
+        endTime,
+        breakMinutes: Math.floor(Math.random() * 60),
+      });
+    }
+
+    await StaffShift.insertMany(shifts);
+
+    console.log("1000 StaffShift records inserted successfully");
+    success=true;
+    res.json({success})
+    //process.exit();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+
+    //process.exit(1);
+  }
+})
 
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallshifts',fetchuser,async (req,res)=>{

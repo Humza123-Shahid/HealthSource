@@ -3,9 +3,73 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const bcrypt =require('bcryptjs');
 const PatientMedicalHistory = require('../../models/PatientMedicalHistory');
+const Patient = require("../../models/Patient");
+const Doctor = require("../../models/Doctor");
 const { body, validationResult } = require('express-validator');
+const conditions = [
+  "Diabetes",
+  "Hypertension",
+  "Asthma",
+  "Flu",
+  "Arthritis",
+  "Heart Disease",
+  "Migraine"
+];
 
+const treatments = [
+  "Medication",
+  "Surgery",
+  "Physiotherapy",
+  "Lifestyle Changes",
+  "Diet Control"
+];
 
+const statuses = ["ongoing", "resolved"];
+
+function getRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+router.post('/addbulkpatientmedicalhistory',async (req,res)=>{
+  try {
+     let success = false;
+    /* Fetch existing Patients & Doctors */
+    const patients = await Patient.find().select("_id");
+    const doctors = await Doctor.find().select("_id");
+
+    if (!patients.length) {
+      console.log("No patients found");
+      process.exit();
+    }
+
+    const records = [];
+
+    for (let i = 0; i < 1000; i++) {
+      const randomPatient =
+        patients[Math.floor(Math.random() * patients.length)];
+
+      const randomDoctor =
+        doctors[Math.floor(Math.random() * doctors.length)];
+
+      records.push({
+        patient: randomPatient._id,
+        doctor: randomDoctor?._id,
+        condition: getRandom(conditions),
+        treatment: getRandom(treatments),
+        status: getRandom(statuses),
+        notes: "Auto generated record " + i,
+      });
+    }
+
+    await PatientMedicalHistory.insertMany(records);
+
+    console.log("1000 Patient Medical History records inserted");
+    success=true;
+    res.json({success})
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallpatientmedicalhistories',fetchuser,async (req,res)=>{
     try {

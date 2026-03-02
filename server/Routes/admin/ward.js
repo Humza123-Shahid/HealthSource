@@ -4,7 +4,35 @@ var fetchuser=require('../../middleware/fetchuser');
 const Ward = require('../../models/Ward');
 const { body, validationResult } = require('express-validator');
 
+router.post('/addbulkward',async (req,res)=>{
+  try {
+    let success = false;
+    const wardTypes = ['general','ICU','NICU','CCU','maternity','VIP'];
 
+    const wards = [];
+
+    for (let i = 1; i <= 1000; i++) {
+      const randomType = wardTypes[Math.floor(Math.random() * wardTypes.length)];
+
+      wards.push({
+        name: `${randomType.toUpperCase()} Ward ${i}`,
+        type: randomType,
+        totalRooms: Math.floor(Math.random() * 50) + 5   // 5–54 rooms
+      });
+    }
+
+    await Ward.insertMany(wards);
+
+    console.log("1000 Ward records inserted successfully");
+    success=true;
+    res.json({success})
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallwards',fetchuser,async (req,res)=>{
     try {

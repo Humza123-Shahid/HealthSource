@@ -3,8 +3,111 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const bcrypt =require('bcryptjs');
 const Admission = require('../../models/Admission');
+const Patient = require("../../models/Patient");
+const Doctor = require("../../models/Doctor");
+const Ward = require("../../models/Ward");
+const Room = require("../../models/Room");
+const Bed = require("../../models/Bed");
 const { body, validationResult } = require('express-validator');
 
+router.post('/addbulkadmission',async (req,res)=>{
+  try {
+    let success = false;
+    // Fetch required referenced data
+    const patients = await Patient.find().select("_id");
+    const doctors = await Doctor.find().select("_id");
+    const wards = await Ward.find().select("_id");
+    const rooms = await Room.find().select("_id");
+    const beds = await Bed.find().select("_id");
+
+    if (
+      patients.length === 0 ||
+      doctors.length === 0 ||
+      wards.length === 0 ||
+      rooms.length === 0 ||
+      beds.length === 0
+    ) {
+      console.log("Required referenced data missing. Insert base tables first.");
+      return;
+    }
+
+    const statusList = ["admitted", "discharged", "transferred"];
+    const reasons = [
+      "Fever",
+      "Accident Injury",
+      "Routine Checkup",
+      "Surgery",
+      "Chest Pain",
+      "Infection",
+      "Observation"
+    ];
+
+    const conditions = ["Stable", "Critical", "Serious", "Under Observation"];
+
+    const admissions = [];
+
+    for (let i = 0; i < 1000; i++) {
+      const randomPatient =
+        patients[Math.floor(Math.random() * patients.length)];
+
+      const randomDoctor =
+        doctors[Math.floor(Math.random() * doctors.length)];
+
+      const randomWard =
+        wards[Math.floor(Math.random() * wards.length)];
+
+      const randomRoom =
+        rooms[Math.floor(Math.random() * rooms.length)];
+
+      const randomBed =
+        beds[Math.floor(Math.random() * beds.length)];
+
+      const randomStatus =
+        statusList[Math.floor(Math.random() * statusList.length)];
+
+      const randomReason =
+        reasons[Math.floor(Math.random() * reasons.length)];
+
+      const randomCondition =
+        conditions[Math.floor(Math.random() * conditions.length)];
+
+      // Random admission date (last 30 days)
+      const admissionDate = new Date();
+      admissionDate.setDate(admissionDate.getDate() - Math.floor(Math.random() * 30));
+
+      // Random discharge date (only if discharged)
+      let dischargeDate = null;
+      if (randomStatus === "discharged") {
+        dischargeDate = new Date(admissionDate);
+        dischargeDate.setDate(
+          dischargeDate.getDate() + Math.floor(Math.random() * 10) + 1
+        );
+      }
+
+      admissions.push({
+        patient: randomPatient._id,
+        admittingDoctor: randomDoctor._id,
+        ward: randomWard._id,
+        room: randomRoom._id,
+        bed: randomBed._id,
+        admissionDate,
+        dischargeDate,
+        reason: randomReason,
+        conditionOnAdmission: randomCondition,
+        status: randomStatus
+      });
+    }
+
+    await Admission.insertMany(admissions);
+
+    console.log("1000 Admission records inserted successfully");
+    success=true;
+    res.json({success})
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+})
 
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchalladmissions',fetchuser,async (req,res)=>{

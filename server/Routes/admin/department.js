@@ -3,7 +3,52 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const Department = require('../../models/Department');
 const { body, validationResult } = require('express-validator');
+const departmentNames = [
+  "Cardiology",
+  "Neurology",
+  "Orthopedics",
+  "Pediatrics",
+  "Radiology",
+  "Oncology",
+  "Dermatology",
+  "Emergency",
+  "Gynecology",
+  "ENT",
+  "Urology",
+  "Pathology"
+];
 
+function getRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// async function seedDepartments() {
+router.post('/addbulkdepartment',async (req,res)=>{
+  try {
+    let success = false;
+    const departments = [];
+
+    for (let i = 0; i < 1000; i++) {
+      const name = getRandom(departmentNames);
+
+      departments.push({
+        name: name + " " + i,     // to avoid duplicate-looking names
+        code: "DEP-" + (1000 + i),
+        description: "Auto generated department " + i,
+      });
+    }
+
+    await Department.insertMany(departments);
+
+    console.log("1000 Department records inserted successfully");
+    success=true;
+    res.json({success})
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    //process.exit(1);
+  }
+})
 // ROUTE 1: Get All the Departments using :GET "/api/departments/fetchalldepartments".Login required
 router.get('/fetchalldepartments',async (req,res)=>{
     try {

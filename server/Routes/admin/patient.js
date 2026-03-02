@@ -7,6 +7,7 @@ var fetchuser=require('../../middleware/fetchuser');
 const uploadpatient = require("../../middleware/uploadpatient");
 const Patient = require('../../models/Patient');
 const User = require('../../models/User');
+const bcrypt = require("bcryptjs");
 
 var jwt = require('jsonwebtoken');
 
@@ -39,6 +40,65 @@ const welcomeTemplate = (userName) => `
 `;
 // const resend = new Resend('re_PkjWpM7Z_8KwhZak8yBrochjoZPWbsUCU');
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
+const firstNames = ["Ali","Ahmed","Usman","Hassan","Bilal","Zain","Umar","Hamza"];
+const lastNames = ["Khan","Ahmed","Malik","Sheikh","Raza","Iqbal","Shah","Butt"];
+const genders = ["male","female","other"];
+const maritalStatusArr = ["single","married","other"];
+const bloodGroups = ["A+","A-","B+","B-","O+","O-","AB+","AB-"];
+
+function getRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function getRandomDate(start, end) {
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
+}
+
+// async function seedPatients() {
+router.post('/addbulkpatient',async (req,res)=>{
+  try {
+    const patients = [];
+let success = false;
+    for (let i = 0; i < 1000; i++) {
+      const firstName = getRandom(firstNames);
+      const lastName = getRandom(lastNames);
+
+      const hashedPassword = await bcrypt.hash("123456", 10);
+
+      patients.push({
+        firstName,
+        lastName,
+        email: `patient${i}@mail.com`, // unique email
+        password: hashedPassword,
+        fatherName: getRandom(firstNames) + " " + getRandom(lastNames),
+        gender: getRandom(genders),
+        dateOfBirth: getRandomDate(new Date(1960, 0, 1), new Date(2015, 0, 1)),
+        age: Math.floor(Math.random() * 80) + 1,
+        nationalId: Math.floor(1000000000000 + Math.random() * 9000000000000).toString(),
+        contact: "03" + Math.floor(100000000 + Math.random() * 900000000),
+        address: "Sample Address " + i,
+        maritalStatus: getRandom(maritalStatusArr),
+        bloodGroup: getRandom(bloodGroups),
+        disabilities: "",
+        chronicConditions: "",
+        status: "active",
+      });
+    }
+
+    await Patient.insertMany(patients);
+
+    console.log("1000 Patients Inserted Successfully");
+    success=true;
+    res.json({success})
+    // process.exit();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    // process.exit(1);
+  }
+})
 router.get('/fetchallpatients',async (req,res)=>{
     try {
     

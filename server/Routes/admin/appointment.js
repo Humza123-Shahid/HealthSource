@@ -138,6 +138,64 @@ cron.schedule('* * * * *', async () => {
     console.error('Cron job error:', err);
   }
 });
+router.post('/addbulkappointment',async (req,res)=>{
+  try {
+    let success = false;
+    // Fetch Patients and Doctors
+    const patients = await Patient.find().select("_id");
+    const doctors = await Doctor.find().select("_id");
+
+    if (patients.length === 0 || doctors.length === 0) {
+      console.log("Patients or Doctors not found. Insert them first.");
+      return;
+    }
+
+    const bookingTypes = ['online', 'walk-in'];
+    const statusList = ['booked', 'cancelled', 'completed', 'no-show'];
+
+    const appointments = [];
+
+    for (let i = 0; i < 1000; i++) {
+      const randomPatient =
+        patients[Math.floor(Math.random() * patients.length)];
+
+      const randomDoctor =
+        doctors[Math.floor(Math.random() * doctors.length)];
+
+      const randomBookingType =
+        bookingTypes[Math.floor(Math.random() * bookingTypes.length)];
+
+      const randomStatus =
+        statusList[Math.floor(Math.random() * statusList.length)];
+
+      // Random date within last 30 days to next 30 days
+      const randomDate = new Date();
+      randomDate.setDate(
+        randomDate.getDate() + Math.floor(Math.random() * 60) - 60
+      );
+
+      appointments.push({
+        patient: randomPatient._id,
+        doctor: randomDoctor._id,
+        appointmentDate: randomDate,
+        bookingType: randomBookingType,
+        status: randomStatus,
+        notes: `Test appointment note ${i + 1}`,
+        reminderSent: Math.random() > 0.5
+      });
+    }
+
+    await Appointment.insertMany(appointments);
+
+    console.log("1000 Appointment records inserted successfully");
+    success=true;
+    res.json({success})
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get("/fetchallappointments", fetchuser, async (req, res) => {
   try {

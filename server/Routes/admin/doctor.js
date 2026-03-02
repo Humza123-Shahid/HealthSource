@@ -3,9 +3,64 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const uploaddoctor = require("../../middleware/uploaddoctor");
 const Doctor = require('../../models/Doctor');
+const Staff = require("../../models/Staff");
+
 const { body, validationResult } = require('express-validator');
 
+router.post('/addbulkdoctor',async (req,res)=>{
+  try {
+     let success = false;
+    // Get all staff ids
+    const staffList = await Staff.find().select("_id");
 
+    if (staffList.length === 0) {
+      console.log("No staff records found. Please insert staff first.");
+      return;
+    }
+
+    const specializations = [
+      "Cardiology",
+      "Neurology",
+      "Orthopedics",
+      "Dermatology",
+      "Pediatrics",
+      "General Surgery",
+      "Radiology",
+      "ENT"
+    ];
+
+    const doctors = [];
+
+    for (let i = 0; i < 1000; i++) {
+      const randomStaff =
+        staffList[Math.floor(Math.random() * staffList.length)];
+
+      const randomSpec =
+        specializations[Math.floor(Math.random() * specializations.length)];
+
+      doctors.push({
+        staff: randomStaff._id,
+        specializations: randomSpec,
+        licenseNumber: "LIC-" + Math.floor(100000 + Math.random() * 900000),
+        experienceYears: Math.floor(Math.random() * 30) + 1,
+        consultationFee: Math.floor(Math.random() * 4000) + 500,
+        onCall: Math.random() > 0.5,
+        signaturePath: `/uploads/signatures/sign_${i}.png`,
+        photoPath: `/uploads/photos/photo_${i}.jpg`
+      });
+    }
+
+    await Doctor.insertMany(doctors);
+
+    console.log("1000 Doctor records inserted successfully");
+    success=true;
+    res.json({success})
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchalldoctors',async (req,res)=>{
     try {

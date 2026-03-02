@@ -3,9 +3,74 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const bcrypt =require('bcryptjs');
 const LabRequest = require('../../models/LabRequest');
+const Patient = require("../../models/Patient");
+const Doctor = require("../../models/Doctor");
+const LabTest = require("../../models/LabTest");
 const { body, validationResult } = require('express-validator');
 
+router.post('/addbulklabrequest',async (req,res)=>{
+  try {
+    let success = false;
 
+    // Fetch required referenced data
+    const patients = await Patient.find().select("_id");
+    const doctors = await Doctor.find().select("_id");
+    const tests = await LabTest.find().select("_id");
+
+    if (patients.length === 0 || doctors.length === 0 || tests.length === 0) {
+      console.log("Patient / Doctor / LabTest data missing. Insert them first.");
+      return;
+    }
+
+    const priorityList = ['routine','urgent','stat'];
+    const statusList = ['pending','processing','completed','cancelled'];
+
+    const labRequests = [];
+
+    for (let i = 0; i < 1000; i++) {
+
+      const randomPatient =
+        patients[Math.floor(Math.random() * patients.length)];
+
+      const randomDoctor =
+        doctors[Math.floor(Math.random() * doctors.length)];
+
+      const randomTest =
+        tests[Math.floor(Math.random() * tests.length)];
+
+      const randomPriority =
+        priorityList[Math.floor(Math.random() * priorityList.length)];
+
+      const randomStatus =
+        statusList[Math.floor(Math.random() * statusList.length)];
+
+      // Random past date within last 30 days
+      const randomDate = new Date(
+        Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000
+      );
+
+      labRequests.push({
+        patient: randomPatient._id,
+        doctor: randomDoctor._id,
+        test: randomTest._id,
+        requestDate: randomDate,
+        priority: randomPriority,
+        status: randomStatus,
+        notes: `Auto generated lab request ${i + 1}`
+      });
+    }
+
+    await LabRequest.insertMany(labRequests);
+
+    console.log("1000 LabRequest records inserted successfully");
+    success=true;
+    res.json({success})
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchalllabrequests',fetchuser,async (req,res)=>{
     try {

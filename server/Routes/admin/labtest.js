@@ -4,7 +4,61 @@ var fetchuser=require('../../middleware/fetchuser');
 const LabTest = require('../../models/LabTest');
 const { body, validationResult } = require('express-validator');
 
+router.post('/addbulklabtest',async (req,res)=>{
+  try {
+    let success = false;
 
+    const categories = [
+      "Hematology",
+      "Biochemistry",
+      "Microbiology",
+      "Immunology",
+      "Pathology",
+      "Radiology"
+    ];
+
+    const testNames = [
+      "Complete Blood Count",
+      "Blood Sugar",
+      "Lipid Profile",
+      "Liver Function Test",
+      "Kidney Function Test",
+      "Thyroid Profile",
+      "Urine Analysis",
+      "Electrolyte Test",
+      "COVID PCR",
+      "X-Ray Chest"
+    ];
+
+    const labTests = [];
+
+    for (let i = 1; i <= 1000; i++) {
+      const randomCategory =
+        categories[Math.floor(Math.random() * categories.length)];
+
+      const randomTest =
+        testNames[Math.floor(Math.random() * testNames.length)];
+
+      labTests.push({
+        name: `${randomTest} ${i}`, // keep unique
+        category: randomCategory,
+        normalRange: `${Math.floor(Math.random() * 50)}-${Math.floor(Math.random() * 150)}`,
+        price: Math.floor(Math.random() * 4000) + 200,
+        code: `LT-${1000 + i}`
+      });
+    }
+
+    await LabTest.insertMany(labTests);
+
+    console.log("1000 Lab Test records inserted successfully");
+    success=true;
+    res.json({success})
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchalllabtests',fetchuser,async (req,res)=>{
     try {

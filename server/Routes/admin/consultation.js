@@ -3,9 +3,96 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const bcrypt =require('bcryptjs');
 const Consultation = require('../../models/Consultation');
+const Patient = require("../../models/Patient");           // adjust path
+const Doctor = require("../../models/Doctor");             // adjust path
+const Appointment = require("../../models/Appointment");
 const { body, validationResult } = require('express-validator');
 
+router.post('/addbulkconsultation',async (req,res)=>{
+  try {
+    let success = false;
+    // Fetch reference data
+    const patients = await Patient.find().select("_id");
+    const doctors = await Doctor.find().select("_id");
+    const appointments = await Appointment.find().select("_id");
 
+    if (patients.length === 0 || doctors.length === 0) {
+      console.log("Patient or Doctor records missing.");
+      return;
+    }
+
+    const symptomsList = [
+      "Fever and cough",
+      "Headache",
+      "Chest pain",
+      "Back pain",
+      "Shortness of breath",
+      "Stomach ache",
+      "General weakness"
+    ];
+
+    const diagnosisList = [
+      "Viral Infection",
+      "Hypertension",
+      "Migraine",
+      "Gastritis",
+      "Asthma",
+      "Flu",
+      "Muscle Strain"
+    ];
+
+    const consultations = [];
+
+    for (let i = 0; i < 1000; i++) {
+      const randomPatient =
+        patients[Math.floor(Math.random() * patients.length)];
+
+      const randomDoctor =
+        doctors[Math.floor(Math.random() * doctors.length)];
+
+      const randomAppointment =
+        appointments.length > 0
+          ? appointments[Math.floor(Math.random() * appointments.length)]
+          : null;
+
+      const randomSymptoms =
+        symptomsList[Math.floor(Math.random() * symptomsList.length)];
+
+      const randomDiagnosis =
+        diagnosisList[Math.floor(Math.random() * diagnosisList.length)];
+
+      // Random follow-up date (within next 30 days)
+      const followUp = new Date();
+      followUp.setDate(followUp.getDate() + Math.floor(Math.random() * 30));
+
+      consultations.push({
+        patient: randomPatient._id,
+        doctor: randomDoctor._id,
+        appointment: randomAppointment ? randomAppointment._id : null,
+        symptoms: randomSymptoms,
+        diagnosis: randomDiagnosis,
+        notes: "Auto generated consultation record",
+        followUpDate: followUp,
+        vitals: {
+          temperature: (Math.random() * 2 + 97).toFixed(1), // 97–99 F
+          bloodPressure: `${110 + Math.floor(Math.random()*30)}/${70 + Math.floor(Math.random()*20)}`,
+          pulse: Math.floor(Math.random() * 40) + 60, // 60–100
+          oxygenLevel: Math.floor(Math.random() * 5) + 95 // 95–99
+        }
+      });
+    }
+
+    await Consultation.insertMany(consultations);
+
+    console.log("1000 Consultation records inserted successfully");
+    success=true;
+    res.json({success})
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallconsultations',fetchuser,async (req,res)=>{
     try {
