@@ -4,7 +4,38 @@ var fetchuser=require('../../middleware/fetchuser');
 const OperationTheatre = require('../../models/OperationTheatre');
 const { body, validationResult } = require('express-validator');
 
+const statuses = ['available', 'maintenance', 'unavailable'];
+const equipmentList = [
+  'ECG Machine, Ventilator, Defibrillator',
+  'Anesthesia Machine, Surgical Lights, Sterilizer',
+  'Patient Monitor, Suction Machine, Infusion Pump',
+  'Ultrasound Machine, Endoscope, Surgical Table',
+  'X-Ray Machine, Oxygen Cylinder, Instrument Trolley'
+];
+router.post("/addbulkoperationtheatre", async (req, res) => {
+    try{
+        let success = false;
+        let theatres = [];
 
+  for (let i = 1; i <= 1000; i++) {
+    const theatre = {
+      name: 'OT-' + i,
+      equipment: equipmentList[Math.floor(Math.random() * equipmentList.length)],
+      status: statuses[Math.floor(Math.random() * statuses.length)]
+    };
+    theatres.push(theatre);
+  }
+
+  await OperationTheatre.insertMany(theatres);
+  console.log('1000 Operation Theatre records inserted');
+  success=true;
+    res.json({success})
+    }catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    //process.exit(1);
+  }
+});
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchalloperationtheatres',fetchuser,async (req,res)=>{
     try {

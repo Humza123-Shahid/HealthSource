@@ -3,8 +3,53 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const bcrypt =require('bcryptjs');
 const StaffDuty = require('../../models/StaffDuty');
+const Staff = require('../../models/Staff');
+const StaffShift = require('../../models/StaffShift');
 const { body, validationResult } = require('express-validator');
 
+const dutyTypes = ['ward-round','OPD','ICU','OT','reception','emergency'];
+const statuses = ['assigned','in-progress','completed','cancelled'];
+const randomChoice = arr => arr[Math.floor(Math.random() * arr.length)];
+const randomDate = () => {
+  const today = new Date();
+  const pastDays = Math.floor(Math.random() * 30); // last 30 days
+  return new Date(today.getTime() - pastDays * 24*60*60*1000);
+};
+
+router.post('/addbulkstaffduty',async (req,res)=>{
+  try {
+    let success = false;
+  const staffIds = await Staff.find().select("_id")
+  const shiftIds = await StaffShift.find().select("_id")
+
+  if (!staffIds.length || !shiftIds.length) {
+    console.log('Please ensure Staff and StaffShift records exist.');
+    return;
+  }
+
+  let duties = [];
+
+  for (let i = 0; i < 1000; i++) {
+    const duty = {
+      staff: randomChoice(staffIds),
+      shift: randomChoice(shiftIds),
+      dutyDate: randomDate(),
+      duty_type: randomChoice(dutyTypes),
+      status: randomChoice(statuses)
+    };
+    duties.push(duty);
+  }
+
+  await StaffDuty.insertMany(duties);
+  console.log('1000 staff duty records inserted');
+  success=true;
+    res.json({success})
+  }catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    //process.exit(1);
+  }
+})
 router.get('/fetchstaffdutybyinput',async (req,res)=>{
     try {
     // const {shift_id,dutydate}=req.body;

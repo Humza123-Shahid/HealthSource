@@ -1,15 +1,15 @@
-.swiper-pagination {
+/* .swiper-pagination {
     display: flex;
-     align-items: center;
-  /* justify-content: center; */
-  bottom: 0px !important;
+     align-items: center; */
+  /* justify-content: center; (this was commented before as well)*/
+  /* bottom: 0px !important;
   left: 375px !important;
   gap:1px !important;
   height:40px;
-}
+} */
 
 /* Default bullet style */
-.swiper-pagination-bullet {
+/* .swiper-pagination-bullet {
   width: 20px;
   height: 20px;
   background: #EFF5F9;
@@ -18,20 +18,139 @@
   border-radius: 50%;
   transition: background .3s ease;
   border: 2px solid var(--primary);
+} */
+
+/* Active bullet */
+/* .swiper-pagination-bullet-active {
+    background: #13C5DD; */
+
+  /* background: #fff; Like Owl */
+/* } */
+/* .swiper-pagination-bullet-active { */
+  /* transform: scale(2); */
+   /* width: 40px;
+    height: 40px;
+} */
+.swiper-pagination {
+  display: flex;
+  align-items: center;
+  bottom: 0px !important;
+  /* Instead of left: 375px, use a responsive approach */
+  left: 46% !important; 
+  gap: 1px !important;
+  height: 50px; /* Increased slightly to fit the 40px active bullet */
+  
+}
+
+/* Default bullet style */
+.swiper-pagination-bullet {
+  width: 15px; /* Smaller for mobile by default */
+  height: 15px;
+  background: #EFF5F9;
+  opacity: 1;
+  margin: 0 4px;
+  border-radius: 50%;
+  transition: all .3s ease;
+  border: 2px solid #13C5DD; /* Assuming this is your primary color */
 }
 
 /* Active bullet */
 .swiper-pagination-bullet-active {
-    background: #13C5DD;
-
-  /* background: #fff; Like Owl */
+  background: #13C5DD;
+  width: 30px; /* Smaller for mobile */
+  height: 30px;
 }
-.swiper-pagination-bullet-active {
-  /* transform: scale(2); */
-   width: 40px;
+
+/* --- Responsive Adjustments --- */
+
+/* For Tablets and Desktops (e.g., width > 768px) */
+@media (min-width: 768px) {
+  .swiper-pagination {
+    bottom: 10px !important;
+    justify-content: center;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    transform: none;
+  }
+  
+  .swiper-pagination-bullet {
+    width: 20px;
+    height: 20px;
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 40px;
     height: 40px;
+  }
 }
 
+/* For small mobile screens */
+/* @media (max-width: 480px) {
+  .swiper-pagination {
+    bottom: 10px !important;
+    justify-content: center;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    transform: none;
+  }
+} */
+
+@media (max-width: 576px) {
+  .swiper-pagination {
+    bottom: 10px !important;
+    justify-content: center;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    transform: none;
+  }
+  .my-responsive-swiper {
+    height: 630px;
+    /* width: 346px; */
+  }
+}
+@media (min-width: 576px) {
+ .swiper-pagination {
+    bottom: 10px !important;
+    justify-content: center;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    transform: none;
+  }
+  .my-responsive-swiper {
+    height: 510px;
+  }
+}
+@media (min-width: 768px) {
+ .swiper-pagination {
+    bottom: 10px !important;
+    justify-content: center;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    transform: none;
+  }
+  .my-responsive-swiper {
+    height: 475px;
+  }
+}
+@media (max-width: 390px) {
+  .swiper-pagination {
+    bottom: 10px !important;
+    justify-content: center;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    transform: none;
+  }
+  .my-responsive-swiper {
+    height: 610px;
+    width: 274px;
+  }
+}
  .custom-prev,
 .custom-next {
   position: absolute;
@@ -69,11 +188,80 @@
   right: 50px;
 }
 .custom-prev2 {
-  left: 45%;
+  /* left: 45%; */
+  left:50px;
+}
+
+.custom-next2 {
+  right:50px
+  /* right: 46%; */
+}
+/* @media (max-width: 575px) {
+    .container, .container-sm {
+        max-width: 300px;
+    }
+} */
+@media (min-width: 320px) {
+ .custom-prev2 {
+   left:21%;
+}
+
+.custom-next2 {
+   right:22%;
+}
+}
+@media (min-width: 576px) {
+ .custom-prev2 {
+  left: 36.5%;
+}
+
+.custom-next2 {
+  right: 37.5%;
+}
+}
+@media (min-width: 768px) {
+ .custom-prev2 {
+  left: 40.5%;
+}
+
+.custom-next2 {
+  right: 41.5%;
+}
+}
+@media (min-width: 992px) {
+ .custom-prev2 {
+  left: 43%;
+}
+
+.custom-next2 {
+  right: 44%;
+}
+}
+ @media (min-width: 1200px) {
+ .custom-prev2 {
+  left: 44%;
+}
+
+.custom-next2 {
+  right: 45%;
+}
+}
+ @media (min-width: 1400px) {
+ .custom-prev2 {
+   left: 45%;
 }
 
 .custom-next2 {
   right: 46%;
 }
- 
- 
+}
+@media (min-width: 320px) {
+  .select-container {
+    width: 100px; /* Smaller width for tablets/mobiles */
+  }
+}
+@media (min-width: 576px) {
+  .select-container {
+    width: 150px; /* Smaller width for tablets/mobiles */
+  }
+}

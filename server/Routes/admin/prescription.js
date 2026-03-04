@@ -3,9 +3,65 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const bcrypt =require('bcryptjs');
 const Prescription = require('../../models/Prescription');
+const Consultation = require("../../models/Consultation");
+const Doctor = require("../../models/Doctor");
+const Patient = require("../../models/Patient");
+const Medicine = require("../../models/Medicine");
 const { body, validationResult } = require('express-validator');
 
+const dosages = ['250mg', '500mg', '1g', '5ml', '10ml'];
+const frequencies = ['Once a day', 'Twice a day', 'Thrice a day', 'Every 8 hours', 'Every 12 hours'];
+const durations = ['3 days', '5 days', '7 days', '10 days', '2 weeks'];
+const instructionsList = [
+  'Take after food', 'Take before food', 'Avoid driving', 'Drink plenty of water', 'Do not skip doses'
+];
 
+// Helper to get random element from array
+const randomChoice = arr => arr[Math.floor(Math.random() * arr.length)];
+router.post("/addbulkprescription", async (req, res) => {
+    try{
+          let success = false;
+        const consultationIds =  await Consultation.find().select("_id")
+  const doctorIds =  await Doctor.find().select("_id")
+  const patientIds =  await Patient.find().select("_id")
+  const medicineIds =  await Medicine.find().select("_id")
+
+  if (!consultationIds.length || !doctorIds.length || !patientIds.length || !medicineIds.length) {
+    console.log('Please ensure Consultation, Doctor, Patient, and Medicine records exist.');
+   
+    return;
+  }
+
+  let prescriptions = [];
+
+  for (let i = 0; i < 1000; i++) {
+    const prescription = {
+      consultation: randomChoice(consultationIds),
+      doctor: randomChoice(doctorIds),
+      patient: randomChoice(patientIds),
+      issuedDate: new Date(Date.now() - Math.floor(Math.random() * 30*24*60*60*1000)), // last 30 days
+      notes: 'Prescription notes #' + (i + 1),
+      medicines: {
+        medicine: randomChoice(medicineIds),
+        dosage: randomChoice(dosages),
+        frequency: randomChoice(frequencies),
+        duration: randomChoice(durations),
+        instructions: randomChoice(instructionsList)
+      }
+    };
+    prescriptions.push(prescription);
+  }
+
+  await Prescription.insertMany(prescriptions);
+  console.log('1000 prescription records inserted');
+   success=true;
+    res.json({success})
+    }catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    //process.exit(1);
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallprescriptions',fetchuser,async (req,res)=>{
     try {

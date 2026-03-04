@@ -2,8 +2,48 @@ const express=require('express');
 const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const Nurse = require('../../models/Nurse');
+const Staff = require("../../models/Staff");
+const Ward = require("../../models/Ward");
 const { body, validationResult } = require('express-validator');
+const qualifications = ['BSc Nursing', 'Diploma in Nursing', 'MSc Nursing', 'Certificate in Midwifery'];
 
+const randomLicense = () => 'LN' + Math.floor(Math.random() * 1000000);
+router.post("/addbulknurse", async (req, res) => {
+  try {
+    let success = false;
+
+  const staffIds = await Staff.find().select("_id");;
+  const wardIds = await Ward.find().select("_id");
+
+  if (staffIds.length === 0 || wardIds.length === 0) {
+    console.log('No staff or ward records found. Please add them first.');
+    
+    return;
+  }
+
+  let nurses = [];
+
+  for (let i = 0; i < 1000; i++) {
+    const nurse = {
+      staff: staffIds[Math.floor(Math.random() * staffIds.length)],
+      qualification: qualifications[Math.floor(Math.random() * qualifications.length)],
+      licenseNumber: randomLicense(),
+      assignedWard: wardIds[Math.floor(Math.random() * wardIds.length)]
+    };
+
+    nurses.push(nurse);
+  }
+
+  await Nurse.insertMany(nurses);
+  console.log('1000 nurse records inserted');
+  success=true;
+    res.json({success})
+  }catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    //process.exit(1);
+  }
+})
 // ROUTE 1: Get All the Nurses using :GET "/api/nurses/fetchallnurses".Login required
 router.get('/fetchallnurses',fetchuser,async (req,res)=>{
     try {

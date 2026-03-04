@@ -5,7 +5,39 @@ const StaffAttendance = require('../../models/StaffAttendance');
 const StaffDuty = require('../../models/StaffDuty');
 
 const { body, validationResult } = require('express-validator');
+const randomChoice = arr => arr[Math.floor(Math.random() * arr.length)];
 
+router.post('/addbulkstaffattendance',async (req,res)=>{
+  try {
+    let success = false;
+  const dutyIds = await StaffDuty.find().select("_id")
+
+  if (dutyIds.length === 0) {
+    console.log('No StaffDuty records found. Please add them first.');
+    return;
+  }
+
+  const statuses = ['present', 'absent', 'leave'];
+  let attendances = [];
+
+  for (let i = 0; i < 1000; i++) {
+    const attendance = {
+      duty: randomChoice(dutyIds),
+      status: randomChoice(statuses),
+    };
+    attendances.push(attendance);
+  }
+
+  await StaffAttendance.insertMany(attendances);
+  console.log('1000 staff attendance records inserted');
+  success=true;
+    res.json({success})
+  }catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    //process.exit(1);
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallstaffattendances',fetchuser,async (req,res)=>{
     try {

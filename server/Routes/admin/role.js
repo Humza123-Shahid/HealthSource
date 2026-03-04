@@ -4,6 +4,48 @@ var fetchuser=require('../../middleware/fetchuser');
 const Role = require('../../models/Role');
 const { body, validationResult } = require('express-validator');
 
+const allPermissions = [
+  'User', 'Patient', 'Patient Medical History',
+  'Role', 'Staff', 'Shift',
+  'Staff Duty', 'Doctor', 'Appointment',
+  'Consultation', 'Surgery', 'Surgery Team',
+  'Operation Theatre', 'Medicine', 'Prescription',
+  'Lab Test', 'Lab Request', 'Lab Result',
+  'Ward', 'Room', 'Bed',
+  'Nurse', 'Admission', 'Staff Attendance',
+  'Social', 'Department'
+];
+
+// Helper to get random subset of permissions
+const randomPermissions = () => {
+  const count = Math.floor(Math.random() * allPermissions.length) + 1;
+  const shuffled = allPermissions.sort(() => 0.5 - Math.random());
+  return JSON.stringify(shuffled.slice(0, count));
+};
+
+router.post('/addbulkrole',async (req,res)=>{
+  try {
+    let success = false;
+     let roles = [];
+
+  for (let i = 1; i <= 1000; i++) {
+    const role = {
+      name: 'Role_' + i,
+      permissions: randomPermissions()
+    };
+    roles.push(role);
+  }
+
+  await Role.insertMany(roles);
+  console.log('1000 role records inserted');
+    success=true;
+    res.json({success})
+  }catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    //process.exit(1);
+  }
+})
 router.get('/fetchallrolesbyname/:name',async (req,res)=>{
     try {
     console.log(req.params.name);

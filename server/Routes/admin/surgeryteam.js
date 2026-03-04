@@ -2,9 +2,47 @@ const express=require('express');
 const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const SurgeryTeam = require('../../models/SurgeryTeam');
+const Surgery = require('../../models/Surgery');
+const Staff = require('../../models/Staff');
 const { body, validationResult } = require('express-validator');
 
+const roles = ['surgeon', 'anesthetist', 'scrub-nurse', 'circulating-nurse', 'assistant-surgeon'];
 
+// Helper to get random element from array
+const randomChoice = arr => arr[Math.floor(Math.random() * arr.length)];
+
+router.post('/addbulksurgeryteam',async (req,res)=>{
+  try {
+    let success = false;
+     const surgeryIds =await Surgery.find().select("_id")
+  const staffIds = await Staff.find().select("_id")
+
+  if (!surgeryIds.length || !staffIds.length) {
+    console.log('Please add Surgery and Staff records first.');
+    return;
+  }
+
+  let surgeryTeams = [];
+
+  for (let i = 0; i < 1000; i++) {
+    const teamMember = {
+      surgery: randomChoice(surgeryIds),
+      staff: randomChoice(staffIds),
+      role: randomChoice(roles)
+    };
+    surgeryTeams.push(teamMember);
+  }
+
+  await SurgeryTeam.insertMany(surgeryTeams);
+  console.log('1000 SurgeryTeam records inserted');
+ success=true;
+    res.json({success})
+  }catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    //process.exit(1);
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallsurgeryteams',fetchuser,async (req,res)=>{
     try {

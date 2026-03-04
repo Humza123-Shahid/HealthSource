@@ -4,10 +4,48 @@ var fetchuser=require('../../middleware/fetchuser');
 const bcrypt =require('bcryptjs');
 const User = require('../../models/User');
 const Patient = require('../../models/Patient');
+const Staff = require('../../models/Staff');
+const Role = require('../../models/Role');
 
 const { body, validationResult } = require('express-validator');
 
+router.post('/addbulkuser',async (req,res)=>{
+  try {
+    let success = false;
+    const staffIds = await Staff.find().select("_id")
+  const roleIds = await Role.find().select("_id")
 
+  if (!staffIds.length || !roleIds.length) {
+    console.log('Please ensure Staff and Role records exist.');
+    return;
+  }
+
+  let users = [];
+
+  for (let i = 1; i <= 1000; i++) {
+    const user = {
+      staff: staffIds[Math.floor(Math.random() * staffIds.length)],
+      email: `user${i}@example.com`,          // unique email
+      username: `user_${i}`,                  // unique username
+      password: `password${i}`,               // plain text password
+      role: roleIds[Math.floor(Math.random() * roleIds.length)]
+    };
+
+    users.push(user);
+  }
+
+  await User.insertMany(users);
+
+  console.log('1000 users inserted successfully');
+  success=true;
+    res.json({success})
+
+  }catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    //process.exit(1);
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallusers',fetchuser,async (req,res)=>{
     try {

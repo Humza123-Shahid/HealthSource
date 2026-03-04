@@ -24,7 +24,7 @@ import appointmentContext from "../context/appointmentContext";
 import patientContext from "../context/patientContext";
 import doctorContext from "../context/doctorContext";
 import staffContext from "../context/staffContext";
-import departmentContext from '../context/departmentContext'
+import departmentContext from "../context/departmentContext";
 
 const customStyles = {
   // Styles for the selected value (the text displayed in the control after selection)
@@ -50,7 +50,7 @@ const customStyles = {
     borderColor: "#ced4da",
 
     boxShadow: state.isFocused
-      ?"0 0 0 .25rem rgba(19,197,221,0.25)"
+      ? "0 0 0 .25rem rgba(19,197,221,0.25)"
       : provided.boxShadow,
     "&:hover": {
       borderColor: state.isFocused ? "#ced4da" : provided.borderColor, // Ensure consistent hover color
@@ -61,15 +61,15 @@ const customStyles = {
 //#89e2ee
 //"0 0 0 4px rgb(139, 226, 238)"
 const customStyles2 = {
-  control: (provided,state) => ({
+  control: (provided, state) => ({
     ...provided,
-    minHeight: '60px', // Set your desired height
-    minWidth:'150px',
-    color:'#848E9F',
-    borderTopLeftRadius: '8px',
-    borderBottomLeftRadius: '8px',
+    minHeight: "60px", // Set your desired height
+    minWidth: "0px",
+    color: "#848E9F",
+    borderTopLeftRadius: "8px",
+    borderBottomLeftRadius: "8px",
     borderColor: "#13C5DD !important",
-    zIndex:3,
+    zIndex: 3,
     boxShadow: state.isFocused
       ? "0 0 0 .25rem rgba(19,197,221,0.25)"
       : provided.boxShadow,
@@ -77,13 +77,13 @@ const customStyles2 = {
       borderColor: state.isFocused ? "#ced4da" : provided.borderColor, // Ensure consistent hover color
     },
   }),
-   singleValue: (provided) => ({
+  singleValue: (provided) => ({
     ...provided,
-    color: '#848E9F',
+    color: "#848E9F",
   }),
-   input: (provided) => ({
+  input: (provided) => ({
     ...provided,
-    color: '#848E9F',
+    color: "#848E9F",
   }),
 };
 
@@ -95,7 +95,7 @@ const Home = () => {
   const prevRef2 = useRef(null);
   const nextRef2 = useRef(null);
   const imgRef = useRef(null);
-      const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [facebookLink, setFacebookLink] = useState("");
   const [instagramLink, setInstagramLink] = useState("");
@@ -110,8 +110,8 @@ const Home = () => {
   const { doctors, getDoctors } = context3;
   const context4 = useContext(staffContext);
   const { staffs, getStaffs } = context4;
-   const context6=useContext(departmentContext);
-      const {departments,getDepartments}=context6;
+  const context6 = useContext(departmentContext);
+  const { departments, getDepartments } = context6;
   const [credentials, setCredentials] = useState({
     patientId: null,
     doctorId: null,
@@ -119,8 +119,8 @@ const Home = () => {
     status: "booked",
     notes: "",
   });
-      const [departmentName, setDepartmentName] = useState('');
-        const [filterText, setFilterText] = useState('');
+  const [departmentName, setDepartmentName] = useState("");
+  const [filterText, setFilterText] = useState("");
 
   const [appointmentDate, setAppointmentDate] = useState("");
   // const dynamicNumber=1;
@@ -134,12 +134,13 @@ const Home = () => {
     console.log(e.target.value);
     setAppointmentDate(e.target.value); // <-- Get input value here
   };
-const handleFilterChange = (event) => {
+  const handleFilterChange = (event) => {
     setFilterText(event.target.value);
   };
   const handleSearchClick = (event) => {
-  navigate('search', { state: { dname:departmentName,searchText:filterText} });
-
+    navigate("search", {
+      state: { dname: departmentName, searchText: filterText },
+    });
   };
   const scrollToTop = () => {
     window.scrollTo({
@@ -175,15 +176,12 @@ const handleFilterChange = (event) => {
     }
   };
   const handleChange3 = (selectedOption) => {
-    if(selectedOption.value=="" )
-    {
-        setDepartmentName('')
+    if (selectedOption.value == "") {
+      setDepartmentName("");
+    } else {
+      setDepartmentName(selectedOption.value);
     }
-    else
-    {
-      setDepartmentName(selectedOption.value)
-    }
-  }
+  };
   const getPatientById = (id) => patients.find((d) => d?._id === id);
   const getStaffById = (id) => staffs.find((d) => d?._id === id);
   const options = [
@@ -217,15 +215,15 @@ const handleFilterChange = (event) => {
     return option.label.toLowerCase().includes(inputValue.toLowerCase());
   };
   const handleSignUpClick = () => {
-    navigate('/signup');
+    navigate("/signup");
   };
   const addAppointments = async (e) => {
     e.preventDefault();
     const { doctorId, bookingType, status, notes } = credentials;
     // const patientobj= getPatientById(patientId);
-const patientId=localStorage.getItem('patientID')
-const patientName=getPatientById(patientId)
-const emailPatient=localStorage.getItem('patientEmail')
+    const patientId = localStorage.getItem("patientID");
+    const patientName = getPatientById(patientId);
+    const emailPatient = localStorage.getItem("patientEmail");
 
     console.log(patientName.firstName, doctorId.label);
 
@@ -242,8 +240,8 @@ const emailPatient=localStorage.getItem('patientEmail')
     );
     console.log(user);
     if (user.success) {
-    // let success=false;
-    // if(success){
+      // let success=false;
+      // if(success){
       let message = "Appointment added successfully";
       alert(message);
       console.log("abc");
@@ -260,8 +258,7 @@ const emailPatient=localStorage.getItem('patientEmail')
       const result3 = await getDoctors();
       const result4 = await getPatients();
       const result5 = await getStaffs();
-      const result6=await getDepartments()
-
+      const result6 = await getDepartments();
     };
     fetchData();
   }, []);
@@ -667,13 +664,12 @@ const emailPatient=localStorage.getItem('patientEmail')
                 magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus
                 sed.
               </p>
-               <Link
-                  to="/search"
-                  class="btn btn-dark rounded-pill py-3 px-5 me-3 force-color"
-
-                >
-                  Find Doctor
-                </Link>
+              <Link
+                to="/search"
+                class="btn btn-dark rounded-pill py-3 px-5 me-3 force-color"
+              >
+                Find Doctor
+              </Link>
               {/* <a class="btn btn-outline-dark rounded-pill py-3 px-5" href="#!">
                 Read More
               </a> */}
@@ -681,10 +677,10 @@ const emailPatient=localStorage.getItem('patientEmail')
             <div class="col-lg-6">
               <div class="bg-white text-center rounded p-5">
                 <h1 class="mb-4">Book An Appointment</h1>
-                {localStorage.getItem('utype')=="patient"?
-                <form onSubmit={addAppointments}>
-                  <div class="row g-3">
-                    {/* <div class="col-12 col-sm-6">
+                {localStorage.getItem("utype") == "patient" ? (
+                  <form onSubmit={addAppointments}>
+                    <div class="row g-3">
+                      {/* <div class="col-12 col-sm-6">
                       <Select
                         id="patientId"
                         options={options}
@@ -695,61 +691,69 @@ const emailPatient=localStorage.getItem('patientEmail')
                         placeholder="Select Patient"
                       />
                     </div> */}
-                    <div class="col-12 col-sm-6">
-                      <Select
-                        id="doctorId"
-                        options={options2}
-                        styles={customStyles}
-                        filterOption={filterOption}
-                        onChange={handleChange2}
-                        name="doctorId"
-                        placeholder="Select Doctor"
-                      />
-                    </div>
+                      <div class="col-12 col-sm-6">
+                        <Select
+                          id="doctorId"
+                          options={options2}
+                          styles={customStyles}
+                          filterOption={filterOption}
+                          onChange={handleChange2}
+                          name="doctorId"
+                          placeholder="Select Doctor"
+                        />
+                      </div>
 
-                    <div class="col-12 col-sm-6">
-                      <input
-                        type="datetime-local"
-                        className="form-control"
-                        id="appointmentDate"
-                        name="appointmentDate"
-                        value={appointmentDate}
-                        placeholder="Appointment Date"
-                        onChange={handleAppointmentDateChange}
-                        aria-describedby="emailHelp"
-                        style={{ height: "55px" }}
-                      />
+                      <div class="col-12 col-sm-6">
+                        <input
+                          type="datetime-local"
+                          className="form-control"
+                          id="appointmentDate"
+                          name="appointmentDate"
+                          value={appointmentDate}
+                          placeholder="Appointment Date"
+                          onChange={handleAppointmentDateChange}
+                          aria-describedby="emailHelp"
+                          style={{ height: "55px" }}
+                        />
+                      </div>
+                      <div class="col-12 col-sm-6">
+                        <select
+                          id="mySelect"
+                          style={{ height: "55px", backgroundColor: "white" }}
+                          className="form-control "
+                          name="bookingType"
+                          onChange={onChange}
+                        >
+                          <option value="">Select Type</option>
+                          <option value="online">Online</option>
+                          <option value="walk-in">Walk-In</option>
+                        </select>
+                      </div>
+                      <div class="col-12">
+                        <button
+                          disabled={
+                            credentials.bookingType == "" ||
+                            credentials.doctorId == null ||
+                            appointmentDate == ""
+                          }
+                          class="btn btn-primary w-100 py-3"
+                          type="submit"
+                        >
+                          Make An Appointment
+                        </button>
+                      </div>
                     </div>
-                    <div class="col-12 col-sm-6">
-                      <select
-                        id="mySelect"
-                        style={{ height: "55px", backgroundColor: "white" }}
-                        className="form-control "
-                        name="bookingType"
-                        onChange={onChange}
-                      >
-                        <option value="">Select Type</option>
-                        <option value="online">Online</option>
-                        <option value="walk-in">Walk-In</option>
-                      </select>
-                    </div>
-                    <div class="col-12">
-                      <button
-                        disabled={
-                          credentials.bookingType == "" ||
-
-                          credentials.doctorId == null ||
-                          appointmentDate == ""
-                        }
-                        class="btn btn-primary w-100 py-3"
-                        type="submit"
-                      >
-                        Make An Appointment
-                      </button>
-                    </div>
-                  </div>
-                </form>:<><button  class="btn btn-primary w-100 py-3" onClick={handleSignUpClick}>Sign Up to Make An
-                    Appointment</button></>}
+                  </form>
+                ) : (
+                  <>
+                    <button
+                      class="btn btn-primary w-100 py-3"
+                      onClick={handleSignUpClick}
+                    >
+                      Sign Up to Make An Appointment
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -777,8 +781,29 @@ const emailPatient=localStorage.getItem('patientEmail')
               modules={[Autoplay, Pagination, Navigation]}
               // pagination={{ clickable: true }}
               spaceBetween={45}
-              slidesPerView={3}
+              // slidesPerView={3}
               speed={1000}
+              breakpoints={{
+                250: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                // when window width is >= 480px
+                576: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                // when window width is >= 768px
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 30,
+                },
+                // when window width is >= 1024px
+                992: {
+                  slidesPerView: 3,
+                  spaceBetween: 40,
+                },
+              }}
               onBeforeInit={(swiper) => {
                 swiper.params.navigation.prevEl = prevRef2.current;
                 swiper.params.navigation.nextEl = nextRef2.current;
@@ -996,6 +1021,27 @@ const emailPatient=localStorage.getItem('patientEmail')
             slidesPerView={2}
             spaceBetween={45}
             speed={1000}
+            breakpoints={{
+                250: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                // when window width is >= 480px
+                480: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                // when window width is >= 768px
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 30,
+                },
+                // when window width is >= 1024px
+                1024: {
+                  slidesPerView: 2,
+                  spaceBetween: 40,
+                },
+              }}
             onBeforeInit={(swiper) => {
               swiper.params.navigation.prevEl = prevRef.current;
               swiper.params.navigation.nextEl = nextRef.current;
@@ -1097,6 +1143,8 @@ const emailPatient=localStorage.getItem('patientEmail')
                         <option value="2">Department 2</option>
                         <option value="3">Department 3</option>
                     </select> */}
+              <div className="select-container">
+
               <Select
                 id="departmentId"
                 options={options3}
@@ -1105,15 +1153,20 @@ const emailPatient=localStorage.getItem('patientEmail')
                 name="departmentId"
                 placeholder="Department"
                 styles={customStyles2}
-
               />
+              </div>
               <input
                 type="text"
                 class="form-control border-primary w-49"
                 placeholder="Keyword"
                 onChange={handleFilterChange}
               />
-              <button class="btn btn-dark border-0 w-25" onClick={handleSearchClick}>Search</button>
+              <button
+                class="btn btn-dark border-0 w-25"
+                onClick={handleSearchClick}
+              >
+                Search
+              </button>
             </div>
           </div>
         </div>
@@ -1128,7 +1181,8 @@ const emailPatient=localStorage.getItem('patientEmail')
             <h1 class="display-4">Patients Say About Our Services</h1>
           </div>
           <div class="row justify-content-center">
-            <div class="col-lg-8">
+            {/* <div class="col-lg-8"> */}
+            <div  class="col-lg-8">
               <Swiper
                 loop={true}
                 autoplay={{
@@ -1136,9 +1190,12 @@ const emailPatient=localStorage.getItem('patientEmail')
                   disableOnInteraction: false,
                 }}
                 modules={[Autoplay, Pagination]}
-                pagination={{ clickable: true }}
+                pagination={{ clickable: true}}
                 speed={1000}
-                style={{ height: "475px" }}
+                 
+              
+                // style={{ height: "475px" ,width:"100%"}}
+                className="my-responsive-swiper"
               >
                 <SwiperSlide>
                   <div class="testimonial-item text-center">
@@ -1181,7 +1238,7 @@ const emailPatient=localStorage.getItem('patientEmail')
                         <i class="fa fa-quote-left fa-2x text-primary"></i>
                       </div>
                     </div>
-                    <p class="fs-4 fw-normal">
+                    <p class="fs-4 fw-normal" >
                       Dolores sed duo clita tempor justo dolor et stet lorem
                       kasd labore dolore lorem ipsum. At lorem lorem magna ut
                       et, nonumy et labore et tempor diam tempor erat. Erat
@@ -1193,6 +1250,7 @@ const emailPatient=localStorage.getItem('patientEmail')
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
+                  {/* <div class="testimonial-item text-center" style={{display:'flex',flexDirection:'column',alignItems:'center'}}> */}
                   <div class="testimonial-item text-center">
                     <div class="position-relative mb-5">
                       <img
@@ -1207,6 +1265,7 @@ const emailPatient=localStorage.getItem('patientEmail')
                         <i class="fa fa-quote-left fa-2x text-primary"></i>
                       </div>
                     </div>
+                    {/* <p class="fs-4 fw-normal" style={{width:'66.67%'}}> */}
                     <p class="fs-4 fw-normal">
                       Dolores sed duo clita tempor justo dolor et stet lorem
                       kasd labore dolore lorem ipsum. At lorem lorem magna ut

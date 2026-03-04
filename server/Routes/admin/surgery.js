@@ -3,10 +3,74 @@ const router= express.Router();
 var fetchuser=require('../../middleware/fetchuser');
 const Surgery = require('../../models/Surgery');
 const SurgeryTeam = require('../../models/SurgeryTeam');
+const Patient = require('../../models/Patient');
+const Doctor = require('../../models/Doctor');
+const OperationTheatre = require('../../models/OperationTheatre');
 
 const { body, validationResult } = require('express-validator');
 
+const surgeryTypes = [
+  'Appendectomy', 'Cholecystectomy', 'Hernia Repair', 
+  'Hip Replacement', 'Knee Replacement', 'Cataract Surgery', 
+  'Heart Bypass', 'Tonsillectomy', 'Cesarean Section'
+];
 
+// Helper to get random element from array
+const randomChoice = arr => arr[Math.floor(Math.random() * arr.length)];
+
+// Helper to generate random time on a date
+const randomTimeOnDate = (date) => {
+  const hour = Math.floor(Math.random() * 8) + 8; // between 8 AM - 3 PM
+  const minute = Math.floor(Math.random() * 60);
+  const start = new Date(date);
+  start.setHours(hour, minute, 0, 0);
+  const end = new Date(start);
+  end.setHours(end.getHours() + Math.floor(Math.random() * 3) + 1); // duration 1-3 hours
+  return { startTime: start, endTime: end };
+};
+
+router.post('/addbulksurgery',async (req,res)=>{
+  try {
+    let success = false;
+    const patientIds =await Patient.find().select("_id")
+  const doctorIds = await Doctor.find().select("_id")
+  const theatreIds = await OperationTheatre.find().select("_id")
+
+  if (!patientIds.length || !doctorIds.length || !theatreIds.length) {
+    console.log('Please ensure Patient, Doctor, and OperationTheatre records exist.');
+    return;
+  }
+
+  let surgeries = [];
+
+  for (let i = 0; i < 1000; i++) {
+    const scheduledDate = new Date(Date.now() + Math.floor(Math.random() * 60*24*60*60*1000)); // next 60 days
+    const { startTime, endTime } = randomTimeOnDate(scheduledDate);
+
+    const surgery = {
+      patient: randomChoice(patientIds),
+      primarySurgeon: randomChoice(doctorIds),
+      type: randomChoice(surgeryTypes),
+      scheduledDate,
+      startTime,
+      endTime,
+      operationTheatre: randomChoice(theatreIds),
+      notes: `Surgery notes #${i+1}`
+    };
+
+    surgeries.push(surgery);
+  }
+
+  await Surgery.insertMany(surgeries);
+  console.log('1000 surgery records inserted');
+  success=true;
+    res.json({success})
+  }catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    //process.exit(1);
+  }
+})
 // ROUTE 1: Get All the Questions using :GET "/api/questions/fetchallquestions".Login required
 router.get('/fetchallsurgeries',fetchuser,async (req,res)=>{
     try {
