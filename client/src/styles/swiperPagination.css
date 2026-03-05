@@ -167,6 +167,7 @@
 }
 .custom-prev2,
 .custom-next2 {
+ 
   position: absolute;
   top: 96%;
   transform: translateY(-50%);
@@ -186,6 +187,15 @@
 
 .custom-next {
   right: 50px;
+}
+@media (max-width: 576px) {
+  .custom-prev {
+  top: 49%;
+}
+
+.custom-next {
+  top: 49%;
+}
 }
 .custom-prev2 {
   /* left: 45%; */

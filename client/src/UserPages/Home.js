@@ -1032,7 +1032,7 @@ const Home = () => {
                   spaceBetween: 20,
                 },
                 // when window width is >= 768px
-                768: {
+                992: {
                   slidesPerView: 2,
                   spaceBetween: 30,
                 },
@@ -1062,7 +1062,7 @@ const Home = () => {
                     <div class="team-item">
                       <div
                         class="row g-0 bg-light rounded overflow-hidden"
-                        style={{ height: "350px" }}
+                        //style={{ height: "350px" ,display:"flex",flexDirection:"column"}}
                       >
                         <div class="col-12 col-sm-5 h-100">
                           <img
@@ -1173,7 +1173,7 @@ const Home = () => {
       </div>
 
       <div class="container-fluid py-5">
-        <div class="container">
+        <div class="container container2">
           <div class="text-center mx-auto mb-5" style={{ maxWidth: "500px" }}>
             <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">
               Testimonial
@@ -1182,7 +1182,7 @@ const Home = () => {
           </div>
           <div class="row justify-content-center">
             {/* <div class="col-lg-8"> */}
-            <div  class="col-lg-8">
+            <div>
               <Swiper
                 loop={true}
                 autoplay={{

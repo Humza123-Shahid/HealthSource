@@ -70,7 +70,7 @@ const AdminLabRequest = () => {
 
 const getLabRequestById = (id) => labrequests.find(d => d._id === id);
 const getLabTestById = (id) => labtests.find(d => d._id === id);
-const getDoctorById = (id) => doctors.find(d => d.staff === id);
+const getDoctorById = (id) => doctors.find(d => d._id === id);
 const getPatientById = (id) => patients.find(d => d._id === id);
 const getStaffById = (id) => staffs.find(d => d._id === id);
 

@@ -20,7 +20,7 @@ const DepartmentState=(props)=>{
       console.log(json);
       setDepartments(json)
     }
-    const addDepartment=async (name,code,description,headOfDepartment)=>{
+    const addDepartment=async (name,code,description)=>{
       //console.log(qword,qoption1,qoption2,qoption3,tfvalue); 
       const response=await fetch(`${host}/api/department/adddepartment`,{
         method:'POST',
@@ -28,7 +28,7 @@ const DepartmentState=(props)=>{
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
         },
-        body:JSON.stringify({name,code,description,headOfDepartment})
+        body:JSON.stringify({name,code,description})
       });
       const departments=await response.json();
       const normalizedData = Array.isArray(departments.savedDepartment ) ? departments.savedDepartment : [departments.savedDepartment];
@@ -48,7 +48,7 @@ const DepartmentState=(props)=>{
       const newDepartments=departments.filter((department)=>{return department._id!==id})
       setDepartments(newDepartments)
     }
-    const editDepartment=async(id,name,code,description,headOfDepartment)=>{
+    const editDepartment=async(id,name,code,description)=>{
       console.log(localStorage.getItem('token'));
       const response=await fetch(`${host}/api/department/updatedepartment/${id}`,{
         method:'PUT',
@@ -56,7 +56,7 @@ const DepartmentState=(props)=>{
             'Content-Type':'application/json',
             'auth-token':localStorage.getItem('token')
           },
-        body:JSON.stringify({name,code,description,headOfDepartment})
+        body:JSON.stringify({name,code,description})
       });
       const json=await response.json();
       let newDepartments=JSON.parse(JSON.stringify(departments));
@@ -69,7 +69,7 @@ const DepartmentState=(props)=>{
           newDepartments[index].name=name;
           newDepartments[index].code=code;
           newDepartments[index].description=description;
-          newDepartments[index].headOfDepartment=headOfDepartment;
+          // newDepartments[index].headOfDepartment=headOfDepartment;
           break;
         }
       }

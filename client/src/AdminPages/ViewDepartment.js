@@ -13,7 +13,7 @@ const ViewDepartment = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Head Of Department</th>
+            {/* <th>Head Of Department</th> */}
             <th>Name</th>
             <th>Code</th>
             <th>Description</th>
@@ -22,7 +22,7 @@ const ViewDepartment = () => {
         <tbody>
             <tr key={Department._id}>
               <td>{index}</td>
-              <td>{Staffs.firstName}</td>
+              {/* <td>{Staffs.firstName}</td> */}
               <td>{Department.name}</td>
               <td>{Department.code}</td>
               <td>{Department.description}</td>

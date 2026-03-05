@@ -75,7 +75,7 @@ const AdminAdmission = () => {
   // };
 
 const getAdmissionById = (id) => admissions.find(d => d._id === id);
-const getDoctorById = (id) => doctors.find(d => d.staff === id);
+const getDoctorById = (id) => doctors.find(d => d._id === id);
 const getPatientById = (id) => patients.find(d => d._id === id);
 const getStaffById = (id) => staffs.find(d => d._id === id);
 const getWardById = (id) => wards.find(d => d._id === id);

@@ -47,7 +47,7 @@ const filterOption = (option, inputValue) => {
 };
   const addDepartments=async (e)=>{
           e.preventDefault();
-          const success= await addDepartment(name,code,description,selectedHODValue)
+          const success= await addDepartment(name,code,description)
           console.log(success);
           if(success)
           {
@@ -74,10 +74,10 @@ useEffect(() => {
     <form onSubmit={addDepartments}>
 
     <div className='mx-0' style={{display:'flex'}}>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
         <label htmlFor="mySelect" className="form-label">Select Head Of Department:</label>
         <Select id="headId" options={options} filterOption={filterOption} onChange={handleChange} name="headId" placeholder="Select Room" />      
-    </div>
+    </div> */}
     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="dName" className="form-label">Enter Name:</label>
             <input type="text" className="form-control" id="dName" value={name} name="dName" onChange={handleNameChange} />
@@ -88,13 +88,13 @@ useEffect(() => {
             <input type="text" className="form-control" id="dcode" value={code} name="dcode" onChange={handleCodeChange} />
 
       </div>
-         
-      </div>
-      <div className='mx-0' style={{display:'flex'}}>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
         <label htmlFor="description" className="form-label">Enter Description:</label>
         <input type="text" className="form-control" id="description" value={description} name="description" onChange={handleDescriptionChange} />
     </div>
+      </div>
+      {/* <div className='mx-0' style={{display:'flex'}}>
+    
     <div className="mb-3 ms-3" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
@@ -103,8 +103,8 @@ useEffect(() => {
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
-    </div>
-      <button disabled={name.length<1||selectedHODValue==''||code==''||description==''} type="submit" className="btn btn-primary" >Add Department</button>
+    </div> */}
+      <button disabled={name.length<1||code==''||description==''} type="submit" className="btn btn-primary" >Add Department</button>
       </form>
     </div>
   )

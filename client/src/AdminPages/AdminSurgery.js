@@ -119,8 +119,8 @@
           <tbody>
             {filteredData.map((row,index) => {
             // const patient = getPatientById(row.patient);
-            // const doctor = getDoctorById(row.primarySurgeon);
-            const staff = getStaffById(row.primarySurgeon);
+            const doctor = getDoctorById(row.primarySurgeon);
+            const staff = getStaffById(doctor?.staff);
             const operation = getOperationTheatresById(row?.operationTheatre);
             const patient = getPatientById(row?.patient);
 

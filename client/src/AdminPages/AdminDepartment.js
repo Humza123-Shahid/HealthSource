@@ -101,7 +101,7 @@ const AdminDepartment = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Head Of Department</th>
+            {/* <th>Head Of Department</th> */}
             <th>Name</th>
             <th>Code</th>
             <th>Action</th>
@@ -109,11 +109,11 @@ const AdminDepartment = () => {
         </thead>
         <tbody>
           {filteredData.map((row,index) => {
-            const StaffName = getStaffById(row.headOfDepartment);
+            // const StaffName = getStaffById(row.headOfDepartment);
             return(
             <tr key={row._id}>
               <td>{index+1}</td>
-              <td>{StaffName?.firstName}</td>
+              {/* <td>{StaffName?.firstName}</td> */}
               <td>{row.name}</td>
               <td>{row.code}</td>
               <td style={{width:"30%"}}>

@@ -80,7 +80,8 @@ const AdminPatientMedicalHistory = () => {
   // };
   
 const getPatientMedicalHistoryById = (id) => patientmedicalhistories.find(d => d._id === id);
-const getDoctorById = (id) => doctors.find(d => d.staff === id);
+// const getDoctorById = (id) => doctors.find(d => d.staff === id);
+const getDoctorById = (id) => doctors.find(d => d._id === id);
 const getPatientById = (id) => patients.find(d => d._id === id);
 const getStaffById = (id) => staffs.find(d => d._id === id);
 
@@ -140,9 +141,15 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
         <tbody>
           {filteredData && filteredData.map((row,index) => {
             const doctor = getDoctorById(row.doctor);
+            
             const patient = getPatientById(row.patient);
             const staff = getStaffById(doctor?.staff);
-            
+            if(index==24){
+              console.log(row.doctor)
+                console.log(doctor);
+                console.log(staff);
+
+            }
             return(
             <tr key={row._id}>
               <td>{index+1}</td>

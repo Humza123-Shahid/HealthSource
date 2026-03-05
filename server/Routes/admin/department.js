@@ -70,13 +70,13 @@ router.post('/adddepartment',fetchuser,[
     try {
         
         let success = false;
-        const {name,code,description,headOfDepartment}=req.body;
+        const {name,code,description}=req.body;
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
         return res.status(400).json({ success,errors: errors.array() });
         }
         const department=new Department({
-            name,code,description,headOfDepartment
+            name,code,description
         })
         const savedDepartment=await department.save();
         success=true;
@@ -88,12 +88,12 @@ router.post('/adddepartment',fetchuser,[
 })
 // ROUTE 3: Update an existing Department using :PUT "/api/departments/updatedepartments".Login required
 router.put('/updatedepartment/:id',fetchuser,async (req,res)=>{
-    const {name,code,description,headOfDepartment}=req.body;
+    const {name,code,description}=req.body;
     const newDepartment={};
     if(name){newDepartment.name=name};
     if(code){newDepartment.code=code};
     if(description){newDepartment.description=description};
-    if(headOfDepartment){newDepartment.headOfDepartment=headOfDepartment};
+    // if(headOfDepartment){newDepartment.headOfDepartment=headOfDepartment};
 
     let department=await Department.findById(req.params.id);
     if(!department){return res.status(404).send("Not Found")}

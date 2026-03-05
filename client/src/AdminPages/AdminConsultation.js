@@ -71,7 +71,7 @@ const AdminConsultation = () => {
 
 const getConsultationById = (id) => consultations.find(d => d._id === id);
 const getAppointmentById = (id) => appointments.find(d => d._id === id);
-const getDoctorById = (id) => doctors.find(d => d.staff === id);
+const getDoctorById = (id) => doctors.find(d => d._id === id);
 const getPatientById = (id) => patients.find(d => d._id === id);
 const getStaffById = (id) => staffs.find(d => d._id === id);
 
