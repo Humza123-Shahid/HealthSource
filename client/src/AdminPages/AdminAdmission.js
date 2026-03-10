@@ -1,5 +1,6 @@
-import React,{useState,useContext, useEffect} from 'react'
+import React,{useState,useMemo,useContext, useEffect} from 'react'
 import '../styles/StyledTable.css';
+import '../styles/pagination.css';
 import admissionContext from '../context/admissionContext'
 import patientContext from '../context/patientContext'
 import doctorContext from '../context/doctorContext'
@@ -26,7 +27,8 @@ const AdminAdmission = () => {
     const {rooms,getRooms}=context6;
     const context7=useContext(bedContext);
     const {beds,getBeds}=context7;
-
+  const [entries, setEntries] = useState(10);
+  const [page, setPage] = useState(1);
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const handleClick = () => {
@@ -46,6 +48,9 @@ const AdminAdmission = () => {
   const filteredData = admissions.filter(item =>
       item.reason?.toLowerCase().includes(searchTerm.toLowerCase())
     );
+  const totalPages = Math.ceil(filteredData.length / entries);
+  const startIndex = (page - 1) * entries;
+  const currentData = filteredData.slice(startIndex, startIndex + entries);
   const handleView = (admissionId,wardName,roomName,bedName,doctorName,patientName,index) => {
     //const dataitem=buses.find(da => da._id ==id)
     const dataadmission=getAdmissionById(admissionId);
@@ -102,10 +107,31 @@ const getBedById = (id) => beds.find(d => d._id === id);
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Admission</button>
+      <h3 className="ms-4" style={{
+      margin: '20px 0px 0px 15px',
+      padding: '0px'}}>Admissions Data</h3>
       <div className="d-flex justify-content-between" style={{
       margin: '20px 0px 0px 15px',
       padding: '0px'}}>
-        <h3 className="ms-2">Admissions Data</h3>
+        <div style={{
+                    margin: '11px 0px 0px 11px',
+     color: '#333'}}>
+          <select
+            value={entries}
+            onChange={(e) => setEntries(Number(e.target.value))}
+            style={{
+                padding: '4px',
+    border: '1px solid #aaa',
+    borderRadius:'3px',
+    width: '56px'}}
+          >
+            <option value={10}>10</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>{" "}
+          entries per page
+        </div>
         <div className="me-5" style={{display: 'flex',
       alignItems: 'center',
       border: '1px solid #ccc',
@@ -142,7 +168,7 @@ const getBedById = (id) => beds.find(d => d._id === id);
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((row,index) => {
+          {currentData.map((row,index) => {
             const doctor = getDoctorById(row.admittingDoctor);
             const patient = getPatientById(row.patient);
             const ward = getWardById(row.ward);
@@ -164,7 +190,7 @@ const getBedById = (id) => beds.find(d => d._id === id);
           });
             return(
             <tr key={row._id}>
-              <td>{index+1}</td>
+              <td>{(index+1)+(page-1)*entries}</td>
               {/* <td>{row.driver_id}</td> */}
               {/* {getDriverName(row.driver_id)}  */}
               
@@ -193,6 +219,95 @@ const getBedById = (id) => beds.find(d => d._id === id);
             })}
         </tbody>
       </table>
+      {/* Bottom Controls */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: 10,
+        }}
+      >
+        <div  style={{
+              margin: '5px 0px 0px 26px',
+    minWidth: '230px',
+     color: '#333'
+        }}
+
+        >
+          Showing {startIndex + 1} to{" "}
+          {Math.min(startIndex + entries, filteredData.length)} of{" "}
+          {filteredData.length} entries
+        </div>
+
+        <div className="dt-paging" style={{
+                margin: '0px 0px 15px 0px'}}
+        >
+          <button 
+          className={page === 1 ? 'dt-paging-button disabled' : 'dt-paging-button'}
+          disabled={page === 1} onClick={() => setPage(page - 1)}
+            // style={{
+            //     cursor: page === 1 ?'default':'pointer',
+            //     color: page === 1 ?'rgba(0, 0, 0, 0.5)':'#333',
+            //     // fontWeight: page === i + 1 ? "bold" : "normal",
+            //     padding: '0.5em 1em',
+            //     borderRadius: '2px',
+            //     boxSizing: 'border-box',
+            //     minWidth: '1.5em',
+            //     // background: 'transparent',
+            //     border: "1px solid transparent",
+            //     background:"transparent",
+            //     margin: "0 0px 0 2px",
+            //   }}
+              >
+            {"‹"}
+          </button>
+
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+            
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={page === i+1 ? 'dt-paging-button current' : 'dt-paging-button none'}
+              // style={{
+              //   color: '#333',
+              //   fontWeight: page === i + 1 ? "bold" : "normal",
+              //   fontFamily: 'Arial ,sans-serif',
+              //   padding: '0.5em 1em',
+              //   borderRadius: '2px',
+              //   boxSizing: 'border-box',
+              //   minWidth: '1.5em',
+              //   // background: 'transparent',
+              //   border:page === i + 1 ? "1px solid rgba(0, 0, 0, 0.3)" : "1px solid transparent",
+              //   background:page === i + 1 ? "linear-gradient(to bottom, rgba(229.5, 229.5, 229.5, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%)" : "transparent",
+              //   margin: "0 0px 0 2px",
+              // }}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+          className={page === totalPages ? 'dt-paging-button disabled' : 'dt-paging-button'}
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+            // style={{
+            //     cursor: page === totalPages ?'default':'pointer',
+            //     color: page === totalPages ?'rgba(0, 0, 0, 0.5)':'#333',
+            //     // fontWeight: page === i + 1 ? "bold" : "normal",
+            //     padding: '0.5em 1em',
+            //     borderRadius: '2px',
+            //     boxSizing: 'border-box',
+            //     minWidth: '1.5em',
+            //     // background: 'transparent',
+            //     border: "1px solid transparent",
+            //     background:"transparent",
+            //     margin: "0 0px 0 2px",
+            //   }}
+          >
+            {"›"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

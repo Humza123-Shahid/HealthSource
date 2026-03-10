@@ -1,5 +1,6 @@
 import React,{useState,useContext, useEffect} from 'react'
 import '../styles/StyledTable.css';
+import "../styles/pagination.css";
 import patientContext from '../context/patientContext'
 // import bookingContext from '../context/bookingContext'
 
@@ -14,6 +15,8 @@ const AdminPatient = () => {
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
+     const [entries, setEntries] = useState(10);
+                  const [page, setPage] = useState(1);
     const handleClick = () => {
         navigate('addpatient');
 
@@ -33,6 +36,9 @@ const AdminPatient = () => {
      item.address?.toLowerCase().includes(searchTerm.toLowerCase())||
      item.maritalStatus?.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    const totalPages = Math.ceil(filteredData.length / entries);
+  const startIndex = (page - 1) * entries;
+  const currentData = filteredData.slice(startIndex, startIndex + entries);
   const handleView = (id,index) => {
     const dataitem=patients.find(da => da._id ==id)
     
@@ -61,10 +67,44 @@ const AdminPatient = () => {
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Patient</button>
-      <div className="d-flex justify-content-between" style={{
+      {/* <div className="d-flex justify-content-between" style={{
       margin: '20px 0px 0px 15px',
-      padding: '0px'}}>
-        <h3 className="ms-2">Patient Data</h3>
+      padding: '0px'}}> */}
+        <h3 className="ms-4"
+        style={{
+          margin: "20px 0px 0px 15px",
+          padding: "0px",
+        }}>Patient Data</h3>
+        <div
+        className="d-flex justify-content-between"
+        style={{
+          margin: "20px 0px 0px 15px",
+          padding: "0px",
+        }}
+      >
+        <div
+          style={{
+            margin: "11px 0px 0px 11px",
+            color: "#333",
+          }}
+        >
+          <select
+            value={entries}
+            onChange={(e) => setEntries(Number(e.target.value))}
+            style={{
+              padding: "4px",
+              border: "1px solid #aaa",
+              borderRadius: "3px",
+              width: "56px",
+            }}
+          >
+            <option value={10}>10</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>{" "}
+          entries per page
+        </div>
         <div className="me-5" style={{display: 'flex',
       alignItems: 'center',
       border: '1px solid #ccc',
@@ -85,6 +125,7 @@ const AdminPatient = () => {
         <FaSearch style={{color: '#888',marginLeft: '0px',cursor:'pointer'}} onClick={handleSearchClick}/>
         </div>
       </div>
+      {/* </div> */}
       <div className="dashboard-content">
       <table  className="styled-table ms-4">
         <thead>
@@ -104,7 +145,7 @@ const AdminPatient = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((row,index) => {
+          {currentData.map((row,index) => {
             const formattedBirthDate = new Date(row?.dateOfBirth).toLocaleString('en-US', {
              year: 'numeric',
             month: '2-digit',
@@ -143,6 +184,71 @@ const AdminPatient = () => {
         })}
         </tbody>
       </table>
+      
+      
+      </div>
+      {/* Bottom Controls */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: 10,
+        }}
+      >
+        <div
+          style={{
+            margin: "5px 0px 0px 26px",
+            minWidth: "230px",
+            color: "#333",
+          }}
+        >
+          Showing {startIndex + 1} to{" "}
+          {Math.min(startIndex + entries, filteredData.length)} of{" "}
+          {filteredData.length} entries
+        </div>
+
+        <div
+          className="dt-paging"
+          style={{
+            margin: "0px 0px 15px 0px",
+          }}
+        >
+          <button
+            className={
+              page === 1 ? "dt-paging-button disabled" : "dt-paging-button"
+            }
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            {"‹"}
+          </button>
+
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={
+                page === i + 1
+                  ? "dt-paging-button current"
+                  : "dt-paging-button none"
+              }
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            className={
+              page === totalPages
+                ? "dt-paging-button disabled"
+                : "dt-paging-button"
+            }
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+          >
+            {"›"}
+          </button>
+        </div>
       </div>
     </div>
   );

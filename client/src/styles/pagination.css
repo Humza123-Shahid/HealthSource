@@ -1,0 +1,43 @@
+.dt-paging .dt-paging-button {
+    box-sizing: border-box;
+    display: inline-block;
+    min-width: 1.5em;
+    padding: 0.5em 1em;
+    margin-left: 2px;
+    text-align: center;
+    text-decoration: none !important;
+    cursor: pointer;
+    font-family: Arial ,sans-serif;
+    font-size: 13.333px;
+    line-height: normal;
+    color: #333;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    background
+    : transparent;
+}
+.dt-paging .dt-paging-button.disabled{
+    color: rgba(0, 0, 0, 0.5);
+}
+.dt-paging .dt-paging-button.current{
+   
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to bottom, rgba(229.5, 229.5, 229.5, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%);
+}
+.dt-paging .dt-paging-button:hover{
+   
+    color: white;
+    border: 1px solid #111;
+    background: linear-gradient(to bottom, rgb(88.4, 88.4, 88.4) 0%, #111 100%);
+
+}
+.dt-paging .dt-paging-button.current:hover{
+   color: #333;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to bottom, rgba(229.5, 229.5, 229.5, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%);
+}
+.dt-paging .dt-paging-button.disabled:hover{
+   color: rgba(0, 0, 0, 0.5);
+   border: 1px solid transparent;
+   background: transparent;
+}
