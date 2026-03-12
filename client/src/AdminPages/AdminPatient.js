@@ -61,22 +61,36 @@ const AdminPatient = () => {
         const fetchData = async () => {
         const result2 = await getPatients();
       };
-  
+     
       fetchData();
       }, []); //
+       useEffect(() => {
+             
+            console.log(patients.length)
+            if(patients.length>200&&patients.length<401){
+                setEntries(25)
+              }
+              else  if(patients.length>400&&patients.length<701){
+                setEntries(50)
+              }
+               else  if(patients.length>700){
+                setEntries(100)
+              }
+            
+            }, [patients]); //
   return (
    <div>
-      <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Patient</button>
+      <button className="btn btn-primary mt-3 ms-4 mobile-margin" onClick={handleClick}>Add Patient</button>
       {/* <div className="d-flex justify-content-between" style={{
       margin: '20px 0px 0px 15px',
       padding: '0px'}}> */}
-        <h3 className="ms-4"
+        <h3 className="ms-4 mobile-margin"
         style={{
           margin: "20px 0px 0px 15px",
           padding: "0px",
         }}>Patient Data</h3>
         <div
-        className="d-flex justify-content-between"
+        className="ms-4 d-flex change-flex justify-content-between mobile-margin"
         style={{
           margin: "20px 0px 0px 15px",
           padding: "0px",
@@ -84,7 +98,7 @@ const AdminPatient = () => {
       >
         <div
           style={{
-            margin: "11px 0px 0px 11px",
+            margin: "11px 0px 0px 0px",
             color: "#333",
           }}
         >
@@ -109,7 +123,8 @@ const AdminPatient = () => {
       alignItems: 'center',
       border: '1px solid #ccc',
       borderRadius: '20px',
-      padding: '0px 15px'}}>
+      padding: '0px 15px',
+      width:'250px'}}>
         <input
           type="text"
           placeholder="Search..."
@@ -127,7 +142,7 @@ const AdminPatient = () => {
       </div>
       {/* </div> */}
       <div className="dashboard-content">
-      <table  className="styled-table ms-4">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
             <th>#</th>
@@ -189,10 +204,12 @@ const AdminPatient = () => {
       </div>
       {/* Bottom Controls */}
       <div
+      className='change-flex'
         style={{
           display: "flex",
           justifyContent: "space-between",
           marginTop: 10,
+          
         }}
       >
         <div
@@ -201,6 +218,7 @@ const AdminPatient = () => {
             minWidth: "230px",
             color: "#333",
           }}
+          className='mobile-margin'
         >
           Showing {startIndex + 1} to{" "}
           {Math.min(startIndex + entries, filteredData.length)} of{" "}

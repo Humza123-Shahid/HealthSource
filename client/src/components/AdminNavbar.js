@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaHome } from 'react-icons/fa';
 
 const AdminNavbar = () => (
-  <nav className="navbar navbar-expand navbar-light bg-light px-4">
+  <nav className="navbar navbar-expand navbar-light bg-light px-4 mobile-padding">
     <span className="navbar-brand">Dashboard</span>
     {/* <Link to="/" className='ms-auto'>
   <span role="img" aria-label="Home" style={{ fontSize: '25px' }}>🏠</span>
@@ -12,7 +12,7 @@ const AdminNavbar = () => (
           {/* Use the imported icon component */}
           {/* <FaHome style={{ fontSize: '22px' ,color:'rgba(0,0,0,0.9)'}} className="home-icon" /> 
           <span style={{color:'rgba(0,0,0,0.9)'}}>View Home</span> */}
-          <div className="flex items-center gap-2 bg-blue-600 px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 cursor-pointer w-fit" style={{color:'rgba(0,0,0,0.9)'}}>
+          <div className="flex items-center gap-2 bg-blue-600 px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 cursor-pointer w-fit" style={{color:'rgba(0,0,0,0.9)',paddingInline: '1.2rem !important'}}>
   <FaHome className="h-5 w-5" />
   <span className="font-semibold tracking-wide">Back to Home</span>
 </div>

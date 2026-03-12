@@ -96,9 +96,23 @@ const getMedicineById = (id) => medicines.find(d => d._id === id);
 
         //setMyData(result);                     // Set state in same file
       };
-  
+    
       fetchData();
       }, []); //
+       useEffect(() => {
+             
+            console.log(prescriptions.length)
+            if(prescriptions.length>200&&prescriptions.length<401){
+                setEntries(25)
+              }
+              else  if(prescriptions.length>400&&prescriptions.length<701){
+                setEntries(50)
+              }
+               else  if(prescriptions.length>700){
+                setEntries(100)
+              }
+            
+            }, [prescriptions]); //
       
   return (
    <div>

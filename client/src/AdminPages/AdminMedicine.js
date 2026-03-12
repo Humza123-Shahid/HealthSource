@@ -73,10 +73,23 @@ const getMedicineById = (id) => medicines.find(d => d._id === id);
         const result = await getMedicines();
         //setMyData(result);                     // Set state in same file
       };
-  
+    
       fetchData();
       }, []); //
-      
+      useEffect(() => {
+                               
+                console.log(medicines.length)
+                if(medicines.length>200&&medicines.length<401){
+                    setEntries(25)
+                  }
+                  else  if(medicines.length>400&&medicines.length<701){
+                    setEntries(50)
+                  }
+                  else  if(medicines.length>700){
+                    setEntries(100)
+                  }
+                
+                }, [medicines]); //
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Medicine</button>

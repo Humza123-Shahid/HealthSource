@@ -42,3 +42,122 @@
   overflow-y: hidden;   /* optional */
   white-space: nowrap; /* prevents wrapping */
 }
+/* table {
+  width: 100%;
+  border-collapse: collapse;
+} */
+ .burger-menu {
+  display: none;
+  position: absolute;
+  top:72px;
+  right: 7px;
+  z-index: 1100;
+  background: #34495e;
+  color: white;
+  border: none;
+  padding: 7px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+@media (max-width: 768px) {
+  .change-flex{
+    flex-direction: column;
+    gap:10px
+  }
+  .burger-menu {
+    display: block; /* Show burger menu */
+  }
+  .sidebar {
+    position: fixed;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%); /* Hide sidebar off-screen */
+  }
+  .mobile-margin
+  {
+    margin: 20px 0px 0px 10px !important
+  }
+  .mobile-padding
+  {
+    padding-right: 0.5rem !important;
+    padding-left: 0.7rem !important
+  }
+  .sidebar.open {
+    transform: translateX(0); /* Slide into view */
+  }
+  .flex-item {
+  flex: 1 1 calc(50% - 20px);
+  }
+  .change-margin-email{
+    margin-top: 4rem !important;
+  }
+  .change-margin-pass{
+    margin-top: 4rem !important;
+  }
+}
+/* @media (max-width: 1345px) {
+  
+  
+} */
+ .flex-container {
+  
+  flex-wrap: wrap; /* Allows items to wrap to new lines */
+  justify-content: space-between; /* Distributes space evenly */
+  gap: 20px; /* Optional: Adds a gap between items */
+}
+
+.flex-item {
+  /* flex-basis: calc(33.33% - 20px); */
+  /* Using flex shorthand: grow, shrink, basis */
+  flex: 1 1 calc(33.33% - 20px); /* Adjust width to account for gaps */
+  /* box-sizing: border-box; 
+  padding: 15px;
+  background-color: #f1f1f1;
+  text-align: center; */
+}
+ @media (max-width: 1215px) {
+  
+
+.flex-item {
+  /*
+    Default for small screens (below 1000px): two items per row.
+    Width calculation: 50% for two items, minus half the gap for perfect fitting (optional but recommended).
+  */
+  margin-right: 0px;
+  flex: 1 1 calc(50% - 20px);
+  /* width: calc(50% - 5px) !important;  */
+  /* box-sizing: border-box;  */
+  /* Ensures padding/border is included in width calculation */
+  /* Add other styling for visual appearance */
+  /* background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center; */
+}
+}
+@media (min-width:769px) and (max-width: 900px) {
+  
+
+.flex-item {
+  
+  
+  flex: 1 1 100%;
+  
+}
+}
+@media (max-width: 605px) {
+  
+
+.flex-item {
+  
+  
+  flex: 1 1 100%;
+  
+}
+.change-margin-pass{
+    margin-top: 1rem !important;
+  }
+}

@@ -112,10 +112,23 @@ const AdminLabRequest = () => {
       const result6 = await getLabTests();
       //setMyData(result);                     // Set state in same file
     };
-
+   
     fetchData();
   }, []); //
-
+useEffect(() => {
+                               
+                console.log(labrequests.length)
+                if(labrequests.length>200&&labrequests.length<401){
+                    setEntries(25)
+                  }
+                  else  if(labrequests.length>400&&labrequests.length<701){
+                    setEntries(50)
+                  }
+                  else  if(labrequests.length>700){
+                    setEntries(100)
+                  }
+                
+                }, [labrequests]); //
   return (
     <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>

@@ -92,9 +92,23 @@ const AdminDoctor = () => {
 
         //setMyData(result);                     // Set state in same file
       };
-  
+      
       fetchData();
       }, []); //
+      useEffect(() => {
+                                     
+                      console.log(doctors.length)
+                      if(doctors.length>200&&doctors.length<401){
+                          setEntries(25)
+                        }
+                        else  if(doctors.length>400&&doctors.length<701){
+                          setEntries(50)
+                        }
+                        else  if(doctors.length>700){
+                          setEntries(100)
+                        }
+                      
+                      }, [doctors]); //
   return (
    <div>
     {localStorage.getItem('utype')!=='doctor' &&

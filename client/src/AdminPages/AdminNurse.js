@@ -98,9 +98,23 @@ const [entries, setEntries] = useState(10);
 
         //setMyData(result);                     // Set state in same file
       };
-  
+      
       fetchData();
       }, []); //
+      useEffect(() => {
+                         
+          console.log(nurses.length)
+          if(nurses.length>200&&nurses.length<401){
+              setEntries(25)
+            }
+            else  if(nurses.length>400&&nurses.length<701){
+              setEntries(50)
+            }
+            else  if(nurses.length>700){
+              setEntries(100)
+            }
+          
+          }, [nurses]); //
   return (
    <div>
       {localStorage.getItem('utype')!=='nurse' &&

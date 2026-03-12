@@ -14,6 +14,11 @@ const Admin = (props) => {
       const [msg,setMsg]=useState('')
       const [type,setType]=useState('')
            const navigate = useNavigate();
+           const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
       
 useEffect(()=>{
   if(localStorage.getItem('token')){
@@ -91,7 +96,12 @@ useEffect(()=>{
     <div className="d-flex">
       <InfoMessage showToast={showToast} msg={msg} type={type}/>
       {/* <div className='bg-dark' style={{backgroundColor:'rgb(44, 62, 80)'}}> */}
-      <div className='bg-dark' style={{backgroundColor:'white'}}>
+       <button className="burger-menu" onClick={toggleSidebar}>
+        {isOpen ? '✕' : '☰'}
+      </button>
+      {/* <div className='bg-dark' style={{backgroundColor:'white'}}> */}
+      <div className={`sidebar ${isOpen ? 'open' : ''}`} style={{backgroundColor:'white','zIndex':'10'}}>
+
       <Sidebar />
       </div>
       <div className="flex-grow-1 d-flex flex-column" style={{ minHeight: '100vh',width:'80%' }}>

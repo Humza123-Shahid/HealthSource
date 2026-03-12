@@ -57,9 +57,22 @@ const AdminOperationTheatre = () => {
         const result = await getOperationTheatres();
         //setMyData(result);                     // Set state in same file
       };
-  
       fetchData();
       }, []); //
+       useEffect(() => {
+                   
+                  console.log(operationtheatres.length)
+                  if(operationtheatres.length>200&&operationtheatres.length<401){
+                      setEntries(25)
+                    }
+                    else  if(operationtheatres.length>400&&operationtheatres.length<701){
+                      setEntries(50)
+                    }
+                     else  if(operationtheatres.length>700){
+                      setEntries(100)
+                    }
+                  
+                  }, [operationtheatres]); //
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Operation Theatre</button>

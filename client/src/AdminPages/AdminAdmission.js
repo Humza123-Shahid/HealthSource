@@ -97,17 +97,33 @@ const getBedById = (id) => beds.find(d => d._id === id);
         const result6 = await getWards();
         const result7 = await getRooms();
         const result8 = await getBeds();
-
+        
         //setMyData(result);                     // Set state in same file
       };
-  
-      fetchData();
-      }, []); //
+     
       
+      fetchData();
+      
+      }, []); // 
+
+      useEffect(() => {
+                                     
+                      console.log(admissions.length)
+                      if(admissions.length>200&&admissions.length<401){
+                          setEntries(25)
+                        }
+                        else  if(admissions.length>400&&admissions.length<701){
+                          setEntries(50)
+                        }
+                        else  if(admissions.length>700){
+                          setEntries(100)
+                        }
+                      
+                      }, [admissions]); //
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Admission</button>
-      <h3 className="ms-4" style={{
+      <h3 className="ms-4 mobile-margin" style={{
       margin: '20px 0px 0px 15px',
       padding: '0px'}}>Admissions Data</h3>
       <div className="d-flex justify-content-between" style={{

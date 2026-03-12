@@ -88,10 +88,23 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
 
         //setMyData(result);                     // Set state in same file
       };
-  
+   
       fetchData();
       }, []); //
-      
+      useEffect(() => {
+                                     
+                      console.log(appointments.length)
+                      if(appointments.length>200&&appointments.length<401){
+                          setEntries(25)
+                        }
+                        else  if(appointments.length>400&&appointments.length<701){
+                          setEntries(50)
+                        }
+                        else  if(appointments.length>700){
+                          setEntries(100)
+                        }
+                      
+                      }, [appointments]); //
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Appointment</button>

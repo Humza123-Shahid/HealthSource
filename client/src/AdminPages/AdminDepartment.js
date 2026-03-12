@@ -77,6 +77,20 @@ const AdminDepartment = () => {
   
       fetchData();
       }, []); //
+      useEffect(() => {
+                                     
+                      console.log(departments.length)
+                      if(departments.length>200&&departments.length<401){
+                          setEntries(25)
+                        }
+                        else  if(departments.length>400&&departments.length<701){
+                          setEntries(50)
+                        }
+                        else  if(departments.length>700){
+                          setEntries(100)
+                        }
+                      
+                      }, [departments]); //
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Department</button>

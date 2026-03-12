@@ -56,9 +56,23 @@ const AdminRole = () => {
         const result = await getRoles();
         //setMyData(result);                     // Set state in same file
       };
-  
+     
       fetchData();
       }, []); //
+       useEffect(() => {
+             
+            console.log(roles.length)
+            if(roles.length>200&&roles.length<401){
+                setEntries(25)
+              }
+              else  if(roles.length>400&&roles.length<701){
+                setEntries(50)
+              }
+               else  if(roles.length>700){
+                setEntries(100)
+              }
+            
+            }, [roles]); //
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Role</button>

@@ -15,6 +15,11 @@ const Sidebar = () => {
    const [selectedTab, setSelectedTab] = useState(
     localStorage.getItem("activeTab") || "Buses"
   );
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
    useEffect(() => {
     localStorage.setItem("activeTab", selectedTab);
 
@@ -64,17 +69,20 @@ setPermissions(prevPermissions => [...prevPermissions, role.permissions]);
         //overflow: 'hidden'
         overflowY: 'auto'
         }}>
+     
     <div style={{'display':"flex",
     'flex-direction':'row',
   'justifyContent':"center",
   'alignItems':"center",
-  'minHeight':"10vh"}} >
+  'minHeight':"10vh",
+  }} >
         {/* <h4 className="mb-1" style={{'color':'black'}}>Admin Dashboard</h4> */}
         <img src={logo} style={{'width':'100%'}}></img>
     {/* <LocalHospitalIcon sx={{ fontSize: '3.5rem' }}  /> */}
     
   </div>
   {/* <hr /> */}
+  {/* <nav className={`sidebar ${isOpen ? 'open' : ''}`}> */}
     <ul className="nav flex-column">
       {/* <li className="nav-item mb-2">
         <Link className="nav-link text-black" style={{color:'black'}} to="dashboard" onClick={()=>SelectedTab("dashboard")}><i className="fas fa-tachometer-alt me-2"></i> Dashboard</Link>
@@ -258,6 +266,7 @@ setPermissions(prevPermissions => [...prevPermissions, role.permissions]);
       <Link className="nav-link "  to="/login" onClick={handleLogout}><i className="iconcolor fas fa-sign-out me-2"></i>Logout</Link>
       </li>
     </ul>
+    {/* </nav> */}
   </div>
   );
 };

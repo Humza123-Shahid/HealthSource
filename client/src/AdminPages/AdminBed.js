@@ -72,9 +72,23 @@ const AdminBed = () => {
 
         //setMyData(result);                     // Set state in same file
       };
-  
+    
       fetchData();
       }, []); //
+      useEffect(() => {
+                                     
+                      console.log(beds.length)
+                      if(beds.length>200&&beds.length<401){
+                          setEntries(25)
+                        }
+                        else  if(beds.length>400&&beds.length<701){
+                          setEntries(50)
+                        }
+                        else  if(beds.length>700){
+                          setEntries(100)
+                        }
+                      
+                      }, [beds]); //
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Bed</button>

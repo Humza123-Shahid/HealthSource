@@ -1,5 +1,6 @@
 import React,{useState,useContext, useEffect} from 'react'
 import '../styles/StyledTable.css';
+ import "../styles/pagination.css";
 import staffdutyContext from '../context/staffdutyContext'
 import staffContext from '../context/staffContext'
 import shiftContext from '../context/shiftContext'
@@ -14,7 +15,8 @@ const AdminStaffDuty = () => {
     const {staffs,getStaffs}=context2;
     const context3=useContext(shiftContext);
     const {shifts,getShifts}=context3;
-    
+    const [entries, setEntries] = useState(10);
+                                                    const [page, setPage] = useState(1);
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const handleClick = () => {
@@ -34,6 +36,9 @@ const AdminStaffDuty = () => {
   // const filteredData = staffduties.filter(item =>
   //     item.staffdutyTime?.toLowerCase().includes(searchTerm.toLowerCase())
   //   );
+  const totalPages = Math.ceil(staffduties.length / entries);
+  const startIndex = (page - 1) * entries;
+  const currentData = staffduties.slice(startIndex, startIndex + entries);
   const handleView = (staffdutyId,staffName,shiftName,index) => {
     //const dataitem=buses.find(da => da._id ==id)
     const datastaffduty=getStaffDutyById(staffdutyId);
@@ -75,17 +80,65 @@ const getShiftById = (id) => shifts.find(d => d._id === id);
 
         //setMyData(result);                     // Set state in same file
       };
-  
+      
       fetchData();
       }, []); //
+       useEffect(() => {
+             
+            console.log(staffduties.length)
+            if(staffduties.length>200&&staffduties.length<401){
+                setEntries(25)
+              }
+              else  if(staffduties.length>400&&staffduties.length<701){
+                setEntries(50)
+              }
+               else  if(staffduties.length>700){
+                setEntries(100)
+              }
+            
+            }, [staffduties]); //
       
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add StaffDuty</button>
-      <div className="d-flex justify-content-between" style={{
+      {/* <div className="d-flex justify-content-between" style={{
       margin: '20px 0px 0px 15px',
-      padding: '0px'}}>
-        <h3 className="ms-2">StaffDuties Data</h3>
+      padding: '0px'}}> */}
+        <h3 className="ms-4"
+        style={{
+          margin: "20px 0px 0px 15px",
+          padding: "0px",
+        }}>StaffDuties Data</h3>
+         <div
+        className="d-flex justify-content-between"
+        style={{
+          margin: "20px 0px 0px 15px",
+          padding: "0px",
+        }}
+      >
+        <div
+          style={{
+            margin: "11px 0px 0px 11px",
+            color: "#333",
+          }}
+        >
+          <select
+            value={entries}
+            onChange={(e) => setEntries(Number(e.target.value))}
+            style={{
+              padding: "4px",
+              border: "1px solid #aaa",
+              borderRadius: "3px",
+              width: "56px",
+            }}
+          >
+            <option value={10}>10</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>{" "}
+          entries per page
+        </div>
         <div className="me-5" style={{display: 'flex',
       alignItems: 'center',
       border: '1px solid #ccc',
@@ -106,6 +159,7 @@ const getShiftById = (id) => shifts.find(d => d._id === id);
         <FaSearch style={{color: '#888',marginLeft: '0px',cursor:'pointer'}} onClick={handleSearchClick}/>
         </div>
       </div>
+      {/* </div> */}
       <table  className="styled-table ms-4">
         <thead>
           <tr>
@@ -117,7 +171,7 @@ const getShiftById = (id) => shifts.find(d => d._id === id);
           </tr>
         </thead>
         <tbody>
-          {staffduties.map((row,index) => {
+          {currentData.map((row,index) => {
             const staff = getStaffById(row?.staff);
             const shift = getShiftById(row?.shift);
 
@@ -152,6 +206,69 @@ const getShiftById = (id) => shifts.find(d => d._id === id);
             })}
         </tbody>
       </table>
+      {/* Bottom Controls */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: 10,
+        }}
+      >
+        <div
+          style={{
+            margin: "5px 0px 0px 26px",
+            minWidth: "230px",
+            color: "#333",
+          }}
+        >
+          Showing {startIndex + 1} to{" "}
+          {Math.min(startIndex + entries, staffduties.length)} of{" "}
+          {staffduties.length} entries
+        </div>
+
+        <div
+          className="dt-paging"
+          style={{
+            margin: "0px 0px 15px 0px",
+          }}
+        >
+          <button
+            className={
+              page === 1 ? "dt-paging-button disabled" : "dt-paging-button"
+            }
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            {"‹"}
+          </button>
+
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={
+                page === i + 1
+                  ? "dt-paging-button current"
+                  : "dt-paging-button none"
+              }
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            className={
+              page === totalPages
+                ? "dt-paging-button disabled"
+                : "dt-paging-button"
+            }
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+          >
+            {"›"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -100,9 +100,23 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
 
         //setMyData(result);                     // Set state in same file
       };
-  
+     
       fetchData();
       }, []); //
+       useEffect(() => {
+             
+            console.log(patientmedicalhistories.length)
+            if(patientmedicalhistories.length>200&&patientmedicalhistories.length<401){
+                setEntries(25)
+              }
+              else  if(patientmedicalhistories.length>400&&patientmedicalhistories.length<701){
+                setEntries(50)
+              }
+               else  if(patientmedicalhistories.length>700){
+                setEntries(100)
+              }
+            
+            }, [patientmedicalhistories]); //
       
   return (
    <div>

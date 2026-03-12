@@ -90,10 +90,23 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
         const result6 = await getConsultations();
         //setMyData(result);                     // Set state in same file
       };
-  
+      
       fetchData();
       }, []); //
-      
+      useEffect(() => {
+                                     
+                      console.log(consultations.length)
+                      if(consultations.length>200&&consultations.length<401){
+                          setEntries(25)
+                        }
+                        else  if(consultations.length>400&&consultations.length<701){
+                          setEntries(50)
+                        }
+                        else  if(consultations.length>700){
+                          setEntries(100)
+                        }
+                      
+                      }, [consultations]); //
   return (
    <div>
       <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Consultation</button>
