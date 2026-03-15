@@ -78,24 +78,28 @@ useEffect(() => {
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={editDepartments}>
 
-    <div className='mx-0' style={{display:'flex'}}>
-    {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+    {/* <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
         <label htmlFor="mySelect" className="form-label">Select Head Of Department:</label>
         <Select id="headId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="headId" placeholder="Select Room" />      
     </div> */}
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
             <label htmlFor="dName" className="form-label">Enter Name:</label>
             <input type="text" className="form-control" id="dName" value={name} name="dName" onChange={handleNameChange} />
       </div>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="dcode" className="form-label">Select Code:</label>
             {/* <input type="text" className="form-control" id="roomType" value={roomType} name="roomType" onChange={handleRoomTypeChange} /> */}
             <input type="text" className="form-control" id="dcode" value={code} name="dcode" onChange={handleCodeChange} />
 
       </div>
-         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+         <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
         <label htmlFor="description" className="form-label">Enter Description:</label>
         <input type="text" className="form-control" id="description" value={description} name="description" onChange={handleDescriptionChange} />
+    </div>
+    <div className="flex-item" style={{width:'100%'}}>
+          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
+          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
       </div>
       {/* <div className='mx-0' style={{display:'flex'}}>

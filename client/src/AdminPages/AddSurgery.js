@@ -149,29 +149,29 @@ const options= [
   ... doctors.map(dt => {
     const staff = getStaffById(dt?.staff);
     return{
-    value: staff._id,
-    label: `${staff.firstName}`
+    value: staff?._id,
+    label: `${staff?.firstName}`
 }})
 ];
 const options2 = [
   { value: "", label: "Select Operation Theatre" }, // empty option
   ... operationtheatres.map(ot => ({
-    value: ot._id,
+    value: ot?._id,
     label: `${ot.name}`
   }))
 ];
 const options3 = [
   { value: "", label: "Select Patient NationalId/Name" }, // empty option
   ... patients.map(pt => ({
-    value: pt._id,
-    label: `${pt.nationalId}-${pt.firstName}`
+    value: pt?._id,
+    label: `${pt.nationalId}-${pt?.firstName}`
   }))
 ];
  const options4 = [
       { value: "", label: "Select Staff" }, // empty option
       ... staffs.map(st => ({
-        value: st._id,
-        label: `${st.firstName}`
+        value: st?._id,
+        label: `${st?.firstName}`
       }))
     ];
 const filterOption = (option, inputValue) => {
@@ -250,7 +250,7 @@ useEffect(() => {
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addSurgeries}>
     {/* <div className='mx-0' style={{display:'flex'}}> */}
-      {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      {/* <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
       
       <label htmlFor="mySelect" className="form-label">Select Patient:</label>
       <select id="mySelect" className="form-control "  value={selectedPatientValue} onChange={handleChangePatient}>
@@ -260,11 +260,11 @@ useEffect(() => {
         ))}
       </select>
     </div> */}
-     {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     {/* <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="name" className="form-label">Enter Patient Name:</label>
             <input type="text" className="form-control" id="name" value={name} name="name" onChange={handleNameChange} />
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="gender" className="form-label">Enter Patient Gender:</label>
             <select id="mySelect" className="form-control "  value={gender} onChange={handleGenderChange}>
                   <option value="male">Male</option>
@@ -272,7 +272,7 @@ useEffect(() => {
                   <option value="other">Other</option>
             </select>
       </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
                 <label htmlFor="contact" className="form-label">Enter Patient Contact:</label>
                 <input type="text" className="form-control" id="contact" value={contact} name="contact" onChange={handleContactChange} />
         </div> */}
@@ -280,8 +280,8 @@ useEffect(() => {
     
     
     {/* </div> */}
-      <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className='mx-0 flex-container' style={{display:'flex'}}>
+        <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
       
       <label htmlFor="nationalId" className="form-label">Select Patient NationalId/Name:</label>
             {/* <select id="surgeonId" className="form-control " value={selectedSurgeonValue} onChange={handleChangeSurgeon}>
@@ -295,7 +295,7 @@ useEffect(() => {
         <Select id="nationalId" options={options3} filterOption={filterOption} onChange={handleChange3} name="nationalId" placeholder="Select Patient NationalId/Name" />
     </div>
     
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
       
       <label htmlFor="surgeonId" className="form-label">Select Primary Surgeon:</label>
             {/* <select id="surgeonId" className="form-control " value={selectedSurgeonValue} onChange={handleChangeSurgeon}>
@@ -308,33 +308,33 @@ useEffect(() => {
         </select> */}
         <Select id="surgeonId" options={options} filterOption={filterOption} onChange={handleChange} name="surgeonId" placeholder="Select Primary Surgeon" />
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="type" className="form-label">Enter Type:</label>
             <input type="text" className="form-control" id="type" value={surgeryType} name="type" onChange={handleTypeChange} />
       </div>
      
     
       
-    </div>
-    <div className='mx-0' style={{display:'flex'}}>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* </div>
+    <div className='mx-0' style={{display:'flex'}}> */}
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
       <label htmlFor="scheduledDate" className="form-label">Scheduled Date:</label>
       <input type="date" className="form-control" id="scheduledDate" value={scheduledDate} name="scheduledDate" onChange={handleDateChange} />
 
       </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="startTime" className="form-label">Select Start Time:</label>
             <input type="time" className="form-control" id="startTime" value={startTime} name="startTime" onChange={handleStartChange} />
       </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="endTime" className="form-label">Select End Time:</label>
             <input type="time" className="form-control" id="endTime" value={endTime} name="endTime" onChange={handleEndChange} />
       </div>
       
      
-    </div>
-        <div className='mx-0' style={{display:'flex'}}>
-          <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* </div>
+        <div className='mx-0' style={{display:'flex'}}> */}
+          <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
         <label htmlFor="mySelect" className="form-label">Select Operation Theatre:</label>
         {/* <select id="mySelect" className="form-control "  value={selectedTheatreValue} onChange={handleChangeTheatre}>
             <option value="">-Select-</option>
@@ -346,11 +346,11 @@ useEffect(() => {
         <Select id="theatreId" options={options2} filterOption={filterOption} onChange={handleChange2} name="theatreId" placeholder="Select Operation Theatre" />
 
       </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="notes" className="form-label">Enter Notes:</label>
             <textarea className="form-control" id="notes" value={notes} name="notes" onChange={handleNotesChange} />
       </div>
-      <div className="mb-3 ms-3" style={{width:'100%'}}>
+      <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
@@ -362,9 +362,9 @@ useEffect(() => {
     <hr />
 
       <h4>Surgery Team</h4>
-      <div className='mx-0' style={{display:'flex'}}>
+      <div className='mx-0 flex-container' style={{display:'flex'}}>
 
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
       
       <label htmlFor="staffId" className="form-label">Select Staff:</label>
             {/* <select id="staffId" className="form-control " value={selectedStaffValue} onChange={handleChangeStaff}>
@@ -375,7 +375,7 @@ useEffect(() => {
         </select> */}
       <Select id="mySelect3" options={options4} filterOption={filterOption} onChange={handleChange4} name="staffId" placeholder="Select Staff" />
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="role" className="form-label">Enter Role:</label>
             {/* <input type="text" className="form-control" id="type" value={role} name="role" onChange={handleRoleChange} /> */}
             <select id="role" className="form-control " name="role" onChange={handleRoleChange}>
@@ -386,34 +386,42 @@ useEffect(() => {
                 <option value="circulating-nurse">Circulating Nurse</option>
             </select>
       </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%',display: 'flex',alignItems: 'center',height: '100px'}}>
-            <button class="add-option-btn" onClick={addOption} style={{width:'20%',marginLeft:'5px'}}>Add Staff</button>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%',display: 'flex',alignItems: 'center',height: '100px'}}>
+            <button class="add-option-btn" onClick={addOption} style={{width:'200px',marginLeft:'0px'}}>Add Staff</button>
       </div>
     </div>
     {/* <div style={{display:'flex'}}> */}
       <div style={{ marginTop: '20px'}}>
         {allNewStaffValue.map((stf, index) => (
           <>
-          <div className='d-flex my-3'>
-            {/* <input type='text' className='form-control me-3' value={stf} style={{width:"32.2%"}} id='option1' name='option1' readonly/>
+          <div className='d-flex my-3 flex-container'>
+            {/* <input type='text' className='form-control flex-item' value={stf} style={{width:"32.2%"}} id='option1' name='option1' readonly/>
             <input type='text' className='form-control' value={allRoleValue[index]} style={{width:"32.2%"}} id='option2' onChange={(e) => handleChangeRole(index, e.target.value)} name='option2'/> */}
-           <div style={{width:"32.2%"}} className='me-3'>
+            {/* <div style={{width:"45.2%%"}} className='me-3'></div> */}
+           {/* <div style={{width:"32.2%"}} className='me-3'> */}
+           <div className="mb-3 my-3 flex-item-4" style={{width:'100%'}}>
            <Select id="mySelect5" options={options4} filterOption={filterOption} value={stf} onChange={(selectedOption) => handleChange5(selectedOption, index)} name="staffId2" placeholder="Select Staff" />
            </div>
-           <select id="role" className="form-control mb-3" style={{width:"32.2%"}} name="role" value={allNewRoleValue[index]}  onChange={(e) => handleChangeRole(index, e.target.value)}>
+           {/* <div style={{width:"58.2%%"}} className='me-3'></div> */}
+           {/* <div style={{width:"32.2%"}} className='me-3'> */}
+           {/* <select id="role" className="form-control mb-3" style={{width:"32.2%",width:"78.2"}} name="role" value={allNewRoleValue[index]}  onChange={(e) => handleChangeRole(index, e.target.value)}> */}
+           <div className="mb-3 my-3 flex-item-4" style={{width:'100%'}}>
+           <select id="role" className="form-control mb-3" name="role" value={allNewRoleValue[index]}  onChange={(e) => handleChangeRole(index, e.target.value)}>
                 <option value="surgeon">Surgeon</option>
                 <option value="assistantsurgeon">Assistant Surgeon</option>
                 <option value="anesthetist">Anesthetist</option>
                 <option value="scrubnurse">Scrub Nurse</option>
                 <option value="circulatingnurse">Circulating Nurse</option>
             </select>
+            </div>
+            <div className="mb-3 my-3 close-btn-responsive" style={{width:'32.3%'}}>
             <button 
                onClick={(e) => handleClose(e,index)}
               style={{
                 background: 'none',
                 backgroundColor:'red',
                 color:'white',
-                marginLeft:'20px',
+                // marginLeft:'20px',
                 marginBottom:'20px',
                 border: 'none',
                 fontSize: '20px',
@@ -422,7 +430,9 @@ useEffect(() => {
             >
               &times;
             </button>
+            {/* </div> */}
             </div>
+        </div>
         </>
         ))}
       </div>

@@ -191,8 +191,8 @@ console.log("abc")
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     {/* <form onSubmit={addSurgeryTeams}> */}
     <form>
-    <div className='mx-0' style={{display:'flex'}}>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+      <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
       
       <label htmlFor="mySelect" className="form-label">Select Surgery:</label>
       {/* <select id="mySelect" className="form-control "  value={selectedSurgeryValue} onChange={handleChangeSurgery}>
@@ -204,18 +204,18 @@ console.log("abc")
       <Select id="surgeryId" options={options} filterOption={filterOption} onChange={handleChange} name="surgeryId" placeholder="Select Surgery" />
 
     </div>
-     <div className="mb-3 ms-3" style={{width:'100%'}}>
+     <div className="flex-item change-margin-condition" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
-        <div className="mb-3 ms-3" style={{width:'100%'}}>
+        <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
       </div>
-    <div className='mx-0' style={{display:'flex'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
 
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
       
       <label htmlFor="staffId" className="form-label">Select Staff:</label>
             {/* <select id="staffId" className="form-control " value={selectedStaffValue} onChange={handleChangeStaff}>
@@ -226,7 +226,7 @@ console.log("abc")
         </select> */}
       <Select id="mySelect3" options={options2} filterOption={filterOption} onChange={handleChange2} name="staffId" placeholder="Select Staff" />
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="role" className="form-label">Enter Role:</label>
             {/* <input type="text" className="form-control" id="type" value={role} name="role" onChange={handleRoleChange} /> */}
             <select id="role" className="form-control " name="role" onChange={handleRoleChange}>
@@ -237,18 +237,18 @@ console.log("abc")
                 <option value="circulating-nurse">Circulating Nurse</option>
             </select>
       </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%',display: 'flex',alignItems: 'center',height: '100px'}}>
-            <button class="add-option-btn" onClick={addOption} style={{width:'20%',marginLeft:'5px'}}>Add Staff</button>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%',display: 'flex',alignItems: 'center',height: '100px'}}>
+            <button class="add-option-btn" onClick={addOption} style={{width:'200px',marginLeft:'0px'}}>Add Staff</button>
       </div>
     </div>
     {/* <div style={{display:'flex'}}> */}
-      <div style={{ marginTop: '20px'}}>
+      {/* <div style={{ marginTop: '20px'}}>
         {allNewStaffValue.map((stf, index) => (
           <>
-          <div className='d-flex my-3'>
-            {/* <input type='text' className='form-control me-3' value={stf} style={{width:"32.2%"}} id='option1' name='option1' readonly/>
+          <div className='d-flex my-3'> */}
+            {/* <input type='text' className='form-control flex-item' value={stf} style={{width:"32.2%"}} id='option1' name='option1' readonly/>
             <input type='text' className='form-control' value={allRoleValue[index]} style={{width:"32.2%"}} id='option2' onChange={(e) => handleChangeRole(index, e.target.value)} name='option2'/> */}
-           <div style={{width:"32.2%"}} className='me-3'>
+           {/* <div style={{width:"32.2%"}} className='flex-item'>
            <Select id="mySelect5" options={options2} filterOption={filterOption} value={stf} onChange={(selectedOption) => handleChange3(selectedOption, index)} name="staffId2" placeholder="Select Staff" />
            </div>
            <select id="role" className="form-control mb-3" style={{width:"32.2%"}} name="role" value={allNewRoleValue[index]}  onChange={(e) => handleChangeRole(index, e.target.value)}>
@@ -273,6 +273,45 @@ console.log("abc")
             >
               &times;
             </button>
+            </div>
+        </>
+        ))}
+      </div> */}
+      <div style={{ marginTop: '20px'}}>
+        {allNewStaffValue.map((stf, index) => (
+          <>
+          <div className='d-flex my-3 flex-container'>
+            {/* <input type='text' className='form-control flex-item' value={stf} style={{width:"32.2%"}} id='option1' name='option1' readonly/>
+            <input type='text' className='form-control' value={allRoleValue[index]} style={{width:"32.2%"}} id='option2' onChange={(e) => handleChangeRole(index, e.target.value)} name='option2'/> */}
+           <div className="mb-3 my-3 flex-item-4" style={{width:'100%'}}>
+           <Select id="mySelect5" options={options2} filterOption={filterOption} value={stf} onChange={(selectedOption) => handleChange3(selectedOption, index)} name="staffId2" placeholder="Select Staff" />
+           </div>
+           <div className="mb-3 my-3 flex-item-4" style={{width:'100%'}}>
+           <select id="role" className="form-control mb-3" name="role" value={allNewRoleValue[index]}  onChange={(e) => handleChangeRole(index, e.target.value)}>
+                <option value="surgeon">Surgeon</option>
+                <option value="assistantsurgeon">Assistant Surgeon</option>
+                <option value="anesthetist">Anesthetist</option>
+                <option value="scrubnurse">Scrub Nurse</option>
+                <option value="circulatingnurse">Circulating Nurse</option>
+            </select>
+            </div>
+            <div className="mb-3 my-3 close-btn-responsive" style={{width:'32.3%'}}>
+            <button 
+               onClick={(e) => handleClose(e,index)}
+              style={{
+                background: 'none',
+                backgroundColor:'red',
+                color:'white',
+                //marginLeft:'20px',
+                marginBottom:'20px',
+                border: 'none',
+                fontSize: '20px',
+                cursor: 'pointer'
+              }}
+            >
+              &times;
+            </button>
+            </div>
             </div>
         </>
         ))}

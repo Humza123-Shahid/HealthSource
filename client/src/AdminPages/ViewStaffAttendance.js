@@ -26,8 +26,9 @@ const ViewStaffAttendance = () => {
 //     });
   return (
     <div>
-      <h3 className="ms-4">Staff Attendances Data</h3>
-      <table  className="styled-table ms-4">
+      <h3 className="ms-4 mobile-margin">Staff Attendances Data</h3>
+      <div className="dashboard-content">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
             <th>#</th>
@@ -53,6 +54,7 @@ const ViewStaffAttendance = () => {
             </tr>
         </tbody>
       </table>
+      </div>
     </div>
   )
 }

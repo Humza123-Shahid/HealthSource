@@ -7,8 +7,9 @@ const ViewRole = () => {
     const index=location.state?.idx;
   return (
     <div>
-      <h1 className="ms-4">Role Data</h1>
-      <table  className="styled-table ms-4">
+      <h1 className="ms-4 mobile-margin">Role Data</h1>
+      <div className="dashboard-content">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
             <th>#</th>
@@ -24,6 +25,7 @@ const ViewRole = () => {
             </tr>
         </tbody>
       </table>
+      </div>
     </div>
   )
 }

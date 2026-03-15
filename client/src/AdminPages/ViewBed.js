@@ -8,8 +8,9 @@ const ViewBed = () => {
      const Rooms=location.state?.room || {};
   return (
     <div>
-      <h1 className="ms-4">Bed Data</h1>
-      <table  className="styled-table ms-4">
+      <h1 className="ms-4 mobile-margin">Bed Data</h1>
+      <div className="dashboard-content">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
             <th>#</th>
@@ -27,6 +28,7 @@ const ViewBed = () => {
             </tr>
         </tbody>
       </table>
+      </div>
     </div>
   )
 }

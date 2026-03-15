@@ -107,17 +107,17 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
                       }, [appointments]); //
   return (
    <div>
-      <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add Appointment</button>
+      <button className="btn btn-primary mt-3 ms-4 mobile-margin" onClick={handleClick}>Add Appointment</button>
       {/* <div className="d-flex justify-content-between" style={{ */}
       
-        <h3  className="ms-4" style={{
+        <h3  className="ms-4 mobile-margin" style={{
       margin: '20px 0px 0px 15px',
       padding: '0px'}}>Appointments Data</h3>
-        <div className="d-flex justify-content-between" style={{
+        <div className="ms-4 d-flex change-flex justify-content-between mobile-margin" style={{
       margin: '20px 0px 0px 15px',
       padding: '0px'}}>
         <div style={{
-                    margin: '11px 0px 0px 11px',
+                    margin: '11px 0px 0px 0px',
      color: '#333'}}>
           <select
             value={entries}
@@ -139,7 +139,8 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
       alignItems: 'center',
       border: '1px solid #ccc',
       borderRadius: '20px',
-      padding: '0px 15px'}}>
+      padding: '0px 15px',
+      width:'250px'}}>
         <input
           type="text"
           placeholder="Search..."
@@ -155,8 +156,8 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
         <FaSearch style={{color: '#888',marginLeft: '0px',cursor:'pointer'}} onClick={handleSearchClick}/>
         </div>
         </div>
-      
-      <table  className="styled-table ms-4">
+      <div className="dashboard-content">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
            <th>#</th>
@@ -206,8 +207,10 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
             })}
         </tbody>
       </table>
+      </div>
       {/* Bottom Controls */}
       <div
+      className='change-flex'
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -219,7 +222,7 @@ const getStaffById = (id) => staffs.find(d => d._id === id);
     minWidth: '230px',
      color: '#333'
         }}
-
+        className='mobile-margin'
         >
           Showing {startIndex + 1} to{" "}
           {Math.min(startIndex + entries, appointments.length)} of{" "}

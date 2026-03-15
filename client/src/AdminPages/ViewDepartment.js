@@ -8,8 +8,9 @@ const ViewDepartment = () => {
      const Staffs=location.state?.staff || {};
   return (
     <div>
-      <h1 className="ms-4">Department Data</h1>
-      <table  className="styled-table ms-4">
+      <h1 className="ms-4 mobile-margin">Department Data</h1>
+      <div className="dashboard-content">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
             <th>#</th>
@@ -30,6 +31,7 @@ const ViewDepartment = () => {
             </tr>
         </tbody>
       </table>
+      </div>
     </div>
   )
 }

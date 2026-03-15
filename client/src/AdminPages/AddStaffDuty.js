@@ -399,16 +399,16 @@ useEffect(() => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addStaffDuties}>
-    <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+        <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
           <label htmlFor="dutyDate" className="form-label">StaffDuty Date</label>
           <input type="date" className="form-control" id="dutyDate" name="dutyDate" value={dutyDate} onChange={handleDutyDateChange}  aria-describedby="emailHelp"/>
         </div>
-         <div className="mb-3 ms-3" style={{width:'100%'}}>
+         <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
-        <div className="mb-3 ms-3" style={{width:'100%'}}>
+        <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
@@ -421,22 +421,23 @@ useEffect(() => {
       //     setAllNewShiftValue[index]({label:'Select Staff',value:null});
       //   }  
       return(
-      <div className='mx-0' style={{display:'flex'}}>
+        <div>
+      <div className='mx-0 flex-container' style={{display:'flex'}}>
         
-        <div className="mb-3 my-3 me-3" style={{width:'2%'}}>
+        <div className="mb-3 my-3" style={{width:'2%'}}>
           <br/>
           <input className='ms-1 mt-3' style={{height:'30%',transform:'scale(1.5)'}} type='checkbox' onChange={(event)=>handleCheckboxChange(index,stf._id,shifts[index]?._id,event)} />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item-3" style={{width:'100%'}}>
             <label htmlFor="staff" className="form-label">Staff</label>
             <Select id="staffId" options={options} filterOption={filterOption} value={allNewStaffValue[index]} onChange={(selectedOption) =>handleChange(selectedOption, index)} name="staffId" placeholder="Select Staff" />
             {/* <Select id="staffId" options={options} filterOption={filterOption} value={{'value':stf._id,'label':stf.firstName}} onChange={(selectedOption) =>handleChange(selectedOption, index)} name="staffId" placeholder="Select Staff" /> */}
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item-3" style={{width:'100%'}}>
             <label htmlFor="shiftId" className="form-label">Shift</label>
              <Select id="shiftId" options={options2} filterOption={filterOption} value={allNewShiftValue[index]} onChange={(selectedOption) =>handleChange2(selectedOption, index)} name="shiftId" placeholder="Select Shift" />
         </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item-3" style={{width:'100%'}}>
             <label htmlFor="bookingType" className="form-label">Enter Duty Type:</label>
             {/* <input type="text" className="form-control" id="bookingType" name="bookingType" onChange={onChange} /> */}
             <select id="mySelect" className="form-control " style={{backgroundColor:'white'}} name="dutyType" onChange={(event)=>onChangeType(index,event)}>
@@ -449,7 +450,7 @@ useEffect(() => {
             </select>
       </div>
       
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item-3" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
             {/* <input type="text" className="form-control" id="status" name="status" onChange={onChange} /> */}
             <select id="mySelect" className="form-control " style={{backgroundColor:'white'}} name="status" onChange={(event)=>onChangeStatus(index,event)}>
@@ -459,6 +460,8 @@ useEffect(() => {
                 <option value="cancelled'">Cancelled'</option>
             </select>
       </div>
+      </div>
+      {index==staffs.length-1?<></>:<hr/>}
     </div>)
 })}
     

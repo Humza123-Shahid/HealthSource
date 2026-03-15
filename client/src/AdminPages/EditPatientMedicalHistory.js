@@ -125,8 +125,8 @@ useEffect(() => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={editPatientMedicalHistories}>
-    <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+        <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
             <label htmlFor="patient" className="form-label">Patient</label>
             {/* <select id="patientId" className="form-control " value={credentials.patientId} name="patientId" onChange={onChange}>
                 
@@ -137,7 +137,7 @@ useEffect(() => {
             </select> */}
             <Select id="patientId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="patientId" placeholder="Select Patient" />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="doctorId" className="form-label">Doctor</label>
             {/* <select id="doctorId" className="form-control " value={credentials.doctorId} name="doctorId" onChange={onChange}>
                 
@@ -150,7 +150,7 @@ useEffect(() => {
             </select> */}
             <Select id="doctorId" options={options2} filterOption={filterOption} defaultValue={defaultValue2} onChange={handleChange2} name="doctorId" placeholder="Select Doctor" />
         </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
             {/* <input type="text" className="form-control" id="status" value={credentials.status} name="status" onChange={onChange} /> */}
              <select id="status" className="form-control " value={credentials.status} name="status" onChange={onChange}>
@@ -161,18 +161,18 @@ useEffect(() => {
     
    
        
-    </div>
-      <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="condition" className="form-label">Enter Condition:</label>
             <textarea className="form-control" id="condition"  value={credentials.condition} name="condition" onChange={onChange} />
       </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="treatment" className="form-label">Enter Treatment:</label>
             <textarea className="form-control" id="treatment" value={credentials.treatment} name="treatment" onChange={onChange} />
       </div>
       
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="notes" className="form-label">Enter Notes:</label>
             <textarea className="form-control" id="notes" value={credentials.notes} name="notes" onChange={onChange} />
       </div>

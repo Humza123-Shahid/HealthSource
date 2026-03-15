@@ -128,8 +128,8 @@ useEffect(() => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addLabResults}>
-    <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+        <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
             <label htmlFor="labrequestId" className="form-label">Lab Request</label>
             {/* <select id="labrequestId" className="form-control " name="labrequestId" onChange={onChange}>
                 <option value="">-Lab Request-</option>
@@ -146,7 +146,7 @@ useEffect(() => {
             </select> */}
              <Select id="labrequestId" options={options} filterOption={filterOption} onChange={handleChange} name="labrequestId" placeholder="Select Lab Request" />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="labtestId" className="form-label">Lab Test</label>
             {/* <select id="labtestId" className="form-control " name="labtestId" onChange={onChange}>
                 <option value="">-Lab Test-</option>
@@ -156,22 +156,22 @@ useEffect(() => {
             </select> */}
              <Select id="labtestId" options={options2} filterOption={filterOption} onChange={handleChange2} name="labtestId" placeholder="Select Lab Test" />
         </div>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="resultValue" className="form-label">Enter Result Value:</label>
             <input type="text" className="form-control" id="resultValue" name="resultValue" onChange={onChange} />
       </div>
        
-    </div>
-      <div className='mx-0' style={{display:'flex'}}>
-         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
+         <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="units" className="form-label">Enter Units:</label>
             <input type="text" className="form-control" id="units" name="units" onChange={onChange} />
       </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="remarks" className="form-label">Enter Remarks:</label>
             <textarea className="form-control" id="remarks" name="remarks" onChange={onChange} />
       </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="uploadedFileUrl" className="form-label">Select File:</label>
             <br/>
             {/* <input type="text" className="form-control" id="uploadedFileUrl" name="uploadedFileUrl" onChange={onChange} /> */}
@@ -180,18 +180,18 @@ useEffect(() => {
               onChange={(e) => setFile(e.target.files[0])}
             />
       </div>
-    </div>
+    {/* </div>
         
-     <div className='mx-0' style={{display:'flex'}}>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className='mx-0' style={{display:'flex'}}> */}
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
           <label htmlFor="resultDate" className="form-label">Result Date</label>
           <input type="date" className="form-control" id="resultDate" name="resultDate" value={resultDate} onChange={handleResultDateChange}  aria-describedby="emailHelp"/>
         </div>
-    <div className="mb-3 ms-3" style={{width:'100%'}}>
+    <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
-     <div className="mb-3 ms-3" style={{width:'100%'}}>
+     <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>

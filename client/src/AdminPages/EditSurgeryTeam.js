@@ -106,8 +106,8 @@ const EditSurgeryTeam = () => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={editSurgeryTeams}>
-    <div className='mx-0' style={{display:'flex'}}>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+      <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
       
       <label htmlFor="mySelect" className="form-label">Select Surgery:</label>
       {/* <select id="mySelect" className="form-control "  value={selectedSurgeryValue} onChange={handleChangeSurgery}>
@@ -119,7 +119,7 @@ const EditSurgeryTeam = () => {
       <Select id="surgeryId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="surgeryId" placeholder="Select Surgery" />
 
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
       
       <label htmlFor="staffId" className="form-label">Select Staff:</label>
             {/* <select id="staffId" className="form-control " value={selectedStaffValue} onChange={handleChangeStaff}>
@@ -130,11 +130,14 @@ const EditSurgeryTeam = () => {
         </select> */}
       <Select id="staffId" options={options2} filterOption={filterOption} defaultValue={defaultValue2} onChange={handleChange2} name="staffId" placeholder="Select Staff" />
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="role" className="form-label">Enter Role:</label>
             <input type="text" className="form-control" id="type" value={role} name="role" onChange={handleRoleChange} />
       </div>
-    
+    <div className="flex-item" style={{width:'100%'}}>
+          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
+          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
+    </div>
     </div>
       
       <button disabled={selectedSurgeryValue==''||selectedStaffValue==''||role==''} type="submit" className="btn btn-primary">Update Surgery Team</button>

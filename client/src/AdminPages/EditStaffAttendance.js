@@ -155,8 +155,8 @@ useEffect(() => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={editStaffAttendances}>
-    <div className='mx-0' style={{display:'flex'}}>
-      {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+      {/* <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
       
       <label htmlFor="mySelect" className="form-label">Select Staff:</label>
       <select id="mySelect" className="form-control "  value={selectedStaffValue} onChange={handleChangeStaff}>
@@ -167,19 +167,19 @@ useEffect(() => {
       </select>
       <Select id="staffId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="staffId" placeholder="Select Staff" />
     </div> */}
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
           
           <label htmlFor="mySelect" className="form-label">Select Duty:</label>
           <Select id="dutyId" options={options3} filterOption={filterOption} defaultValue={defaultValue3} onChange={handleChange3} name="dutyId" placeholder="Select Duty" />
     
         </div>
-    {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
       <label htmlFor="date" className="form-label">Date:</label>
       <input type="date" className="form-control" id="date" value={date} name="date" onChange={handleDateChange} />
 
       </div>
       
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="checkInTime" className="form-label">Check In Time:</label>
             <input type="time" className="form-control" id="checkInTime" value={checkInTime} name="checkInTime" onChange={handleCheckInChange} />
       </div>
@@ -187,11 +187,11 @@ useEffect(() => {
     </div>
       <div className='mx-0' style={{display:'flex'}}>
         
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="checkOutTime" className="form-label">Check Out Time:</label>
             <input type="time" className="form-control" id="checkOutTime" value={checkOutTime} name="checkOutTime" onChange={handleCheckOutChange} />
       </div> */}
-      {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      {/* <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
       
       <label htmlFor="mySelect" className="form-label">Select Shift:</label>
       <select id="mySelect" className="form-control "  value={selectedShiftValue} onChange={handleChangeShift}>
@@ -203,7 +203,7 @@ useEffect(() => {
       <Select id="shiftId" options={options2} filterOption={filterOption} defaultValue={defaultValue2} onChange={handleChange2} name="shiftId" placeholder="Select Shift" />
     </div>
      */}
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Status:</label>
             {/* <input type="number" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} /> */}
             <select id="mySelect" className="form-control " value={status} onChange={handleStatusChange}>
@@ -212,7 +212,7 @@ useEffect(() => {
                 <option value="leave">Leave</option>
             </select>
       </div>
-      <div className="mb-3 ms-3" style={{width:'100%'}}>
+      <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>

@@ -144,31 +144,31 @@ console.log(newPath);
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={editPatients}>
 
-    <div className='mx-0' style={{display:'flex'}}>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+      <div className="mb-3 my-3  flex-item change-margin-email" style={{width:'100%'}}>
           <label htmlFor="email" className="form-label">Email address</label>
           <input type="email" className="form-control" id="email" name="email" value={email} onChange={handleEmailChange} aria-describedby="emailHelp"/>
         </div>
-         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+         <div className="mb-3 my-3  flex-item change-margin-pass" style={{width:'100%'}}>
             <label htmlFor="password" className="form-label">Password</label>
           <input type="password" className="form-control" id="password" name="password" value={password} onChange={handlePasswordChange} minLength={3} required/>
       </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
             <label htmlFor="fname" className="form-label">Enter First Name:</label>
             <input type="text" className="form-control" id="fname" value={firstName} name="fname" onChange={handleFirstNameChange} />
       </div>
      
-    </div>
-        <div className='mx-0' style={{display:'flex'}}>
-           <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* </div>
+        <div className='mx-0' style={{display:'flex'}}> */}
+           <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
             <label htmlFor="lname" className="form-label">Enter Last Name:</label>
             <input type="text" className="form-control" id="lname" value={lastName} name="lname" onChange={handleLastNameChange} />
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
             <label htmlFor="fathername" className="form-label">Enter Father Name:</label>
             <input type="text" className="form-control" id="fathername" value={fatherName} name="fathername" onChange={handleFatherNameChange} />
       </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
             <label htmlFor="gender" className="form-label">Enter Gender:</label>
             {/* <input type="text" className="form-control" id="gender" value={gender} name="gender" onChange={handleGenderChange} /> */}
             <select id="mySelect" className="form-control "  value={gender} onChange={handleGenderChange}>
@@ -178,32 +178,32 @@ console.log(newPath);
             </select>
       </div>
      
-      </div>
-      <div className='mx-0' style={{display:'flex'}}>
-         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
+         <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
             <label htmlFor="bdate" className="form-label">Select Date of Birth:</label>
             <input type="date" className="form-control" id="bdate" value={birthDate} name="bdate" onChange={handleBirthDateChange} />
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
             <label htmlFor="age" className="form-label">Enter Age:</label>
             <input type="number" className="form-control" id="age" value={age} name="age" onChange={handleAgeChange} />
       </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
                 <label htmlFor="nid" className="form-label">Enter National Id:</label>
                 <input type="text" className="form-control" id="nid" value={nationalId} name="nid" onChange={handleNationalIdChange} />
         </div>
        
-        </div>
-        <div className='mx-0' style={{display:'flex'}}>
-           <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        {/* </div>
+        <div className='mx-0' style={{display:'flex'}}> */}
+           <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
                 <label htmlFor="contact" className="form-label">Enter Contact:</label>
                 <input type="text" className="form-control" id="contact" value={contact} name="contact" onChange={handleContactChange} />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
                 <label htmlFor="address" className="form-label">Enter Address:</label>
                 <textarea className="form-control" id="address" value={address} name="address" onChange={handleAddressChange} />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
                 <label htmlFor="mstatus" className="form-label">Enter Marital Status:</label>
                 {/* <input type="text" className="form-control" id="mstatus" value={maritalStatus} name="mstatus" onChange={handleMaritalStatusChange} /> */}
                  <select id="mySelect" className="form-control "  value={maritalStatus} onChange={handleMaritalStatusChange}>
@@ -213,9 +213,9 @@ console.log(newPath);
                  </select>
         </div>
         
-        </div>
-         <div className='mx-0' style={{display:'flex'}}>
-          <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        {/* </div>
+         <div className='mx-0' style={{display:'flex'}}> */}
+          <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
                 <label htmlFor="bgroup" className="form-label">Enter Blood Group:</label>
                 {/* <input type="text" className="form-control" id="bgroup" value={bloodGroup} name="bgroup" onChange={handleBloodGroupChange} /> */}
                  <select id="mySelect" className="form-control "  value={bloodGroup} onChange={handleBloodGroupChange}>
@@ -229,24 +229,24 @@ console.log(newPath);
                   <option value="0-">O-</option>
                 </select>
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
                 <label htmlFor="disabilities" className="form-label">Enter Disabilities:</label>
                 <textarea className="form-control" id="disabilities" value={disabilities} name="disabilities" onChange={handleDisabilitiesChange} />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
             <label htmlFor="conditions" className="form-label">Enter Chronic Conditions:</label>
            <textarea className="form-control" id="conditions" value={chronicConditions} name="conditions" onChange={handleChronicConditionsChange} />
       </div>
       
       
        
-    </div>
-    <div className='mx-0' style={{display:'flex'}}>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* </div>
+    <div className='mx-0' style={{display:'flex'}}> */}
+      <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
             <label htmlFor="regDate" className="form-label">Select Registration Date:</label>
             <input type="date" className="form-control" id="regDate" value={regDate} name="regDate" onChange={handleRegistrationDateChange} />
       </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
             <label htmlFor="photoUrl" className="form-label">Select Photo:</label>
             <br/>
             {/* <input type="text" className="form-control" id="photoUrl" value={photoUrl} name="photoUrl" onChange={handlePhotoUrlChange} /> */}
@@ -256,7 +256,7 @@ console.log(newPath);
             />
              
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className="mb-3 my-3  flex-item" style={{width:'100%'}}>
         <div>
               {/* {preview ? (
                 <>
@@ -284,9 +284,9 @@ console.log(newPath);
             </a>
         </div>
       </div>
-      </div>
-      <div className='mx-0' style={{display:'flex'}}>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
+      <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
             {/* <input type="text" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} /> */}
              <select id="mySelect" className="form-control " value={status} onChange={handleStatusChange}>
@@ -295,18 +295,18 @@ console.log(newPath);
                 <option value="deceased">Deceased</option>
             </select>
       </div>
-      <div className="mb-3 ms-3" style={{width:'100%'}}>
+      <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
-        <div className="mb-3 ms-3" style={{width:'100%'}}>
+        <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
       
       </div>
       
-      <button disabled={email==''||password==''||firstName==''||fatherName==''||birthDate.length<1||nationalId.length<1||contact.length<1||address.length<1||bloodGroup.length<1||disabilities.length<1||chronicConditions.length<1} type="submit" className="btn btn-primary" >Update Patient</button>
+      <button disabled={email==''||password==''||firstName==''||fatherName==''||birthDate.length<1||nationalId.length<1||contact.length<1||address.length<1||bloodGroup.length<1||disabilities.length<1||chronicConditions.length<1} type="submit" className="btn btn-primary mb-1" >Update Patient</button>
       </form>
     </div>
   )

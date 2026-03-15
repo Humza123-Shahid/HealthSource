@@ -77,16 +77,16 @@ useEffect(() => {
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={editBeds}>
 
-    <div className='mx-0' style={{display:'flex'}}>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+    <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
         <label htmlFor="mySelect" className="form-label">Select Room:</label>
         <Select id="roomId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="roomId" placeholder="Select Room" />      
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="bedNumber" className="form-label">Enter Bed Number:</label>
             <input type="text" className="form-control" id="bedNumber" value={bedNumber} name="bedNumber" onChange={handleBedNumberChange} />
       </div>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Select Status:</label>
             {/* <input type="text" className="form-control" id="roomType" value={roomType} name="roomType" onChange={handleRoomTypeChange} /> */}
             <select id="status" className="form-control " value={status} name="status" onChange={handleStatusChange}>

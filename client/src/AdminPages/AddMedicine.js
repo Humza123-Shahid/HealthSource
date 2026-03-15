@@ -49,23 +49,23 @@ const AddMedicine = () => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addMedicines}>
-    <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+        <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
             <label htmlFor="name" className="form-label">Enter Name:</label>
             <input type="text" className="form-control" id="name" name="name" onChange={onChange} />
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="category" className="form-label">Enter Category:</label>
             <input type="text" className="form-control" id="category" name="category" onChange={onChange} />
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="manufacturer" className="form-label">Enter Manufacturer:</label>
             <input type="text" className="form-control" id="manufacturer" name="manufacturer" onChange={onChange} />
       </div>
        
-    </div>
-      <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="form" className="form-label">Enter Form:</label>
             {/* <input type="text" className="form-control" id="form" name="form" onChange={onChange} /> */}
             <select id="mySelect" className="form-control " name="form" onChange={onChange}>
@@ -76,29 +76,33 @@ const AddMedicine = () => {
               <option value="other">Other</option>
             </select>
       </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
         <label htmlFor="unitPrice" className="form-label">Enter Unit Price:</label>
         <input type="number" className="form-control" id="unitPrice" name="unitPrice" onChange={onChange} />
     </div>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
         <label htmlFor="stock" className="form-label">Enter Stock:</label>
         <input type="number" className="form-control" id="stock" name="stock" onChange={onChange} />
     </div>
-    </div>
+    {/* </div>
         
-     <div className='mx-0' style={{display:'flex'}}>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className='mx-0' style={{display:'flex'}}> */}
+      <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
           <label htmlFor="expiryDate" className="form-label">Select Expiry Date</label>
           <input type="date" className="form-control" id="expiryDate" name="expiryDate" value={expiryDate} onChange={handleExpiryDateChange}  aria-describedby="emailHelp"/>
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="batchNumber" className="form-label">Enter Batch Number:</label>
             <input type="text" className="form-control" id="batchNumber" name="batchNumber" onChange={onChange} />
       </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="upc" className="form-label">Enter Upc:</label>
             <input type="text" className="form-control" id="upc" name="upc" onChange={onChange} />
       </div>
+       <div className="flex-item" style={{width:'100%'}}>
+          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
+          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
+        </div>
       </div>
     
     

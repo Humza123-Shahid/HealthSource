@@ -210,9 +210,9 @@ useEffect(() => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addAdmissions}>
-    <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
-            <label htmlFor="patient" className="form-label">Patient</label>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+        <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
+            <label htmlFor="patient" className="form-label ">Patient</label>
             {/* <select id="patientId" className="form-control " name="patientId" onChange={onChange}>
                 <option value="">-Patient-</option>
                     {Array.isArray(patients) && patients.map((row) => (
@@ -221,8 +221,8 @@ useEffect(() => {
             </select> */}
             <Select id="patientId" options={options} filterOption={filterOption} onChange={handleChange} name="patientId" placeholder="Select Patient" />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
-            <label htmlFor="doctorId" className="form-label">Admitting Doctor</label>
+        <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
+            <label htmlFor="doctorId" className="form-label ">Admitting Doctor</label>
             {/* <select id="doctorId" className="form-control " name="doctorId" onChange={onChange}>
                 <option value="">-Doctor-</option>
                     {Array.isArray(doctors) && doctors.map((row) => {
@@ -233,7 +233,7 @@ useEffect(() => {
             </select> */}
              <Select id="doctorId" options={options2} filterOption={filterOption} onChange={handleChange2} name="doctorId" placeholder="Select Doctor" />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="wardId" className="form-label">Ward</label>
             {/* <select id="wardId" className="form-control " name="wardId" onChange={onChange}>
                 <option value="">-Lab Test-</option>
@@ -245,42 +245,40 @@ useEffect(() => {
         </div>
      
        
-    </div>
-      <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="roomId" className="form-label">Room</label>
              <Select id="roomId" options={options4} filterOption={filterOption} onChange={handleChange4} name="roomId" placeholder="Select Room" />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="bedId" className="form-label">Bed</label>
              <Select id="bedId" options={options5} filterOption={filterOption} onChange={handleChange5} name="bedId" placeholder="Select Bed" />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
           <label htmlFor="admissionDate" className="form-label">Admission Date</label>
           <input type="date" className="form-control" id="admissionDate" name="admissionDate" value={admissionDate} onChange={handleAdmissionDateChange}  aria-describedby="emailHelp"/>
         </div>
       
        
     
-    </div>
-        
-     <div className='mx-0' style={{display:'flex'}}>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
+      <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
         <label htmlFor="dischargeDate" className="form-label">Discharge Date</label>
         <input type="date" className="form-control" id="dischargeDate" name="dischargeDate" value={dischargeDate} onChange={handleDischargeDateChange}  aria-describedby="emailHelp"/>
      </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="reason" className="form-label">Enter Reason:</label>
             <textarea className="form-control" id="reason" name="reason" onChange={onChange} />
       </div>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="conditionOnAdmission" className="form-label">Enter Condition On Admission:</label>
             <textarea className="form-control" id="conditionOnAdmission" name="conditionOnAdmission" onChange={onChange} />
       </div>
-        </div>
-
-     <div className='mx-0' style={{display:'flex'}}>
-         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
+         <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Select Status:</label>
             {/* <input type="text" className="form-control" id="status" name="status" onChange={onChange} /> */}
             <select id="mySelect" className="form-control " name="status" onChange={onChange}>
@@ -290,11 +288,11 @@ useEffect(() => {
 
             </select>
       </div>
-        <div className="mb-3 ms-3" style={{width:'100%'}}>
+        <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
-     <div className="mb-3 ms-3" style={{width:'100%'}}>
+     <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>

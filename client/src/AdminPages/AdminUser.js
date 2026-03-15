@@ -106,17 +106,17 @@ const getPatientById = (id) => patients.find(d => d._id === id);
       
   return (
    <div>
-      <button className="btn btn-primary mt-3 ms-4" onClick={handleClick}>Add User</button>
+      <button className="btn btn-primary mt-3 ms-4 mobile-margin" onClick={handleClick}>Add User</button>
       {/* <div className="d-flex justify-content-between" style={{
       margin: '20px 0px 0px 15px',
       padding: '0px'}}> */}
-        <h3 className="ms-4"
+        <h3 className="ms-4 mobile-margin"
         style={{
           margin: "20px 0px 0px 15px",
           padding: "0px",
         }}>Users Data</h3>
          <div
-        className="d-flex justify-content-between"
+        className="ms-4 d-flex change-flex justify-content-between mobile-margin"
         style={{
           margin: "20px 0px 0px 15px",
           padding: "0px",
@@ -124,7 +124,7 @@ const getPatientById = (id) => patients.find(d => d._id === id);
       >
         <div
           style={{
-            margin: "11px 0px 0px 11px",
+            margin: "11px 0px 0px 0px",
             color: "#333",
           }}
         >
@@ -149,7 +149,8 @@ const getPatientById = (id) => patients.find(d => d._id === id);
       alignItems: 'center',
       border: '1px solid #ccc',
       borderRadius: '20px',
-      padding: '0px 15px'}}>
+      padding: '0px 15px',
+      width:'250px'}}>
         <input
           type="text"
           placeholder="Search..."
@@ -166,7 +167,8 @@ const getPatientById = (id) => patients.find(d => d._id === id);
         </div>
       </div>
       {/* </div> */}
-      <table  className="styled-table ms-4">
+      <div className="dashboard-content">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
            <th>#</th>
@@ -209,8 +211,10 @@ const getPatientById = (id) => patients.find(d => d._id === id);
             })}
         </tbody>
       </table>
+      </div>
        {/* Bottom Controls */}
       <div
+      className='change-flex'
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -223,6 +227,7 @@ const getPatientById = (id) => patients.find(d => d._id === id);
             minWidth: "230px",
             color: "#333",
           }}
+          className='mobile-margin'
         >
           Showing {startIndex + 1} to{" "}
           {Math.min(startIndex + entries, filteredData.length)} of{" "}

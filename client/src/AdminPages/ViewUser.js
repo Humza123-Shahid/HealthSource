@@ -11,8 +11,9 @@ const ViewUser = () => {
 
   return (
     <div>
-      <h1 className="ms-4">User Data</h1>
-      <table  className="styled-table ms-4">
+      <h1 className="ms-4 mobile-margin">User Data</h1>
+      <div className="dashboard-content">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
             <th>#</th>
@@ -32,6 +33,7 @@ const ViewUser = () => {
             </tr>
         </tbody>
       </table>
+      </div>
     </div>
   )
 }

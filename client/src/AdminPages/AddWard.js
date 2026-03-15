@@ -57,12 +57,12 @@ const AddWard = () => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addWards}>
-    <div className='mx-0' style={{display:'flex'}}>
-      <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+      <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
             <label htmlFor="name" className="form-label">Enter Name:</label>
             <input type="text" className="form-control" id="name" value={name} name="name" onChange={handleNameChange} />
       </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="wtype" className="form-label">Enter Type:</label>
             {/* <input type="text" className="form-control" id="wtype" value={wardType} name="wtype" onChange={handleWardTypeChange} /> */}
             <select id="mySelect" className="form-control "  value={wardType} onChange={handleWardTypeChange}>
@@ -76,10 +76,14 @@ const AddWard = () => {
             </select>
       </div>
     
-         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+         <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="trooms" className="form-label">Enter Total Rooms:</label>
             <input type="number" className="form-control" id="trooms" value={totalRooms} name="trooms" onChange={handleTotalRoomsChange} />
       </div>
+       <div className="flex-item" style={{width:'100%'}}>
+          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
+          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
+    </div>
       </div>
       <button disabled={name==''||wardType==''} type="submit" className="btn btn-primary">Add Ward</button>
       </form>

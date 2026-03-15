@@ -76,16 +76,16 @@ useEffect(() => {
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addRooms}>
 
-    <div className='mx-0' style={{display:'flex'}}>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+    <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
         <label htmlFor="mySelect" className="form-label">Select Ward:</label>
         <Select id="wardId" options={options} filterOption={filterOption} onChange={handleChange} name="wardId" placeholder="Select Ward" />      
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="roomNumber" className="form-label">Enter Room Number:</label>
             <input type="text" className="form-control" id="roomNumber" value={roomNumber} name="roomNumber" onChange={handleRoomNumberChange} />
       </div>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="roomType" className="form-label">Enter Room Type:</label>
             {/* <input type="text" className="form-control" id="roomType" value={roomType} name="roomType" onChange={handleRoomTypeChange} /> */}
             <select id="roomType" className="form-control " name="roomType" onChange={handleRoomTypeChange}>
@@ -95,17 +95,17 @@ useEffect(() => {
             </select>
       </div>
          
-      </div>
-      <div className='mx-0' style={{display:'flex'}}>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
         <label htmlFor="chargesPerDay" className="form-label">Enter Charges Per Day:</label>
         <input type="number" className="form-control" id="chargesPerDay" value={chargesPerDay} name="chargesPerDay" onChange={handleChargesPerDayChange} />
     </div>
-        <div className="mb-3 ms-3" style={{width:'100%'}}>
+        <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>
-        <div className="mb-3 ms-3" style={{width:'100%'}}>
+        <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>

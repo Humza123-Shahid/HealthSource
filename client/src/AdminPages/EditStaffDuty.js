@@ -133,24 +133,24 @@ useEffect(() => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={editStaffDuties}>
-    <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+        <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
                     <label htmlFor="staff" className="form-label">Staff</label>
                     <Select id="staffId" options={options} filterOption={filterOption} defaultValue={defaultValue} onChange={handleChange} name="staffId" placeholder="Select Staff" />
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="shiftId" className="form-label">Shift</label>
              <Select id="shiftId" options={options2} filterOption={filterOption} defaultValue={defaultValue2} onChange={handleChange2} name="shiftId" placeholder="Select Shift" />
         </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
           <label htmlFor="dutyDate" className="form-label">StaffDuty Date</label>
           <input type="date" className="form-control" id="dutyDate" name="dutyDate" value={dutyDate} onChange={handleDutyDateChange}  aria-describedby="emailHelp"/>
         </div>
-    </div>
-      <div className='mx-0' style={{display:'flex'}}>
+    {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
 
 
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="bookingType" className="form-label">Enter Duty Type:</label>
             {/* <input type="text" className="form-control" id="bookingType" name="bookingType" onChange={onChange} /> */}
             <select id="mySelect" className="form-control " value={credentials.dutyType} name="dutyType" onChange={onChange}>
@@ -162,7 +162,7 @@ useEffect(() => {
                 <option value="emergency">Emergency</option>
             </select>
       </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
             {/* <input type="text" className="form-control" id="status" name="status" onChange={onChange} /> */}
             <select id="mySelect" className="form-control " value={credentials.status} name="status" onChange={onChange}>
@@ -172,7 +172,7 @@ useEffect(() => {
                 <option value="cancelled'">Cancelled'</option>
             </select>
       </div>
-        <div className="mb-3 ms-3" style={{width:'100%'}}>
+        <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
         </div>

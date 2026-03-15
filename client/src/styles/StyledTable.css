@@ -98,6 +98,12 @@
   .change-margin-pass{
     margin-top: 4rem !important;
   }
+  .change-margin{
+    margin-top: 4rem !important;
+  }
+  .change-margin-condition{
+    margin-top: 4rem !important;
+  }
 }
 /* @media (max-width: 1345px) {
   
@@ -110,7 +116,7 @@
   gap: 20px; /* Optional: Adds a gap between items */
 }
 
-.flex-item {
+.flex-item,.flex-item-4 {
   /* flex-basis: calc(33.33% - 20px); */
   /* Using flex shorthand: grow, shrink, basis */
   flex: 1 1 calc(33.33% - 20px); /* Adjust width to account for gaps */
@@ -119,10 +125,20 @@
   background-color: #f1f1f1;
   text-align: center; */
 }
+.flex-item-2 {
+  
+  flex: 1 1 calc(25% - 20px); 
+
+}
+.flex-item-3 {
+  
+  flex: 1 1 calc(24.5% - 20px); 
+
+}
  @media (max-width: 1215px) {
   
 
-.flex-item {
+.flex-item,.flex-item-2 {
   /*
     Default for small screens (below 1000px): two items per row.
     Width calculation: 50% for two items, minus half the gap for perfect fitting (optional but recommended).
@@ -137,27 +153,108 @@
   padding: 20px;
   text-align: center; */
 }
+.flex-item-3 {
+  margin-right: 0px;
+  flex: 1 1 calc(49% - 20px);
+}
+.flex-item-4{
+  flex: 1 1 calc(90% - 20px);
+}
+.close-btn-responsive{
+  width: 10% !important;
+}
 }
 @media (min-width:769px) and (max-width: 900px) {
   
 
-.flex-item {
+.flex-item,.flex-item-2 {
   
   
   flex: 1 1 100%;
   
+}
+.flex-item-3 {
+ flex: 1 1 91%;
 }
 }
 @media (max-width: 605px) {
   
 
-.flex-item {
+.flex-item,.flex-item-2 {
   
   
   flex: 1 1 100%;
   
 }
+.flex-item-3 {
+ flex: 1 1 91%;
+}
 .change-margin-pass{
     margin-top: 1rem !important;
   }
+  .change-margin-condition{
+    margin-top: 1rem !important;
+  }
+.responsive-form{
+  width: 100% !important;
+  height: 100%;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+      display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0px !important;
 }
+
+}
+@media (min-width: 1000px) {
+  
+
+
+.responsive-form{
+  width: 35vw !important;
+ 
+}
+
+}
+@media (max-width: 800px) {
+  
+
+
+.responsive-form-signup{
+ 
+  width: 100% !important;
+ height: 100%;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+ border-radius: 0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+}
+@media (max-width: 500px) {
+  
+
+
+/* .responsive-form-signup{
+  width: 100% !important;
+ border-radius: 0 !important;
+} */
+.flex-container-signup{
+  flex-direction: column !important;
+}
+}
+/* @media (min-width: 500px) { */
+  
+
+
+/* .responsive-form-signup{
+  width: 100% !important;
+ border-radius: 0 !important;
+} */
+/* .flex-container{
+  flex-direction: row !important;
+}
+} */

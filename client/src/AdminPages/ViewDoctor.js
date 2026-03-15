@@ -9,8 +9,9 @@ const ViewDoctor = () => {
      const Status=Doctor.onCall?"Available":"UnAvailable";
   return (
     <div>
-      <h1 className="ms-4">Doctor Data</h1>
-      <table  className="styled-table ms-4">
+      <h1 className="ms-4 mobile-margin">Doctor Data</h1>
+      <div className="dashboard-content">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
             <th>#</th>
@@ -40,6 +41,7 @@ const ViewDoctor = () => {
             </tr>
         </tbody>
       </table>
+      </div>
     </div>
   )
 }

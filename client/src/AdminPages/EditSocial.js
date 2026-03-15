@@ -42,12 +42,12 @@ const EditSocial = () => {
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={editSocials}>
 
-    <div className='mx-0' style={{display:'flex'}}>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+    <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
         <label htmlFor="pname" className="form-label">Enter Platform Name:</label>
         <input type="text" className="form-control" id="pname" value={platformName} name="pname" onChange={handleNameChange} />
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
       <label htmlFor="url" className="form-label">Enter Url:</label>
       <input type="text" className="form-control" id="url" value={url} name="url" onChange={handleUrlChange} />
       {/* <select id="mySelect" className="form-control " value={selectedStatusValue} onChange={handleStatusChange}>
@@ -62,7 +62,7 @@ const EditSocial = () => {
 
       </select> */}
     </div>
-     <div className="mb-3 ms-3" style={{width:'100%'}}>
+     <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>

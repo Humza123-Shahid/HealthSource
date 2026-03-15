@@ -43,16 +43,16 @@ const AddOperationTheatre = () => {
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addOperationTheatres}>
 
-    <div className='mx-0' style={{display:'flex'}}>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+    <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
         <label htmlFor="name" className="form-label">Enter Name:</label>
         <input type="text" className="form-control" id="name" value={name} name="name" onChange={handleNameChange} />
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
         <label htmlFor="equipment" className="form-label">Equipment:</label>
         <textarea className="form-control" id="equipment" value={equipment} name="equipment" onChange={handleEquipmentChange} />
     </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
         <label htmlFor="status" className="form-label">Status:</label>
         {/* <input type="text" className="form-control" id="status" value={status} name="status" onChange={handleStatusChange} /> */}
         <select id="mySelect" className="form-control " value={status} onChange={handleStatusChange}>
@@ -61,6 +61,10 @@ const AddOperationTheatre = () => {
             <option value="unavailable">Unavailable</option>
         </select>
     </div>
+    <div className="flex-item" style={{width:'100%'}}>
+          <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
+          <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
+        </div>
       </div>
       <button disabled={name.length<1||equipment.length<1||status.length<1} type="submit" className="btn btn-primary" >Add Operation Theatre</button>
       </form>

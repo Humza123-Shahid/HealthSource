@@ -110,9 +110,9 @@ const Login = (props) => {
     >
       <InfoMessage showToast={showToast} msg={msg} type={type} />
       <form
-        className="mt-3 mb-3 pt-4 px-3"
+        className="mt-3 mb-3 pt-4 px-3 responsive-form"
         onSubmit={handleSubmit}
-        style={{ backgroundColor: "white", borderRadius: "10px" }}
+        style={{ backgroundColor: "white", borderRadius: "10px" ,width:"50vw"}}
       >
         <img
           src={logimg}
@@ -120,7 +120,7 @@ const Login = (props) => {
           style={{ display: "block", margin: "0 auto", width: "100px" }}
           alt="..."
         />
-        <h2 style={{ textAlign: "center", width: "50vh" }}>Sign In</h2>
+        <h2 style={{ textAlign: "center"}}>Sign In</h2>
         <div className="mb-3">
           {/* <label htmlFor="username" className="form-label">
             User Name

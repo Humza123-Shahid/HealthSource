@@ -97,8 +97,8 @@ useEffect(() => {
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addDoctors}>
 
-    <div className='mx-0' style={{display:'flex'}}>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+    <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
         <label htmlFor="mySelect" className="form-label">Select Staff Name:</label>
         {/* <select id="mySelect" className="form-control "  value={selectedStaffValue} onChange={handleChangeStaff}>
             <option value="">-Select-</option>
@@ -109,27 +109,27 @@ useEffect(() => {
         <Select id="staffId" options={options} filterOption={filterOption} onChange={handleChange} name="staffId" placeholder="Select Staff" />
 
             </div>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="specializations" className="form-label">Enter Specializations:</label>
             <textarea className="form-control" id="specializations" value={specializations} name="specializations" onChange={handleSpecializationsChange} />
       </div>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="lNumber" className="form-label">Enter License Number:</label>
             <input type="text" className="form-control" id="lNumber" value={licenseNumber} name="lNumber" onChange={handleLicenseNumberChange} />
       </div>
     
         
-      </div>
-      <div className='mx-0' style={{display:'flex'}}>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
+     <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
         <label htmlFor="eYears" className="form-label">Experience Years:</label>
         <input type="number" className="form-control" id="eYears" value={experienceYears} name="eYears" onChange={handleExperienceYearsChange} />
     </div>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
         <label htmlFor="cFee" className="form-label">Consultation Fee:</label>
         <input type="number" className="form-control" id="cFee" value={consultationFee} name="cFee" onChange={handleConsultationFeeChange} />
     </div>
-         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+         <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
       
       <label htmlFor="mySelect" className="form-label">Select On Call :</label>
       <select id="mySelect" className="form-control " value={selectedonCallValue} onChange={handleOnCallChange}>
@@ -138,9 +138,9 @@ useEffect(() => {
 
       </select>
     </div>
-      </div>
-       <div className='mx-0' style={{display:'flex'}}>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+      {/* </div>
+       <div className='mx-0' style={{display:'flex'}}> */}
+     <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="signatureUrl" className="form-label">Select Signature:</label>
             {/* <input type="text" className="form-control" id="signatureUrl" value={signatureUrl} name="signatureUrl" onChange={handleSignatureUrlChange} /> */}
            <input
@@ -148,7 +148,7 @@ useEffect(() => {
               onChange={(e) => setFile(e.target.files[0])}
             />
       </div>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="photoUrl" className="form-label">Select Photo:</label>
             <br/>
             {/* <input type="text" className="form-control" id="signatureUrl" value={signatureUrl} name="signatureUrl" onChange={handleSignatureUrlChange} /> */}
@@ -157,7 +157,7 @@ useEffect(() => {
               onChange={(e) => setFile2(e.target.files[0])}
             />
       </div>
-    <div className="mb-3 ms-3" style={{width:'100%'}}>
+    <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>

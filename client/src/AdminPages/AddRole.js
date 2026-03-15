@@ -102,12 +102,12 @@ useEffect(() => {
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addRoles}>
 
-    <div className='mx-0' style={{display:'flex'}}>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+    <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
         <label htmlFor="name" className="form-label">Enter Name:</label>
         <input type="text" className="form-control" id="name" value={name} name="name" onChange={handleNameChange} />
     </div>
-    {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
       <label htmlFor="permissions" className="form-label">Enter Permissions:</label>
       <input type="text" className="form-control" id="permissions" value={permissions} name="permissions" onChange={handlePermissionsChange} /> */}
       {/* <select id="mySelect" className="form-control " value={selectedStatusValue} onChange={handleStatusChange}>
@@ -122,17 +122,17 @@ useEffect(() => {
 
       </select> */}
     {/* </div> */}
-     <div className="mb-3 ms-3" style={{width:'100%'}}>
+     <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
-    <div className="mb-3 ms-3" style={{width:'100%'}}>
+    <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
       </div>
       <label htmlFor="name" className="form-label">Select Permissions:</label>
-      <div style={{ display: 'flex', gap: '50px', alignItems: 'center',paddingLeft:'5px' }}>
+      <div style={{ display: 'flex',flexWrap:"wrap", gap: '50px', alignItems: 'center',paddingLeft:'5px' }}>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(0,event)} style={{ transform: "scale(1.5)" }}/> User</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(1,event)} style={{ transform: "scale(1.5)" }} /> Patient</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(2,event)} style={{ transform: "scale(1.5)" }}/> Patient Medical History</label>
@@ -141,10 +141,10 @@ useEffect(() => {
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(5,event)}style={{ transform: "scale(1.5)" }} /> Shift</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(6,event)} style={{ transform: "scale(1.5)" }}/> Staff Duty</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(7,event)} style={{ transform: "scale(1.5)" }} /> Doctor</label>
-      </div>
+      {/* </div>
       <br/>
 
-      <div style={{ display: 'flex', gap: '50px', alignItems: 'center',paddingLeft:'5px' }}>
+      <div style={{ display: 'flex',flexWrap:"wrap", gap: '50px', alignItems: 'center',paddingLeft:'5px' }}> */}
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(8,event)} style={{ transform: "scale(1.5)" }}/> Appointment</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(9,event)} style={{ transform: "scale(1.5)" }} /> Consultation</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(10,event)} style={{ transform: "scale(1.5)" }}/> Surgery</label>
@@ -152,9 +152,9 @@ useEffect(() => {
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(12,event)} style={{ transform: "scale(1.5)" }}/> Operation Theatre</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(13,event)} style={{ transform: "scale(1.5)" }} /> Medicine</label>
        
-      </div>
+      {/* </div>
       <br/>
-      <div style={{ display: 'flex', gap: '50px', alignItems: 'center',paddingLeft:'5px' }}>
+      <div style={{ display: 'flex',flexWrap:"wrap", gap: '50px', alignItems: 'center',paddingLeft:'5px' }}> */}
          <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(14,event)} style={{ transform: "scale(1.5)" }}/> Prescription</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(15,event)} style={{ transform: "scale(1.5)" }} /> Lab Test</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(16,event)} style={{ transform: "scale(1.5)" }}/> Lab Request</label>
@@ -164,9 +164,9 @@ useEffect(() => {
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(20,event)} style={{ transform: "scale(1.5)" }}/> Bed</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(21,event)} style={{ transform: "scale(1.5)" }} /> Nurse</label>
         
-      </div>
+      {/* </div>
       <br/>
-       <div style={{ display: 'flex', gap: '50px', alignItems: 'center',paddingLeft:'5px' }}>
+       <div style={{ display: 'flex',flexWrap:"wrap", gap: '50px', alignItems: 'center',paddingLeft:'5px' }}> */}
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(22,event)} style={{ transform: "scale(1.5)" }}/> Admission</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(23,event)} style={{ transform: "scale(1.5)" }} /> Staff Attendance</label>
         <label style={{ fontSize:'20px' }}><input type="checkbox" onChange={(event)=>handleCheckboxChange(24,event)} style={{ transform: "scale(1.5)" }}/> Social</label>

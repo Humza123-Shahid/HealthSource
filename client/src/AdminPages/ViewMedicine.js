@@ -13,8 +13,9 @@ const ViewMedicine = () => {
           });
   return (
     <div>
-      <h1 className="ms-4">Medicine Data</h1>
-      <table  className="styled-table ms-4">
+      <h1 className="ms-4 mobile-margin">Medicine Data</h1>
+      <div className="dashboard-content">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
             <th>#</th>
@@ -44,6 +45,7 @@ const ViewMedicine = () => {
             </tr>
         </tbody>
       </table>
+      </div>
     </div>
   )
 }

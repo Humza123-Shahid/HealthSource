@@ -9,8 +9,9 @@ const ViewPatientMedicalHistory = () => {
     const index=location.state?.idx;
   return (
     <div>
-      <h1 className="ms-4">Patient Medical History Data</h1>
-      <table  className="styled-table ms-4">
+      <h1 className="ms-4 mobile-margin">Patient Medical History Data</h1>
+      <div className="dashboard-content">
+      <table  className="styled-table ms-4 mobile-margin">
         <thead>
           <tr>
             <th>#</th>
@@ -35,6 +36,7 @@ const ViewPatientMedicalHistory = () => {
             </tr>
         </tbody>
       </table>
+      </div>
     </div>
   )
 }

@@ -116,8 +116,8 @@ useEffect(() => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addPatientMedicalHistories}>
-    <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+        <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
             <label htmlFor="patient" className="form-label">Patient</label>
             {/* <select id="patientId" className="form-control " name="patientId" onChange={onChange}> */}
             <Select id="patientId" options={options} filterOption={filterOption} onChange={handleChange} name="patientId" placeholder="Select Patient" />
@@ -129,7 +129,7 @@ useEffect(() => {
                     ))} */}
             {/* </select> */}
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
             <label htmlFor="doctorId" className="form-label">Doctor</label>
              <Select id="doctorId" options={options2} filterOption={filterOption} onChange={handleChange2} name="doctorId" placeholder="Select Doctor" />
             {/* <select id="doctorId" className="form-control " name="doctorId" onChange={onChange}> */}
@@ -143,7 +143,7 @@ useEffect(() => {
                  })} */}
             {/* </select> */}
         </div>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="status" className="form-label">Enter Status:</label>
             {/* <input type="text" className="form-control" id="status" name="status" onChange={onChange} /> */}
              <select id="status" className="form-control " name="status" onChange={onChange}>
@@ -154,22 +154,22 @@ useEffect(() => {
     
    
        
-    </div>
-      <div className='mx-0' style={{display:'flex'}}>
+    {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
 
-        {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        {/* <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
           <label htmlFor="diagnosisDate" className="form-label">Diagnosis Date</label>
           <input type="date" className="form-control" id="diagnosisDate" name="diagnosisDate" value={diagnosisDate} onChange={handleDiagnosisDateChange}  aria-describedby="emailHelp"/>
         </div> */}
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="condition" className="form-label">Enter Condition:</label>
             <textarea className="form-control" id="condition"  name="condition" onChange={onChange} />
       </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="treatment" className="form-label">Enter Treatment:</label>
             <textarea className="form-control" id="treatment" name="treatment" onChange={onChange} />
       </div>
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="notes" className="form-label">Enter Notes:</label>
             <textarea className="form-control" id="notes" name="notes" onChange={onChange} />
       </div>

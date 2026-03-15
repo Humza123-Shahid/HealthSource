@@ -175,8 +175,8 @@ useEffect(() => {
     <div className='ms-3'>
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={addUsers}>
-    <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+        <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
             <label htmlFor="staff" className="form-label">Staff</label>
             {/* <select id="staffId" className="form-control " name="staffId" onChange={onChange}>
                 <option value="">-Staff-</option>
@@ -186,7 +186,7 @@ useEffect(() => {
             </select> */}
              <Select id="staffId" options={options} filterOption={filterOption} onChange={handleChange} name="staffId" placeholder="Select Staff" />
         </div>
-        {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        {/* <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
             <label htmlFor="patient" className="form-label">Patient</label>
             <select id="patientId" className="form-control " name="patientId" onChange={onChange}>
                 <option value="">-Patient-</option>
@@ -196,29 +196,29 @@ useEffect(() => {
             </select>
             <Select id="patientId" options={options2} filterOption={filterOption} onChange={handleChange2} name="patientId" placeholder="Select Patient" />
         </div> */}
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item change-margin-condition" style={{width:'100%'}}>
           <label htmlFor="email" className="form-label">Email address</label>
           <input type="email" className="form-control" id="email" name="email" onChange={onChange} aria-describedby="emailHelp"/>
           {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
 
         </div>
-     <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+     <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
           <label htmlFor="name" className="form-label">User Name</label>
           <input type="text" className="form-control" id="name" name="name" onChange={onChange}/>
         </div>
      
-    </div>
-      <div className='mx-0' style={{display:'flex'}}>
+    {/* </div>
+      <div className='mx-0' style={{display:'flex'}}> */}
 
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
           <label htmlFor="password" className="form-label">Password</label>
           <input type="password" className="form-control" id="password" name="password" onChange={onChange} minLength={3} required/>
         </div>  
-       <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+       <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
           <label htmlFor="cpassword" className="form-label">Confirm Password</label>
           <input type="password" className="form-control" id="cpassword" name="cpassword" onChange={onChange} minLength={3} required/>
         </div>
-        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+        <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
           <label htmlFor="role" className="form-label">Role</label>
             {/* <select id="roleId" className="form-control " name="roleId" onChange={onChange}>
               <option value="">-Role-</option>

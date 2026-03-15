@@ -70,12 +70,12 @@ const EditRole = () => {
     <InfoMessage showToast={showToast} msg={msg} type={type}/>
     <form onSubmit={editRoles}>
 
-    <div className='mx-0' style={{display:'flex'}}>
-    <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    <div className='mx-0 flex-container' style={{display:'flex'}}>
+    <div className="mb-3 my-3 flex-item change-margin" style={{width:'100%'}}>
         <label htmlFor="name" className="form-label">Enter Name:</label>
         <input type="text" className="form-control" id="name" value={name} name="name" onChange={handleNameChange} />
     </div>
-    {/* <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
+    {/* <div className="mb-3 my-3 flex-item" style={{width:'100%'}}>
       
       <label htmlFor="permissions" className="form-label">Enter Permissions:</label>
       <input type="text" className="form-control" id="permissions" value={permissions} name="permissions" onChange={handlePermissionsChange} /> */}
@@ -91,11 +91,11 @@ const EditRole = () => {
 
       </select> */}
     {/* </div> */}
-     <div className="mb-3 ms-3" style={{width:'100%'}}>
+     <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>
-     <div className="mb-3 ms-3" style={{width:'100%'}}>
+     <div className="flex-item" style={{width:'100%'}}>
           <label htmlFor="abc" className="form-label" style={{display:'none'}}>abc</label>
           <input type="text" className="form-control" style={{display:'none'}} id="abc" name="abc"/>
     </div>

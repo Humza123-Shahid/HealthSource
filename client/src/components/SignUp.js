@@ -181,25 +181,25 @@ const SignUp = (props) => {
     <div className='mt-0 d-flex flex-column align-items-center justify-content-center' style={{backgroundColor:"#318CE7",height:'100vh'}}>
       <InfoMessage showToast={showToast} msg={msg} type={type}/>
       {/* <form className='mt-3 mb-3 pt-4 px-3' onSubmit={handleSubmit} style={{backgroundColor:"white",borderRadius: '10px',width:'50vw'}} > */}
-      <form className='mt-3 mb-3 pt-4 px-3' onSubmit={handleSubmit} style={{backgroundColor:"white",borderRadius: '10px',width:'50vw'}} >  
+      <form className='mt-3 mb-3 pt-4 px-3 responsive-form-signup' onSubmit={handleSubmit} style={{backgroundColor:"white",borderRadius: '10px',width:'50vw'}} >  
         <img src={logimg} className="center" style={{display:'block',margin:'0 auto',width:'100px'}}alt="..."/>
         <h2 className='mb-3' style={{textAlign:"center",width:'100%'}}>Sign Up</h2>
-        <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3" style={{width:'100%'}}>
+        <div className='mx-0 flex-container-signup' style={{display:'flex',flexDirection:'row'}}>
+        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
           <label htmlFor="email" className="form-label">Email address</label>
           <input type="email" className="form-control" id="email" name="email" onChange={onChange} aria-describedby="emailHelp"/>
         </div>
-         <div className="mb-3 ms-3 me-3" style={{width:'100%'}}>
+         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="password" className="form-label">Password</label>
           <input type="password" className="form-control" id="password" name="password" onChange={onChange} minLength={3} required/>
       </div>
       </div>
-       <div className='mx-0' style={{display:'flex'}}>
-        <div className="mb-3" style={{width:'100%'}}>
+       <div className='mx-0 flex-container-signup' style={{display:'flex',flexDirection:'row'}}>
+        <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
           <label htmlFor="firstName" className="form-label">First Name</label>
           <input type="text" className="form-control" id="firstName" name="firstName" onChange={onChange}  aria-describedby="emailHelp"/>
         </div>
-         <div className="mb-3 ms-3 me-3" style={{width:'100%'}}>
+         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="gender" className="form-label">Enter Gender:</label>
             {/* <input type="text" className="form-control" id="gender" value={gender} name="gender" onChange={handleGenderChange} /> */}
             <select id="mySelect" className="form-control " name="gender"  value={gender} onChange={handleGenderChange}>
@@ -230,7 +230,7 @@ const SignUp = (props) => {
             </select>
         </div> */}
         </div>
-        <div className='mx-0' style={{display:'flex'}}>
+        <div className='mx-0 flex-container-signup' style={{display:'flex',flexDirection:'row'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
             <label htmlFor="age" className="form-label">Enter Age:</label>
             <input type="number" className="form-control" id="age" name="age" onChange={onChange} />
@@ -249,7 +249,7 @@ const SignUp = (props) => {
         </div> */}
 
         </div>
-        <div className='mx-0' style={{display:'flex'}}>
+        <div className='mx-0 flex-container-signup' style={{display:'flex',flexDirection:'row'}}>
         <div className="mb-3 my-3 me-3" style={{width:'100%'}}>
                 <label htmlFor="mstatus" className="form-label">Enter Marital Status:</label>
                 {/* <input type="text" className="form-control" id="mstatus" value={maritalStatus} name="mstatus" onChange={handleMaritalStatusChange} /> */}
@@ -289,7 +289,7 @@ const SignUp = (props) => {
         </div>
 
         {/* <button type="submit" className="btn btn-primary mb-2" style={{width:'50%',display:'block',margin:'auto'}} onClick={()=>handleRegister()} >Register</button> */}
-        <button type="submit" className="btn btn-primary mb-2" style={{width:'50%',display:'block',margin:'auto'}} >Register</button>
+        <button type="submit" className="btn btn-primary mb-2" style={{width:'50%',display:'block',margin:'0 auto'}} >Register</button>
           <p className="ms-0 mt-0 mb-5" style={{textAlign:'center'}}>
         Already have an account?{' '}
         <Link to="/login" style={{textDecoration:'underline'}}>
